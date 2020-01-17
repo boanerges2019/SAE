@@ -1,0 +1,293 @@
+@import 'src/styles/variables/variables.scss';
+#notes{
+  width:100%;
+  display:block;
+  float:left;
+  margin-bottom:40px;
+  height: 630px;
+  position: relative;
+  float: left;
+
+
+  /*Tabs Bootstrap */
+  .nav-tabs {
+   border-bottom:none;
+   float:left;
+   /* Badge */
+   .badge_option{
+     padding: 0px;
+     margin-top: 0px;
+     margin-left: 2px;
+     position: relative;
+     display: inline-block;
+     .badge_notification{
+     background: $gris_notif;
+     border-radius: 50%;
+     min-width: 30px;
+     height: 30px;
+     border: 2px solid $gris_notifborder;
+     line-height: 25px;
+     text-align: center;
+     font-size: $ft_tabs;
+     font-weight: bold;
+     color: $blanc;
+     padding: 0;
+     cursor: pointer;
+     text-decoration: none;
+     margin-right: 0px;
+     position: relative;
+     display: inline-block;
+        &:hover{
+          background:$gris_notif;;
+          text-decoration:none;
+        }
+     }
+   }
+   > li > a:focus {
+     padding: 20px 20px;
+     margin-top: 0px;
+     margin-right:0px;
+     color:$blanc;
+     border:none;
+     height: 60px;
+     background:$bg-titre;
+     border-right:1px solid $gris_fonce;
+   }
+   li{
+     width:225px;
+     height: 60px;
+     cursor: pointer;
+
+     > a {
+       border-radius:0;
+       padding: 20px 20px;
+       margin-top: 0px;
+       margin-right:0px;
+       text-transform: uppercase;
+       color:$blanc;
+       font-size:$ft_tabs;
+       border:none;
+       height: 60px;
+       border-right:1px solid $gris_fonce;
+     }
+     &.active > a {
+        border-top: 6px solid $bleu;
+        padding: 14px 20px 15px 20px;
+        color:$noir;
+        border-right:none;
+        font-weight:600;
+      }
+      &:hover > a,
+      &:focus > a {
+        color:$noir!important;
+        background:$blanc;
+        border-right:none;
+      }
+   }
+ }
+
+  .option{
+    margin-top: 15px;
+    margin-right: 15px;
+    .btn.action {
+      height: 30px;
+      border-radius: 5px;
+      color: $blanc;
+      background: $bleu;
+      padding: 8px 10px;
+      line-height: 0;
+      text-transform: uppercase;
+      font-weight: 600;
+      border: none;
+      text-align: center;
+      font-size: 14px;
+      &:hover,
+      &:focus{
+        background-color:$bleu_fonce;
+      }
+      &.right{
+        float:right
+      }
+      .glyphicon{
+        margin-right:10px;
+      }
+    }
+
+
+    .nouvelle-note{
+      width:550px;
+
+      .form-group{
+        margin: 0 0 15px 0;
+
+        .control-label{
+          padding-top:0px!important;
+          &.titre{
+            font-size: 16px;
+            font-weight:600;
+            text-align:left!important;
+          }
+        }
+        textarea{
+          width:100%;
+        }
+
+          .switch {
+              margin-left: 20px;
+              float:left;
+          }
+
+        .action{
+        margin-left:15px;
+        }
+        ul.couleur{
+          float: left;
+          padding: 0;
+          li{
+            display: inline-block;
+            position: relative;
+            text-align: left;
+            margin-right: 5px;
+          }
+          .carre{
+            width: 20px;
+            height: 20px;
+            background: $gris_type;
+            float: left;
+            border-radius:0!important;
+            padding:0!important;
+
+            &.bleu{
+              background:$bleu_note;
+            }
+            &.violet{
+              background:$violet_note;
+            }
+            &.jaune{
+              background:$jaune_note;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Background */
+  .bg_header{
+    background:$bg-titre;
+    height:60px;
+    width:100%;
+    display:block;
+    float:left;
+    border-radius:5px 5px 0 0;
+
+    .encart{
+      margin-top: 15px;
+      display: block;
+      float: left;
+        /* Intitule */
+        .intitule{
+          display:inline-block;
+          color: $blanc;
+          border-right: none;
+          font-weight: 600;
+          text-transform: uppercase;
+          font-size: 16px;
+          float: left;
+          padding: 3px 10px 0px 20px;
+        }
+        /* Badge */
+        .badge_option{
+          padding: 0px;
+          float: left;
+          margin-top: 0px;
+          margin-left: 2px;
+          position: relative;
+          display: block;
+          float: left;
+          .badge_notification{
+          background: $gris_notif;
+          border-radius: 50%;
+          min-width: 30px;
+          height: 30px;
+          border: 2px solid $gris_notifborder;
+          line-height: 25px;
+          text-align: center;
+          font-size: $ft_tabs;
+          font-weight: bold;
+          color: $blanc;
+          padding: 0;
+          cursor: pointer;
+          text-decoration: none;
+          margin-right: 0px;
+          position: relative;
+          display: block;
+             &:hover{
+               background:none;
+               text-decoration:none;
+             }
+          }
+        }
+      }
+  }
+
+
+    .wrapper {
+      .container{
+        &.dragndrop{
+          margin:0;
+          width:280px;
+          display: table-cell;
+        }
+      }
+    }
+
+  .bg_content{
+    background:$blanc;
+    height:570px;
+    width:100%;
+    display:block;
+    float:left;
+    border-radius:0 0 5px 5px;
+    padding:10px;
+
+    .note{
+      //position: absolute;
+      width: 270px;
+      height: 200px;
+      padding: 10px;
+      box-shadow: 2px 2px 5px grey;
+      margin-bottom:10px;
+      cursor:pointer;
+      &.bleu{background-color:$bleu_note;}
+      &.violet{background-color:$violet_note;}
+      &.jaune{background-color:$jaune_note;}
+      .topBar{
+        z-index:1;
+        width:100%;
+        height:40px;
+        font-weight:600;
+        .permanente{
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: $bleu;
+            float: left;
+        }
+      }
+      .form{
+        width:100%;
+        height:130px;
+      }
+      .textAria{
+        position:absolute;
+        border-color:red;
+        width:240px;
+        height:130px;
+      }
+      .textAria:focus{
+        outline: 0;
+      }
+    }
+  }
+}

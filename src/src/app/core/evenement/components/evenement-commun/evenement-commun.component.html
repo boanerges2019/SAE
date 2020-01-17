@@ -1,0 +1,117 @@
+<div class="well well-lg">
+    <div class="form-horizontal">
+        <h4 (click)="isCollapsedContent = !isCollapsedContent">
+          <span class="glyphicon"
+                [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+                aria-hidden="false"></span>
+            Horodate
+        </h4>
+
+        <div [collapse]="isCollapsedContent" class="collapse">
+            <!--Horodate création & Origine -->
+            <div class="form-group">
+                <div class="">
+                    <label class="col-xs-3 control-label">Horodate de création</label>
+
+                    <div class="col-xs-3">
+                        <input class="form-control"
+                               [(ngModel)]="evenement.horodateCreation"
+                               ctxAccess
+                               [fieldName]="field.horodateCreation" 
+                               [currentCtx]="currentCtx"
+                               ng2-datetime-picker
+                               date-format="DD/MM/YYYY HH:mm:ss"
+                               parse-format="DD/MM/YYYY HH:mm:ss"
+                               [close-on-select]="false"/>
+                    </div>
+                </div>
+                <div *ngIf="evenement.attributs[field.origine]">
+                    <label class="col-xs-3 control-label">Origine</label>
+
+                    <div class="col-xs-3">
+                        <cesam-input [type]="'select'"
+                                     [model]="evenement.attributs[field.origine]"
+                                     [items]="origines"
+                                     [enumName]="modeleEvenementCte.ORIGINES"
+                                     [fieldName]="field.origine"
+                                     [currentCtx]="currentCtx"></cesam-input>
+                    </div>
+                </div>
+            </div>
+            <!--Horodate début -->
+            <div class="form-group">
+                <label class="col-xs-3 control-label">Horodate de début prévu</label>
+
+                <div class="col-xs-3">
+                    <input class="form-control"
+                           [(ngModel)]="evenement.horodateDebutPrevue"
+                           ctxAccess [fieldName]="field.horodateDebutPrevue" [currentCtx]="currentCtx"
+                           [state]="evenement[field.etat]"
+                           cesamRequired [model]="evenement.horodateDebutPrevue"
+                           [required]="horodateDebutPrevueRequired" [class]="'has-error'"
+                           ng2-datetime-picker date-format="DD/MM/YYYY HH:mm:ss"
+                           parse-format="DD/MM/YYYY HH:mm:ss"
+                           [close-on-select]="false"/>
+                </div>
+                <label class="col-xs-3 control-label">Horodate de début</label>
+
+                <div class="col-xs-3">
+                    <input class="form-control"
+                           [(ngModel)]="evenement.horodateDebut"
+                           ctxAccess [fieldName]="field.horodateDebut" [currentCtx]="currentCtx"
+                           ng2-datetime-picker
+                           date-format="DD/MM/YYYY HH:mm:ss"
+                           parse-format="DD/MM/YYYY HH:mm:ss"
+                           [close-on-select]="false"/>
+                </div>
+            </div>
+            <!--Horodate fin -->
+            <div class="form-group">
+                <label class="col-xs-3 control-label">Horodate de fin prévue</label>
+
+                <div class="col-xs-3">
+                    <input class="form-control"
+                           [(ngModel)]="evenement.horodateFinPrevue"
+                           ctxAccess [fieldName]="field.horodateFinPrevue" [currentCtx]="currentCtx"
+                           [state]="evenement[field.etat]"
+                           ng2-datetime-picker
+                           date-format="DD/MM/YYYY HH:mm:ss"
+                           parse-format="DD/MM/YYYY HH:mm:ss"
+                           [close-on-select]="false"/>
+                </div>
+                <label class="col-xs-3 control-label">Horodate de fin</label>
+
+                <div class="col-xs-3">
+                    <input class="form-control"
+                           [(ngModel)]="evenement.horodateFin"
+                           ctxAccess [fieldName]="field.horodateFin" [currentCtx]="currentCtx"
+                           ng2-datetime-picker
+                           date-format="DD/MM/YYYY HH:mm:ss"
+                           parse-format="DD/MM/YYYY HH:mm:ss"
+                           [close-on-select]="false"/>
+                </div>
+            </div>
+            <!--Durée prévue & Informer Webtrafic-->
+            <div class="form-group">
+                <label class="col-xs-3 control-label">Durée prévue</label>
+
+                <div class="col-xs-3">
+                    <input class="form-control"
+                           [(ngModel)]="evenement.dureePrevue"
+                           ctxAccess [fieldName]="field.dureePrevue" [currentCtx]="currentCtx"/>
+                </div>
+                <div class="col-xs-6">
+                    <div class="checkbox">
+                        <label>
+                            <cesam-input [type]="'checkbox'"
+                                         [model]="evenement.attributs[field.informerWebTrafic]"
+                                         [innerHTML]="'Informer WebTrafic'"
+                                         [fieldName]="field.informerWebTrafic"
+                                         [currentCtx]="currentCtx"></cesam-input>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

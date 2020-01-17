@@ -1,0 +1,317 @@
+<div class="content plan">
+
+    <!--Table intitulé-->
+    <table class="table firstline">
+        <thead>
+        <tr class="first">
+            <th class="libelle statut">Statut
+            </th>
+            <th class="libelle evenement">Description de l'action
+            </th>
+        </tr>
+        </thead>
+    </table>
+    <!--Table contenu -->
+    <div class="contenu" [perfect-scrollbar]>
+        <table class="table" *ngFor="let theme of planAction.themes">
+            <tbody *ngIf="theme && theme.actionsApplicables && theme.actionsApplicables.length>0">
+            <!--Ligne chargement + Pause -->
+            <tr class="theme">
+                <td class="libelle statut">
+            <tr>
+                <td>
+                    <button *ngIf="theme.codeModeExecution === 'MODE_EXECUTION_THEME.AUTOMATIQUE' && model.startButtons[theme.identifiant] &&
+                                  (!model.startButtons[theme.identifiant].hide)"
+                            class="btn btn-default btn-xs action"
+                            (click)="execThemeAction($event,theme.identifiant, theme.actionsApplicables)">Démarrer
+                    </button>
+                </td>
+                <td></td>
+            </tr>
+            </td>
+            <td class="libelle nom_theme" colspan="2"> {{ theme.nom }}</td>
+            </tr>
+            <tr *ngFor="let action of theme.actionsApplicables">  <!--Ligne validé -->
+                <td class="libelle statut">
+                    <tr>
+                        <pac-status
+                            [idEvenement]="planAction.identifiantEvenement"
+                            [idTheme]="theme.identifiant"
+                            [actionApplicable]="action"
+                            [modeExecution]="theme.codeModeExecution"></pac-status>
+                    </tr>
+                </td>
+            <td class="libelle action_applicable">
+                <div [innerHTML]="action.nom"></div>
+            </td>
+            <td class="libelle action_appliquee">
+                <span changeDropDirection [seuil]="750">
+                  <div class="badge" aria-haspopup="true" aria-expanded="true" role="button">
+                      {{action.actionsAppliquees.length}}
+                  </div>
+                  <div class="dropdown-menu dropdown-menu-right">
+                      <div class="nbexecution">
+                          Nombre d'exécution : <b>{{action.actionsAppliquees.length}}</b>
+                      </div>
+
+                      <ul class="type" *ngFor="let actionAppliquee of getLastAction(action.actionsAppliquees)">
+                      <span [ngSwitch]="actionAppliquee.codeEtat">
+                        <li *ngSwitchCase="'ETAT_ACTION.ECHEC'">
+                            <div class="statut echec" title="Echec">
+                                <span aria-hidden="true" class="glyphicon glyphicon-remove"></span>
+                            </div>
+                        </li>
+                        <li *ngSwitchCase="'ETAT_ACTION.REFUSE'">
+                            <div class="statut refuse" title="Refusé">
+                                <span>R</span>
+                            </div>
+                        </li>
+                        <li *ngSwitchCase="'ETAT_ACTION.SUCCES'">
+                            <div class="statut success" title="Succès">
+                                <span aria-hidden="true" class="glyphicon glyphicon-ok"></span>
+                            </div>
+                        </li>
+                        <li *ngSwitchCase="'ETAT_ACTION.SUSPENDU'">
+                            <div class="statut suspendue" title="Suspendue">
+                                <span>S</span>
+                            </div>
+                        </li>
+                      </span>
+                      </ul>
+                  </div>
+                </span>
+            </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <div class="actions_unitaires" id="actions_unitaires">
+            <!-- Mode edition action unitaire pour creer une nouvelle action -->
+            <table class="table1" *ngIf="model.editedActionUnitaire">
+                <tbody>
+                <tr class="theme selected ligne1">
+                    <td colspan="2" class="libelle evenement">Ajout action unitaire</td>
+                </tr>
+                <!--Input-->
+                <tr>
+                    <td class="libelle statut">
+                        <tr>
+                            <td>
+                                <label class="control-label">Nom de l'action</label>
+                            </td>
+                        </tr>
+                </td>
+                <td class="libelle evenement">
+                    <div class="col-xs-6">
+                        <input type="text" placeholder="Nom de l'action" [(ngModel)]="model.nomAction"
+                               (keyup)="actionChange($event)"
+                               class="form-control"/>
+                    </div>
+                </td>
+                </tr>
+
+                <!-- Affichage des primitives -->
+                <tr>
+                    <td class="libelle statut">
+                        <tr>
+                            <td>
+                                <label class="control-label">Primitive</label>
+                            </td>
+                        </tr>
+                        </td>
+                    <td class="libelle evenement">
+                    <div class="form-group">
+                        <div class="col-xs-8">
+                            <ng-select
+                                       (selected)="primitiveChange($event)"
+                                       [items]="model.primitives"
+                                       placeholder="Type de primitive">
+                            </ng-select>
+                        </div>
+                    </div>
+                </td>
+                </tr>
+
+                <!-- Affichage des parametres -->
+
+                <tr *ngFor="let param of model.currentPrimitive?.modelesParametres">
+                    <td class="libelle statut">
+                        <tr>
+                            <td>
+                                <label class="control-label" [innerHTML]="param.nom"></label>
+                            </td>
+                        </tr>
+                     </td>
+
+                        <td class="libelle evenement">
+                            <div class="form-group">
+
+                                <!-- ENTIER_BORNEE-->
+                                <div class="col-xs-6" *ngIf="model.codeType.ENTIER_BORNEE === param.codeTypeValeurPossible">
+                                    <input
+                                           class="form-control" [(ngModel)]="param.paramValue.valeur"
+                                           (keyup)="parametreChange($event, param)"
+                                           open-on-focus="true"
+                                           cesamNumber [min]="param.valeurPossible?.min" [max]="param.valeurPossible?.max"
+                                           [cesamNumberModel]="param.paramValue" [overrideAllValues]="false"
+                                           placeholder={{param.valeurPossible.nom}}>
+                                </div>
+
+                                <!-- NUMERIQUE_BORNEE-->
+                                <div class="col-xs-6" *ngIf="model.codeType.NUMERIQUE_BORNEE===param.codeTypeValeurPossible">
+                                    <input
+                                           class="form-control" [(ngModel)]="param.paramValue.valeur"
+                                           (keyup)="parametreChange($event, param)"
+                                           open-on-focus="true"
+                                           cesamNumber [min]="param.valeurPossible?.min" [max]="param.valeurPossible?.max"
+                                           placeholder={{param.valeurPossible.nom}}>
+                                </div>
+
+                                <!-- TEXTUELLE_BORNEE-->
+                                <div class="col-xs-6" *ngIf="model.codeType.TEXTUELLE_BORNEE===param.codeTypeValeurPossible">
+                                    <input type="text"
+                                           class="form-control" [(ngModel)]="param.paramValue.valeur"
+                                           (keyup)="parametreChange($event, param)"
+                                           open-on-focus="true"
+                                           maxlength={{param.valeurPossible?.longueurMax}}
+                                           placeholder={{param.valeurPossible.nom}}>
+                                </div>
+
+                                <!-- ENUMERATION-->
+                                <div class="col-xs-6" *ngIf="model.codeType.ENUMERATION===param.codeTypeValeurPossible">
+                                    <ng-select
+                                               (selected)="parametreChange($event, param)"
+                                               [items]="param.valeurPossibles"
+                                               placeholder={{param.nom}}
+                                               >
+                                    </ng-select>
+                                </div>
+
+                                <!-- REQUETE-->
+                                <div class="col-xs-8" *ngIf="model.codeType.REQUETE===param.codeTypeValeurPossible">
+                                    <ng-select
+                                               (selected)="parametreChange($event, param)"
+                                               [items]="param.valeurPossibles"
+                                               placeholder={{param.nom}}>
+                                    </ng-select>
+                                </div>
+
+                            </div>
+                        </td>
+                </tr>
+
+
+                <tr>
+                </tr>
+
+                </tbody>
+            </table>
+                <!-- Mode affichage actions unitaires -->
+            <table class="table" *ngIf="blocActionsUnitaires && !model.editedActionUnitaire">
+                <tbody *ngIf="blocActionsUnitaires.actionsApplicables && blocActionsUnitaires.actionsApplicables.length>0">
+                <!--Ligne chargement + Pause -->
+                <tr class="theme">
+                    <td class="libelle statut">
+                        <!--tr>
+                            <td>
+                                <button *ngIf="theme.codeModeExecution === 'MODE_EXECUTION_THEME.AUTOMATIQUE' && model.startButtons[theme.identifiant] &&
+                                              (!model.startButtons[theme.identifiant].hide)"
+                                        class="btn btn-default btn-xs action"
+                                        (click)="execThemeAction($event,theme.identifiant, theme.actionsApplicables)">Démarrer
+                                </button>
+                            </td>
+                            <td></td>
+                        </tr-->
+                    </td>
+                    <td class="libelle nom_theme" colspan="2"> Actions unitaires</td>
+                </tr>
+                <tr *ngFor="let action of blocActionsUnitaires.actionsApplicables">  <!--Ligne validé -->
+                    <td class="libelle statut">
+                        <tr>
+                            <pac-status
+                                [idEvenement]="planAction.identifiantEvenement"
+                                [actionApplicable]="action"
+                                [idTheme]="blocActionsUnitaires.identifiant"
+                                [isActionUnitaire]="true"
+                                [modeExecution]="model.modeExecution.MANUEL">
+                            </pac-status>
+                        </tr>
+                    </td>
+                    <td class="libelle action_applicable">
+                        <div [innerHTML]="action.nom"></div>
+                    </td>
+                    <td class="libelle action_appliquee">
+                            <span changeDropDirection [seuil]="750">
+                              <div class="badge" aria-haspopup="true" aria-expanded="true" role="button">
+                                  {{action.actionsAppliquees.length}}
+                              </div>
+                              <div class="dropdown-menu dropdown-menu-right">
+                                  <div class="nbexecution">
+                                      Nombre d'exécution : <b>{{action.actionsAppliquees.length}}</b>
+                                  </div>
+
+                                  <ul class="type" *ngFor="let actionAppliquee of getLastAction(action.actionsAppliquees)">
+                                  <span [ngSwitch]="actionAppliquee.codeEtat">
+                                    <li *ngSwitchCase="'ETAT_ACTION.ECHEC'">
+                                        <div class="statut echec" title="Echec">
+                                            <span aria-hidden="true" class="glyphicon glyphicon-remove"></span>
+                                        </div>
+                                    </li>
+                                    <li *ngSwitchCase="'ETAT_ACTION.REFUSE'">
+                                        <div class="statut refuse" title="Refusé">
+                                            <span>R</span>
+                                        </div>
+                                    </li>
+                                    <li *ngSwitchCase="'ETAT_ACTION.SUCCES'">
+                                        <div class="statut success" title="Succès">
+                                            <span aria-hidden="true" class="glyphicon glyphicon-ok"></span>
+                                        </div>
+                                    </li>
+                                    <li *ngSwitchCase="'ETAT_ACTION.SUSPENDU'">
+                                        <div class="statut suspendue" title="Suspendue">
+                                            <span>S</span>
+                                        </div>
+                                    </li>
+                                  </span>
+                                  </ul>
+                              </div>
+                            </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Footer plan-->
+<div class="footer">
+    <ul class="stat" *ngIf="!planAction">
+        <li><span class="bold" [innerHTML]="model.nbActions.succes"></span>/<span class="bold"
+                                                                                  [innerHTML]="model.nbActions.total"></span>
+            réalisée(s)
+        </li>
+        <li><span class="bold" [innerHTML]="model.nbActions.refuse"> </span> refusée(s)</li>
+        <li><span class="bold" [innerHTML]="model.nbActions.echec"> </span> en erreur(s)</li>
+    </ul>
+    <ul class="boutons pull-right">
+        <li class="link" *ngIf="model.editedActionUnitaire" (click)="cancelActionUnitaire()">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            <span class="bold" class="bold">Annuler la création de l'action</span>
+        </li>
+        <li>
+            <button type="button" class="btn btn-default"
+                    [ngClass]="{ 'disabled': !model.actionIsValid}" *ngIf="model.editedActionUnitaire"
+                    (click)="createActionUnitaire()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:10px"></span>créer
+                l'action
+            </button>
+            <button type="button" class="btn btn-default" *ngIf="!model.editedActionUnitaire"
+                    (click)="addActionUnitaire()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:10px"></span>ajouter une
+                action unitaire
+            </button>
+        </li>
+    </ul>
+</div>

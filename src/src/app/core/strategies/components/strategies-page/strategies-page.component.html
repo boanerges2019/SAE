@@ -1,0 +1,15 @@
+<div class="strategie-affichage">
+    <liste-alerte></liste-alerte>
+    <alert-error></alert-error>
+
+    <liste-strategies></liste-strategies>
+
+    <liste-msg-pmv
+        *ngIf="!model.messageStrategie">
+    </liste-msg-pmv>
+    <msg-strategie
+        *ngIf="model.messageStrategie"
+        [currentCtx]="model.currentCtx"
+        [strategie]="strategie">
+    </msg-strategie>
+</div>

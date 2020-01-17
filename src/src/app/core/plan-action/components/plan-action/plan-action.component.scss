@@ -1,0 +1,110 @@
+@import 'src/styles/variables/variables.scss';
+
+.content.plan{
+
+    .actions_unitaires{
+        height: 400px ;
+    }
+
+    .table1{
+        border-collapse: separate;
+        border-spacing: 10px;
+        .ligne1{
+            height: 50px;
+            background-color: $bleu;
+            text-align: center;
+        }
+    }
+
+  .libelle{
+    /*Tableau pour Plan d'actions & Macro */
+    &.evenement, &.nom_theme{
+        width:720px;
+        padding:0 18px 0 0;
+        .nom_evenement{
+          padding-right:10px;
+        }
+        .question{
+          width: 600px;
+          padding-right: 10px;
+          font-weight:bold;
+        }
+    }
+
+    &.action_applicable{
+      width:670px;
+    }
+
+    &.action_appliquee{
+
+      .dropdown-menu{
+        padding:5px 10px;
+        min-width:195px;
+      }
+      /* Show the dropdown menu on hover */
+      .dropdown:hover .dropdown-menu,  .dropup:hover .dropdown-menu{
+        display:block;
+      }
+
+      ul.type{
+        float: left;
+        padding: 6px 0 0 0;
+        li{
+          float: left;
+          display: inline-block;
+          position: relative;
+          text-align: left;
+          direction: ltr;
+          margin-right: 5px;
+          color:$blanc;
+        }
+        .statut{
+          width: 20px;
+          height: 20px;
+          background: $gris_type;
+          float: left;
+          &.success{
+            background:$vert;
+          }
+          &.refuse{
+            background:$orange;
+            padding: 1px 6px;
+            font-weight: bold;
+          }
+          &.echec{
+            background:$orange;
+          }
+          &.suspendue{
+            background:$orange;
+          }
+          .glyphicon{
+            margin:2px 3px;
+          }
+        }
+        .fermeture{
+          background:$blanc;
+          font-weight: 600;
+          text-align: center;
+          vertical-align: middle;
+          color: BLACK;
+          padding: 10px 5px;
+          line-height: 0;
+          display: inline-block;
+          margin-bottom: 0;
+        }
+      }
+    }
+     &.statut{
+        width:180px;
+        padding:0 18px 0 20px;
+    }
+  }
+  .badge{
+    margin: -1px 0 0 10px;
+    padding: 3px 6px;
+    min-width: 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    background: $gris_notif;
+  }
+}

@@ -1,0 +1,175 @@
+<div class="well well-lg">
+  <div class="form-horizontal">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Interventions dépanneur
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+      <!-- Dépanneur Suivi Intervention-->
+      <div class="form-group tabled" [ngClass]="[currentCtx === contexte.READ ? 'tabledisabled': '']">
+        <table class="table table-bordered table-condensed input col-xs-12">
+          <thead>
+            <th class="col-xs-3">Dépanneur</th>
+            <th class="col-xs-3">Alerte</th>
+            <th class="col-xs-3">Arrivée sur les lieux</th>
+            <th class="col-xs-3">Quitte les lieux</th>
+          </thead>
+        <tbody>
+          <tr  *ngFor="let item of listeInterventionsDepanneur[field.itemInterventionDepanneur]; let i=index">
+            <td class="col-xs-3">
+              <cesam-input
+                    [type]="'text'"
+                    [model]="item[field.intervenantDepanneur]"
+                    [fieldName]="field.intervenantDepanneur"
+                    [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <cesam-input
+                  [type]="'date'"
+                  [model]="item[field.horodateAppelDepanneur]"
+                  [fieldName]="field.horodateAppelDepanneur"
+                  [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <cesam-input
+                    [type]="'date'"
+                    [model]="item[field.horodateArriveeLieuDepanneur]"
+                    [fieldName]="field.horodateArriveeLieuDepanneur"
+                    [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <tr>
+                <td class="col-xs-10">
+                  <cesam-input
+                      [type]="'date'"
+                      [model]="item[field.horodateQuitteLieuDepanneur]"
+                      [fieldName]="field.horodateQuitteLieuDepanneur"
+                      [currentCtx]="currentCtx"></cesam-input>
+                </td>
+                <td class="col-xs-2">
+                  <button class="btn btn-default btn-xs trash"
+                    (click)="removeIntervention(i)"
+                    ctxAccess [fieldName]="field.removeInterventionDepanneurBtn" [currentCtx]="currentCtx" [hideExtraVar]="true">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                 </button>
+               </td>
+             </tr>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-xs-3">
+              <cesam-input
+                [type]="'text'"
+                [model]="modelDepanneur[field.intervenantDepanneur]"
+                [fieldName]="field.intervenantDepanneur"
+                [currentCtx]="currentCtx"></cesam-input>
+              </td>
+            <td class="col-xs-3">
+              <cesam-input
+                  [type]="'date'"
+                  [model]="modelDepanneur[field.horodateAppelDepanneur]"
+                  [fieldName]="field.horodateAppelDepanneur"
+                  [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <cesam-input
+                  [type]="'date'"
+                  [model]="modelDepanneur[field.horodateArriveeLieuDepanneur]"
+                  [fieldName]="field.horodateArriveeLieuDepanneur"
+                  [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <tr>
+                <td class="col-xs-10">
+                  <cesam-input
+                      [type]="'date'"
+                      [model]="modelDepanneur[field.horodateQuitteLieuDepanneur]"
+                      [fieldName]="field.horodateQuitteLieuDepanneur"
+                      [currentCtx]="currentCtx"></cesam-input>
+                </td>
+                <td class="col-xs-2">
+               </td>
+             </tr>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="form-group">
+         <div class="col-xs-12 control-label">
+           <button class="btn btn-default btn-xs action right"
+             (click)="addIntervention()"
+             ctxAccess
+             [fieldName]="field.addInterventionDepanneurBtn"
+             [currentCtx]="currentCtx"
+             [hideExtraVar]="true">AJOUTER</button>
+         </div>
+      </div>
+      <!-- Dépanneur & Dépannage-->
+      <div class="form-group">
+        <label class="col-xs-3 control-label">Dépanneur - Astreinte</label>
+        <div class="col-xs-3">
+          <cesam-input [type]="'select'"
+             [model]="evenement.attributs[field.depanneurAstreinte]"
+             [items]="depanneursAstreinte"
+             [enumName]="modeleEvenementCte.MOTIFS_SUIVI_GENDARMRIE"
+             [fieldName]="field.depanneurAstreinte"
+             [currentCtx]="currentCtx"></cesam-input>
+
+          <!-- <select class="form-control"
+             [(ngModel)]="depanneurAstreinte.valeur"
+             ctxAccess [fieldName]="field.depanneurAstreinte" [currentCtx]="currentCtx">
+              <option value=""></option>
+              <option *ngFor="let depanneurAstreinte of depanneursAstreinte"
+                [value]="depanneurAstreinte" [innerHTML]="depanneurAstreinte"></option>
+          </select> -->
+       </div>
+        <label class="col-xs-3 control-label">Dépanneur - Motif</label>
+        <div class="col-xs-3">
+          <cesam-input [type]="'select'"
+             [model]="evenement.attributs[field.depanneurMotif]"
+             [items]="depanneursMotif"
+             [enumName]="modeleEvenementCte.DEPANNEURS_MOTIFS"
+             [fieldName]="field.depanneurMotif"
+             [currentCtx]="currentCtx"></cesam-input>
+       </div>
+     </div>
+     <div class="form-group">
+       <label class="col-xs-1 control-label">Dépannage</label>
+       <div class="col-xs-3">
+         <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.depannage]"
+            [items]="depannages"
+            [enumName]="modeleEvenementCte.DEPANNAGES"
+            [fieldName]="field.depannage"
+            [currentCtx]="currentCtx"></cesam-input>
+      </div>
+       <div class="col-xs-1"></div>
+       <div class="col-xs-4">
+         <div class="checkbox">
+           <label>
+             <cesam-input [type]="'checkbox'"
+               [model]="evenement.attributs[field.interventionConjointeDepanneur]"
+               [innerHTML]="'Intervention conjointe avec événement'"
+               [fieldName]="field.interventionConjointeDepanneur"
+               [currentCtx]="currentCtx"></cesam-input>
+          </label>
+         </div>
+       </div>
+       <div class="col-xs-3">
+         <select class="form-control"
+             [(ngModel)]="evenement.attributs[field.idEvenementConjointDepanneur].valeur"
+             ctxAccess
+             [fieldName]="field.idEvenementConjointDepanneur"
+             [currentCtx]="currentCtx">
+             <option value=""></option>
+             <option *ngFor="let evtConjoint of evenementsConjoints"
+               [value]="evtConjoint.identifiant"
+               [innerHTML]="evtConjoint.nomLocalisant"></option>
+         </select>
+        </div>
+       </div>
+     </div>
+  </div>
+</div>

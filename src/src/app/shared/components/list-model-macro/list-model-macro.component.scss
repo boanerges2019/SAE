@@ -1,0 +1,290 @@
+@import 'src/styles/variables/variables.scss';
+#modeleMacros{
+
+    .espace_haut{
+        margin-top:15px;
+    }
+
+    datalist{
+        overflow: auto;
+    }
+    .select{
+        height: 30px;
+        margin-left: 10px;
+        margin-top: 10px;
+        width: 200px;
+    }
+
+    .labelInitialiser{
+        margin-top: 15px;
+    }
+
+    .sepDiv{
+        margin-right: 10px;
+        width: 210px;
+    }
+
+    .en-cours{
+        background: $bleu_fonce;
+        color:$blanc;
+    }
+    .croix{
+        background: $orange;
+        color:$blanc;
+        height: 28px;
+        border-radius: 5px;
+        padding: 8px 10px;
+        line-height: 0;
+        text-transform: uppercase;
+        font-weight: 600;
+        border: 1px solid #ffffff;
+        font-size: 14px;
+    }
+    .succes{
+        background: $vert;
+        color:$blanc;
+    }
+    .espaceTop{
+        padding-top:30px;
+    }
+
+    .content{
+        width: 100%;
+        display:block;
+        float:left;
+        box-shadow: inset 0 -10px 10px -10px $gris_fonce;
+        margin-bottom: 10px;
+
+        .contenu{
+            background-color:$blanc;
+            overflow-x: scroll;
+            box-shadow: inset 0 -10px 10px -10px $gris_fonce;
+            .bleu{
+                color:$bleu;
+            }
+
+            .table {
+                margin-bottom:0;
+                .separator{
+                    height: 5px !important;
+                    .ligne{
+                        border-bottom:1px dashed #e5e5e5!important;
+                    }
+                }
+                .bleu{
+                    color:$bleu;
+                }
+                thead tr.first{
+                    height:30px;
+                    th{border-bottom: 1px solid #ddd;}
+                }
+                thead,
+                > tbody{
+                    tr{
+                        height: 50px;
+                        padding: 0 8px 0 8px;
+                        vertical-align: middle;
+                        &.evenement-titre{
+                            border-top:1px solid $blanc;
+                        }
+                        > td{
+                            vertical-align:middle;
+                            border:none;
+                            padding: 0;
+                            .btn{
+                                height: 28px;
+                                border-radius: 5px;
+                                color: $blanc;
+                                background: $bleu;
+                                padding: 8px 10px;
+                                line-height: 0;
+                                text-transform: uppercase;
+                                font-weight:600;
+                                border: 1px solid $blanc;
+                                font-size:$ft_standard;
+                                &:hover,
+                                &:focus{
+                                    background-color:$bleu_fonce;
+                                }
+                            }
+                            &.options_btn{
+                                display:none;
+                            }
+                        }
+                        th{
+                            vertical-align:middle;
+                            color:$gris_clair;
+                            cursor:pointer;
+                            &.sorted{
+                                color:$bleu;
+                            }
+                            .type{
+                                padding-left:20px;
+                            }
+                        }
+                        .libelle{
+                            &.plan{
+                                padding: 0 18px 0 20px!important;
+                                width: 390px;
+                                font-weight:600;
+                                .nom_plan{
+                                    margin-right:10px;
+                                }
+                            }
+                            &.priorite{
+                                width: 100px;
+                                padding: 0 18px 0 0;
+                                .sort{
+                                    margin-right:10px;
+                                    .glyphicon{
+                                        cursor:pointer;
+                                        margin-left:5px;
+                                        &.first{
+                                            margin-right:21px;
+                                        }
+                                    }
+                                }
+                            }
+                            &.maco{
+                                width: 690px;
+                                padding: 0 18px 0 20px!important;
+                                font-weight:600;
+                            }
+                            &.calendrier{
+                                width: 200px;
+                                padding: 0 18px 0 0;
+                            }
+                            &.exe{
+                                padding: 0 18px 0 0!important;
+                                /*Barre de progression*/
+                                .progress.macro {
+                                    background-color: $gris_drop;
+                                    margin-bottom:0;
+                                    width:75px;
+                                    height: 10px;
+                                    .progress-striped .progress-bar, .progress-bar-striped {
+                                        background-image: linear-gradient(135deg, $bleu 25%, transparent 25%, transparent 50%, $bleu 50%, $bleu 75%, transparent 75%, transparent);
+                                        background-color:transparent;
+                                        background-size:2rem 2rem;
+                                        width:100%;
+                                    }
+                                }
+                            }
+                        }
+
+                        &.groupe{
+                            background:$gris_drop;
+                            ul.boutons{
+                                margin:0;
+                                padding: 0;
+                                li{
+                                    float: left;
+                                    margin-left:10px;
+                                    position: relative;
+                                    display: block;
+                                }
+                            }
+                            &.selected{
+                                background:$bleu_fonce!important;
+                                color:$blanc!important;
+                            }
+
+                        }
+                        &.child{
+                            background:$bleu_groupe;
+                            color:$noir;
+                        }
+                        &.event-selected{
+                            &.child{
+                                background:$bleu!important;
+                                color:$blanc!important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .footer{
+            height:50px;
+            width:100%;
+            display:block;
+            float:left;
+            background-color:$blanc;
+            border-radius:0 0 5px 5px;
+            padding-left:20px;
+            &.planifies{
+                margin-bottom: 10px !important;
+            }
+            ul.stat{
+                float: left;
+                margin: 0;
+                padding-left: 0;
+                margin-bottom: 0;
+                list-style: none;
+                margin-top:12px;
+                li{
+                    position: relative;
+                    display: block;
+                    float: left;
+                    margin-right:10px;
+                    .checkbox{
+                        margin:0;
+                        label input[type="checkbox"]{
+                            margin-top: 5px;
+                        }
+                    }
+                    .bold{
+                        font-weight:bold;
+                        font-size:$ft_tabs;
+                        color:$bleu;
+                    }
+                }
+            }
+
+            ul.boutons{
+                padding-left:0;
+                li{
+                    float: left;
+                    position: relative;
+                    display: block;
+                    &.link{
+                        cursor:pointer;
+                        margin-top: 13px;
+                        font-weight:bold;
+                        font-size:$ft_tabs;
+                        color:$bleu;
+                        margin-right:10px;
+                        &:hover{
+                            color:$bleu_fonce;
+                        }
+                    }
+                    .btn{
+                        height:50px;
+                        border-radius:0;
+                        border:none;
+                        background-color:$vert;
+                        color:$blanc;
+                        text-transform: uppercase;
+                        font-size:$ft_btn;
+                        border-left: 3px solid $blanc;
+                        padding:6px 8px;
+                        &.temps{width:295px;}
+                        &.manuelle{width:205px;}
+                        &.evenement{width:220px;}
+                        &:hover{
+                            background-color:$vert_hover;
+                        }
+                        &:focus{
+                            background-color:$vert_focus;
+                        }
+                        .glyphicon{
+                            top:2px;
+                            margin-right:10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

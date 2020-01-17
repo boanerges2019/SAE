@@ -1,0 +1,48 @@
+<div class="well well-lg">
+  <div class="form-horizontal">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent" data-toggle="collapse">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+       <!--Mode & Motif-->
+       <div class="form-group">
+         <label class="col-xs-3 control-label">Mode</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.modeStockage]"
+            [items]="modesStockage"
+            [enumName]="modeleEvenementCte.MODES_STOCKAGE"
+            [fieldName]="field.modeStockage"
+            [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <label class="col-xs-2 control-label">Motif</label>
+         <div class="col-xs-4">
+           <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.motifStockage]"
+            [items]="motifsStockage"
+            [enumName]="modeleEvenementCte.MOTIFS_STOCKAGE"
+            [fieldName]="field.motifStockage"
+            [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       </div>
+       <!--Véhicules-->
+       <div class="form-group">
+         <label class="col-xs-3 control-label">Type de véhicule</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.typeVehicule]"
+            [items]="typesVehicule"
+            [enumName]="modeleEvenementCte.TYPES_VEHICULES_STOCK"
+            [fieldName]="field.typeVehicule"
+            [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <label class="col-xs-3 control-label">Nb. de véhicules stockés</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'number'" [model]="evenement.attributs[field.nbVehiculesStockes]" [fieldName]="field.nbVehiculesStockes" [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       </div>
+     </div>
+  </div>
+</div>

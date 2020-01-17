@@ -1,0 +1,373 @@
+@import 'src/styles/variables/variables.scss';
+.navbar {
+    height: 80px;
+    border-radius: 0px;
+    background-color: $bg-bandeau;
+    box-shadow: inset 0 -10px 10px -10px $noir;
+    margin: 0;
+
+    .cursor_pointer{
+        cursor: pointer;
+    }
+
+    .info {
+        color: white;
+        padding-top: 15px;
+        padding-left: 5px;
+    }
+    .container {
+        width: 100%;
+        height: 80px;
+        padding: 20px 15px 0 15px;
+        float: left;
+        .navbar-brand {
+            height: auto;
+            margin-top: -5px;
+            padding: 0 20px 0 15px;
+        }
+        #notification {
+            float: left;
+            border-left: 1px solid $blanc;
+            margin-left: 0;
+            padding-left: 20px;
+            .dropdown {
+                .btn {
+                    text-align: left;
+                    padding: 4px 5px 4px 20px;
+                    .caret {
+                        margin-left: 5px;
+                    }
+                }
+                ul.dropdown-menu {
+                    width: 640px;
+                    margin: -1px 0 0 0;
+                    padding: 0;
+                    li {
+                        display: block;
+                        width: 640px;
+                        border-bottom: 1px solid #e0e0e0;
+                        border-left: 6px solid $blanc;
+                        min-height: 30px;
+                        margin-top: 0;
+                        .notification_nom {
+                            display: inline-block;
+                            float: left;
+                            padding: 5px 0;
+                            width: 560px;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            color: $orange;
+                        }
+                        .voir{
+                            display: inline-block;
+                            float: right;
+                            width: 60px;
+                            color: $orange;
+                            cursor: pointer;
+                        }
+
+                        &:hover {
+                            background: $bleu_pale !important;
+                            border-left: 6px solid $orange;
+                        }
+                        a {
+                            /*color: black;*/
+                            text-decoration: none;
+                            padding: 5px 10px;
+                            font-size: 14px;
+                            word-wrap: break-word;
+                            white-space: normal;
+                            &.dropdown-toggle {
+                                text-decoration: none;
+                                padding: 10px 0px 10px 0px;
+                            }
+                          /*  &:hover {
+                                background: $orange_clair;
+                            }*/
+                        }
+                    }
+                }
+            }
+
+            .notification_alerte {
+                display: block;
+                width: 640px;
+                height: 38px;
+                padding: 4px 5px 4px 20px;
+                font-size: 14px;
+                line-height: 1.42857;
+                font-weight: 600;
+                font-style: italic;
+                color: #555555;
+                background-color: $bg-notification;
+                color: $blanc;
+                background-image: none;
+                border: 1px solid $bg-notification;
+                border-radius: 4px;
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+                transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+                .notification_nom {
+                    display: inline-block;
+                    float: left;
+                    padding: 5px 0;
+                    width: 560px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+                .voir{
+                    display: inline-block;
+                    float: right;
+                    width: 50px;
+                    color: $blanc;
+                    padding: 5px 0;
+                    cursor: pointer;
+                }
+
+                &.active {
+                    background-color: $orange;
+                    .btn {
+                        height: 28px;
+                        font-style: normal;
+                        border-radius: 5px;
+                        color: $blanc;
+                        background: $orange;
+                        padding: 8px 10px;
+                        line-height: 0;
+                        text-transform: uppercase;
+                        font-weight: 600;
+                        border: 1px solid $blanc;
+                        &:hover,
+                        &:focus {
+                            background-color: $orange_fonce;
+                        }
+                    }
+                }
+                &.btn {
+                    &:hover,
+                    &:focus {
+                        background-color: $orange_fonce;
+                    }
+                    &.voir {
+                        float: right
+                    }
+                }
+            }
+        }
+
+        .sound {
+            margin-left: 7px;
+            font-size: 20px;
+        }
+        /* macro en cours */
+
+        .macro_en_cours {
+            display: inline-block;
+            color: $blanc;
+            ul {
+                margin-top: 0px;
+                li {
+                    margin-top: 10px;
+                    font-size: $ft_tabs;
+                    padding-right: 10px;
+
+                    &.badge_option {
+                        padding: 0px;
+                        margin-top: 7px;
+                    }
+                    &.border {
+                        border-left: 1px solid #fff;
+                        margin-top: 7px;
+                        height: 30px;
+                        margin-left: 0;
+                    }
+
+                    .badge_notification {
+                        background: $gris_notif;
+                        border-radius: 50%;
+                        min-width: 30px;
+                        height: 30px;
+                        border: 2px solid $gris_notifborder;
+                        line-height: 25px;
+                        text-align: center;
+                        font-size: $ft_tabs;
+                        font-weight: bold;
+                        color: $blanc;
+                        padding: 0;
+                        cursor: pointer;
+                        text-decoration: none;
+                        margin-right: 20px;
+                        &:hover {
+                            background: none;
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        /*Menu */
+        .menu {
+            display: inline-block;
+            float: right;
+            .encadrer {
+                display: inline-block;
+                border: 1px solid $blanc;
+                height: 45px;
+            }
+            .meme_block {
+                display: inline-block;
+            }
+            ul {
+                margin-top: 0px;
+                li {
+                   /* margin-top: 2px;*/
+                    &.badge_option {
+                        padding: 0px;
+                        margin-top: 5px;
+                    }
+                    &.border {
+                        border-left: 1px solid #fff;
+                        margin-top: 5px;
+                        height: 30px;
+                        margin-left: 0;
+                    }
+                    &.local {
+                        color: $blanc;
+                        margin-left: 20px;
+                        margin-top: -10px;
+                        .heure {
+                            font-size: $ft_heure;
+                            color: $blanc;
+                            float: right;
+                        }
+                        .jour {
+                            font-size: $ft_tabs;
+                            color: $gris_date;
+                            font-weight: 600;
+                            /*margin-top: -10px;*/
+                        }
+                        .date {
+                            font-size: 16px;
+                            color: #92969b;
+                            font-weight: 600;
+                            margin-top: -10px;
+                        }
+                    }
+                }
+                a {
+                    color: $blanc;
+                    text-decoration: underline;
+                    font-size: $ft_tabs;
+                    padding-right: 10px;
+                    &:hover,
+                    &:focus {
+                        background: none;
+                        color: $bleu_pale;
+                    }
+                }
+                .dropdown {
+                    ul.dropdown-menu {
+                        padding: 0;
+                        li {
+                            border-bottom: 1px solid #e0e0e0;
+                            border-left: 6px solid $blanc;
+                            min-height: 30px;
+                            margin-top: 0;
+                            &:hover {
+                                background: $bleu_pale;
+                                border-left: 6px solid $bleu;
+                            }
+                            a {
+                                color: black;
+                                text-decoration: none;
+                                padding: 5px 10px;
+                                font-size: 14px;
+                                &.dropdown-toggle {
+                                    text-decoration: none;
+                                    padding: 10px 0px 10px 0px;
+                                }
+                            }
+                        }
+                    }
+                    a {
+                        margin-right: 25px;
+                        padding-left: 0;
+                        padding-right: 0;
+                    }
+                    .name {
+                        max-width: 450px;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        display: inline-block;
+                    }
+                    .caret {
+                        float: right;
+                        margin-top: 10px;
+                        margin-left: 20px;
+                        display: block;
+                        width: 0;
+                        height: 0;
+                    }
+                    &.open {
+                        & > a {
+                            background: none !important;
+                            border: none;
+                        }
+                    }
+                }
+                .avatar {
+                    display: block;
+                    float: left;
+                    height: 30px;
+                    margin-left: 20px;
+                    margin-right: 10px;
+                    .glyphicon {
+                        color: $blanc;
+                        top: 14px;
+                    }
+                    .cadre {
+                        position: relative;
+                        left: 0;
+                        display: inline-block;
+                        overflow: visible;
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 100%;
+                        margin-top: 5px;
+                        img {
+                            display: block;
+                            width: 30px;
+                            height: 30px;
+                            -webkit-border-radius: 100%;
+                            -moz-border-radius: 100%;
+                            border-radius: 100%;
+                        }
+                    }
+                }
+                .badge_notification {
+                    background: $gris_notif;
+                    border-radius: 50%;
+                    min-width: 30px;
+                    height: 30px;
+                    border: 2px solid $gris_notifborder;
+                    line-height: 25px;
+                    text-align: center;
+                    font-size: $ft_tabs;
+                    font-weight: bold;
+                    color: $blanc;
+                    padding: 0;
+                    cursor: pointer;
+                    text-decoration: none;
+                    margin-right: 20px;
+                    &:hover {
+                        background: none;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+    }
+}

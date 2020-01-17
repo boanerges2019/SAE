@@ -1,0 +1,51 @@
+<div class="well well-lg">
+  <div class="form-horizontal" >
+    <h4 (click)="isCollapsedContent = !isCollapsedContent">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+        Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+       <!--Type bouchon & nature-->
+       <div class="form-group">
+         <label class="col-xs-3 control-label">Type de bouchon</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+              [model]="evenement.attributs[field.typeBouchon]"
+              [items]="typesBouchon"
+              [enumName]="modeleEvenementCte.TYPES_BOUCHON"
+              [fieldName]="field.typeBouchon"
+              [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <label class="col-xs-3 control-label">Nature</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+              [model]="evenement.attributs[field.natureBouchon]"
+              [items]="naturesBouchon"
+              [enumName]="modeleEvenementCte.NATURES_BOUCHON"
+              [fieldName]="field.natureBouchon"
+              [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       </div>
+       <!--Type bouchon & nature-->
+       <div class="form-group">
+         <label class="col-xs-3 control-label">HKM</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'number'"
+             [model]="evenement.attributs[field.hkm]"
+             [fieldName]="field.hkm"
+             [step]="0.01"
+             [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <label class="col-xs-3 control-label">Longueur maxi</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'number'"
+             [model]="evenement.attributs[field.longueurMaxiBouchon]"
+             [fieldName]="field.longueurMaxiBouchon"
+             [step]="0.01"
+             [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       </div>
+     </div>
+  </div>
+</div>

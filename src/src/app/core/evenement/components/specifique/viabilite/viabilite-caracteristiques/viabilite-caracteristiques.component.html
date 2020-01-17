@@ -1,0 +1,32 @@
+<div class="well well-lg">
+  <div  class="form-horizontal">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent" data-toggle="collapse">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+      <!--Secteur & Mesure-->
+       <div class="form-group">
+         <label class="col-xs-3 control-label">Partie Haute (La Praz)</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.partieHauteViabiliteHivernale]"
+            [items]="partiesHautesViabiliteHivernale"
+            [enumName]="modeleEvenementCte.PARTIE_HAUTE_VIABILITE_HIVERNALE"
+            [fieldName]="field.partieHauteViabiliteHivernale"
+            [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <label class="col-xs-3 control-label">Partie Basse (Cesam)</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.partieBasseViabiliteHivernale]"
+            [items]="partiesBassesViabiliteHivernale"
+            [enumName]="modeleEvenementCte.PARTIE_BASSE_VIABILITE_HIVERNALE"
+            [fieldName]="field.partieBasseViabiliteHivernale"
+            [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       </div>
+     </div>
+  </div>
+</div>

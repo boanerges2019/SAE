@@ -1,0 +1,93 @@
+<div class="well well-lg">
+    <div class="form-horizontal">
+        <!-- Line  -->
+        <div class="form-group" *ngIf="strategie">
+            <label class="col-xs-1 control-label">Nom</label>
+
+            <div class="col-xs-5">
+                <input class="form-control"
+                       [disabled]="true"
+                       type="text"
+                       [(ngModel)]="strategie.nom"
+                       ctxAccess
+                       [fieldName]="model.field.description"
+                       [currentCtx]="currentCtx"
+                       [configCte]="model.configCte"/>
+            </div>
+
+            <label class="col-xs-1 control-label">Priorité</label>
+
+            <div class="col-xs-5">
+                <input class="form-control"
+                       [disabled]="true"
+                       type="text"
+                       [(ngModel)]="strategie.priorite"
+                       ctxAccess
+                       [fieldName]="model.field.priorite"
+                       [currentCtx]="currentCtx"
+                       [configCte]="model.configCte"/>
+            </div>
+
+        </div>
+
+        <!-- Line  -->
+        <div class="form-group" *ngIf="strategie">
+            <label class="col-xs-1 control-label">PMV</label>
+
+            <div class="col-xs-5">
+                <ng-select
+                    ctxAccess
+                    [fieldName]="model.field.pmv"
+                    [currentCtx]="currentCtx"
+                    [configCte]="model.configCte"
+                    [items]="model.equipements"
+                    (selected)="equipementChange($event)"
+                    placeholder="Sélectionner un PMV ...">
+                </ng-select>
+            </div>
+
+            <label class="col-xs-1 control-label">Messages</label>
+
+            <div class="col-xs-5">
+                <ng-select
+                    [disabled]="!model.equipement"
+                    ctxAccess
+                    [fieldName]="model.field.familleMessage"
+                    [currentCtx]="currentCtx"
+                    [configCte]="model.configCte"
+                    [items]="model.famillesMessages"
+                    (selected)="familleMessageChange($event)"
+                    placeholder="Sélectionner un message ...">
+                 </ng-select>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="model.strategie.allowConfigMessage">
+            <div class="col-xs-12 control-label separation"></div>
+        </div>
+
+        <!-- Line  -->
+        <config-message
+            *ngIf="model.strategie.allowConfigMessage && model.strategie.formatMessage && model.strategie.configMessage && model.equipementObject"
+            [currentCtx]="this.currentCtx"
+            [codeModeleEquipement]="model.equipementObject.codeModele"
+            [formatMessage]="model.strategie.formatMessage"
+            [configMessage]="model.strategie.configMessage">
+        </config-message>
+
+        <div class="form-group" *ngIf="model.strategie.allowConfigMessage">
+            <hr/>
+            <div class="form-group col-xs-12">
+                <button type="submit" class="btn btn-default btn-md action pull-right"
+                        (click)="updateMessage()"
+                        ctxAccess
+                        [fieldName]="model.field.initialiseBtn"
+                        [currentCtx]="currentCtx"
+                        [configCte]="model.configCte"
+                        [hideExtraVar]="true">
+                    Ajouter ou Mettre à jour message
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

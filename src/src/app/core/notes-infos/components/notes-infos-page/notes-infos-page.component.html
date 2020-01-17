@@ -1,0 +1,60 @@
+<div class="notes-infos">
+  <liste-alerte></liste-alerte>
+  <alert-error></alert-error>
+  
+  <liste-notes-infos 
+    *ngIf="activeTab===tabs.TAB_NOTE.codeInfo"
+    [notesEnCours]="true"
+    [consignesEnCours]="false"
+    [nextTabs]="[tabs.TAB_CONSIGNE,tabs.TAB_AST_SIMPLE,tabs.TAB_AST_MULT,tabs.TAB_EVT_PREV_JOUR,tabs.TAB_BAL_PREV_JOUR]"
+    [parentComponent]="this">
+  </liste-notes-infos>
+
+  <liste-notes-infos 
+    *ngIf="activeTab===tabs.TAB_CONSIGNE.codeInfo"    
+    [notesEnCours]="false"
+    [consignesEnCours]="true"    
+    [previousTabs]="[tabs.TAB_NOTE]"
+    [nextTabs]="[tabs.TAB_AST_SIMPLE,tabs.TAB_AST_MULT,tabs.TAB_EVT_PREV_JOUR,tabs.TAB_BAL_PREV_JOUR]"
+    [parentComponent]="this">    
+  </liste-notes-infos>
+
+  <suivi-astreintes    
+   *ngIf="activeTab===tabs.TAB_AST_SIMPLE.codeInfo"
+   [lectureSeule]="true" 
+   [classiqueEnCours]="true" 
+   [multipleEnCours]="false" 
+   [previousTabs]="[tabs.TAB_NOTE, tabs.TAB_CONSIGNE]"
+   [nextTabs]="[tabs.TAB_EVT_PREV_JOUR,tabs.TAB_BAL_PREV_JOUR]"
+   [parentComponent]="this">      
+  </suivi-astreintes>
+
+  <suivi-astreintes 
+    *ngIf="activeTab===tabs.TAB_AST_MULT.codeInfo"
+    [lectureSeule]="true"
+    [classiqueEnCours]="false" 
+    [multipleEnCours]="true" 
+    [previousTabs]="[tabs.TAB_NOTE, tabs.TAB_CONSIGNE]"
+    [nextTabs]="[tabs.TAB_EVT_PREV_JOUR,tabs.TAB_BAL_PREV_JOUR]"
+    [parentComponent]="this">
+  </suivi-astreintes>
+
+  <liste-evenement
+      *ngIf="activeTab===tabs.TAB_EVT_PREV_JOUR.codeInfo"
+      [prevusDuJourUniquement]="true"
+      [lectureSeule]="true"
+      [previousTabs]="[tabs.TAB_NOTE, tabs.TAB_CONSIGNE,tabs.TAB_AST_SIMPLE,tabs.TAB_AST_MULT]"
+      [nextTabs]="[tabs.TAB_BAL_PREV_JOUR]"
+      [parentComponent]="this">
+  </liste-evenement>
+
+  <liste-evenement
+      *ngIf="activeTab===tabs.TAB_BAL_PREV_JOUR.codeInfo"
+      [prevusDuJourUniquement]="true"
+      [lectureSeule]="true"
+      [previousTabs]="[tabs.TAB_NOTE, tabs.TAB_CONSIGNE,tabs.TAB_AST_SIMPLE,tabs.TAB_AST_MULT,tabs.TAB_EVT_PREV_JOUR]"
+      [type]="'BAL'"
+      [parentComponent]="this">
+  </liste-evenement>
+
+</div>

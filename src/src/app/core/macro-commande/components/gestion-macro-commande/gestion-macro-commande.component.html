@@ -1,0 +1,98 @@
+<div id="macro-commandes">
+    <div class="header">
+        <!--Menu onglet Tabs-->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a>gestion des macro-commandes</a>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="planifies">
+
+            <div class="contenu" [perfect-scrollbar]>
+                <!--Table intitulé-->
+                <table class="table firstline">
+                    <thead>
+                    <tr class="first">
+                        <th class="first_line libelle" (click)="sortHeader(model.labels.headers[0].model)"
+                            [ngClass]="[model.labels.headers[0].identifiant, model.sort.header === 'nom' ? 'sorted':'']">
+                            Macro-commandes planifiées
+                        </th>
+                        <th class="libelle" (click)="sortHeader(model.labels.headers[1].model)"
+                            [ngClass]="[model.labels.headers[1].identifiant, model.sort.header === 'dateDebut' ? 'sorted':'']">
+                            Prochaine éxécution
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+
+                <!--Table contenu -->
+                <!--Liste mc plannifiés -->
+                <table class="table">
+                    <tbody>
+                    <tr *ngFor="let modeleMacroCommande of macroCommandesPlanifiees"
+                        selectItemDirective
+                        [applyClassesOnSelect]="'event-selected'"
+                        [model]="modeleMacroCommande">
+                        <td class="libelle plan">
+                            <tr>
+                                <td class="nom_plan" [innerHTML]="modeleMacroCommande?.nom"></td>
+                                <td class="options_btn">
+                                  <span changeDropDirection [seuil]="480">
+                                      <span class="dropdown">
+                                          <button
+                                              aria-expanded="false"
+                                              aria-haspopup="true"
+                                              class="btn btn-default btn-xs"
+                                              data-toggle="dropdown"
+                                              role="button">
+                                              actions
+                                          </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a (click)="desactiverPlanificationMacro(modeleMacroCommande)">Désactiver</a></li>
+                                                <li><a (click)="supprimerPlanificationMacro(modeleMacroCommande)">Supprimer</a></li>
+                                            </ul>
+                                        </span>
+                                    </span>
+                                </td>
+                            </tr>
+                        </td>
+                         <td class="libelle exe">
+                             <div class="calendrier desactive"> {{ modeleMacroCommande.nextDate }}</div>
+                         </td>
+                     </tr>
+                     </tbody>
+                 </table>
+            </div>
+
+            <!--Footer macro planifies-->
+            <div class="footer">
+                <ul class="stat">
+                    <li><span class="bold">{{model.planifieesCount}}/{{model.total}} </span> macro-commandes planifiés</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="spacer"></div>
+
+        <div class="macrocommande" *ngIf="!isPlanifier">
+            <list-model-macro
+                [idMacro]="idMacro"
+                [currentCtx]="model.currentCtx"
+                [contentHeight]="380"
+                [contenuHeight]="330">
+            </list-model-macro>
+        </div>
+
+        <div class="planification" *ngIf="isPlanifier">
+            <cesam-planification
+                [currentCtx]="model.currentCtx"
+                [modele]="modelMacroCommande"
+                [contentHeight]="270"
+                [type]="'macro'">
+            </cesam-planification>
+        </div>
+    </div>
+</div>

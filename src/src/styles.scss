@@ -1,0 +1,143 @@
+@import 'src/styles/variables/variables.scss';
+/* You can add global styles to this file, and also import other style files */
+/* Variables communs*/
+body{
+
+   /*  overflow:hidden; pour activer et desactiver  le plein ecran. */
+  font-family: 'Source Sans Pro', sans-serif!important;
+  color:$gris_texte;
+  :focus {
+      outline: none!important;
+  }
+
+  h4{
+    font-size:16px;
+  }
+  a{
+    color:$bleu;
+    font-weight:600;
+    &:hover{
+      color:$bleu_fonce;
+    }
+  }
+
+  /*DatePicker*/
+  .timer .ng2-datetime-picker .time .select-current-time {
+      display:none!important;
+  }
+  .ng2-datetime-picker {
+      font-family: 'Source Sans Pro', sans-serif;
+      > .month {
+        padding: 0px 20px 0 0px;
+        background: $bg-titre;
+        color: $blanc;
+        line-height:30px;
+        .prev_next {
+           color: $blanc;
+           &:hover{
+            background-color: $blanc;
+            color: $bg-titre;
+          }
+       }
+     }
+     .days {
+        .day.selected, :hover {
+        background: $bleu!important;
+        color: $blanc;
+        }
+     }
+     .time{
+       padding: 0px 10px 5px 10px;
+       .select-current-time {
+           color: $bleu;
+       }
+     }
+      .close-button{
+        padding: 0 5px;
+        margin: 5px 5px 0 0;
+      &:before{
+        color:$bleu!important;
+        font-weight:bold;
+        font-size: 16px;
+      }
+    }
+  }
+  /*Alert*/
+  .alert{
+      height: auto;
+      float: left;
+      width:100%;
+      padding:10px 10px 10px 35px;
+      .glyphicon{
+          margin-right:8px;
+          margin-left:-25px;
+          float: left;
+      }
+      .message{
+        display:inline-block;
+        float: left;
+        margin-bottom: 8px;
+      }
+  }
+}
+
+  /*Switch*/
+.lbl {
+  position: relative;
+  display: block;
+  height: 20px;
+  width: 44px;
+  background: $gris_drop;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lbl:after {
+  position: absolute;
+  left: -2px;
+  top: -3px;
+  display: block;
+  width: 26px;
+  height: 26px;
+  border-radius: 100px;
+  box-shadow: 0px 3px 3px rgba(0,0,0,0.05);
+  background: $bleu;
+  content: '';
+  transition: all 0.3s ease;
+}
+
+.lbl:active:after { transform: scale(1.15, 0.85); }
+
+.cbx:checked ~ label { background: $gris_clair; }
+
+.cbx:checked ~ label:after {
+  left: 20px;
+  background: $bleu;
+}
+
+.cbx:disabled ~ label {
+  background: #d5d5d5;
+  pointer-events: none;
+}
+
+.cbx:disabled ~ label:after { background: #bcbdbc; }
+
+
+/** Input error */
+.has-error, .has-error .form-control {
+     border-color: $rouge !important ;
+    box-shadow: inset 0 1px 1px rgba(211, 47, 47, 0.075);
+}
+.has-error .form-control:focus {
+     border-color: $rouge !important ;
+    box-shadow: inset 0 1px 1px rgba(211, 47, 47, 0.075);
+}
+
+.well{
+  box-shadow: none!important;
+}
+
+.alert-dismissable .close, .alert-dismissible .close {
+    right: -5px !important;
+}

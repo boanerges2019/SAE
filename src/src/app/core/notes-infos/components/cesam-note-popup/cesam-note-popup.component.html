@@ -1,0 +1,73 @@
+<div id="ng2-opd-popup-main" [ngClass]="mainClass" [ngStyle]="mainStyle">
+    <form class="form-horizontal  ng-untouched ng-pristine ng-valid" novalidate="">
+                            <div class="form-group">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-11 control-label titre">modifier note {{note?.identifiant}}</label>
+                                <label class="col-xs-1 control-label">
+                                    <a (click)="closeModifierNotePopup()"><span aria-hidden="true"
+                                                                                class="glyphicon glyphicon-remove pull-right "></span></a>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                    <textarea maxlength="255" rows="3"
+                              [value]="note?.description"
+                              (keyup)="descriptionNoteChange($event);"
+                              class="ng-pristine ng-valid ng-touched"
+                              placeholder="Tapez votre note ici..."
+                        >
+                    </textarea>
+                        </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-2 control-label">Couleurs</label>
+
+                                <div class="col-xs-3">
+                                    <ul class="couleur">
+                                        <li>
+                                            <div class="btn carre bleu" (click)="selectBleu($event)"><span
+                                                aria-hidden="true"
+                                                class="glyphicon glyphicon-ok"
+                                                *ngIf="model.checkbleu"></span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="btn carre violet" (click)="selectViolet($event)"><span
+                                                aria-hidden="true"
+                                                class="glyphicon glyphicon-ok"
+                                                *ngIf="model.checkviolet"></span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="btn carre jaune" (click)="selectJaune($event)"><span
+                                                aria-hidden="true"
+                                                class="glyphicon glyphicon-ok"
+                                                *ngIf="model.checkjaune"></span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Le rattachement d'un fichier n'est possible que pour une consigne-->
+                            <div class="form-group" *ngIf="type===typesNote.CONSIGNE">
+                                <div class="col-xs-4">
+                                    <cesam-upload (outputFile)="fileChange($event)"></cesam-upload>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <ul class="pull-right col-xs-12">
+                                    <button class="btn btn-default action btn-xs pull-right"
+                                            (click)="saveModifierNotePopup()">OK
+                                    </button>
+                                    <button class="btn btn-default action btn-xs pull-right"
+                                            (click)="closeModifierNotePopup()">Annuler
+                                    </button>
+                                </ul>
+                            </div>
+                        </form>
+
+</div>
+

@@ -1,0 +1,11 @@
+<div id="body-app">
+    <cesam-popup [hidden]="!isLogging || !isActifServeur">
+        Attention vous êtes sur le point de quitter sans sauvegarder les éventuelles modifications.
+        Etes vous sur de vouloir quitter ?
+    </cesam-popup>
+
+    <bandeau [hidden]="!isLogging || !isActifServeur"></bandeau>
+    <router-outlet></router-outlet>
+    <navigation-principale [hidden]="!isLogging || !isActifServeur"></navigation-principale>
+</div>
+

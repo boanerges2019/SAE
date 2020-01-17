@@ -1,0 +1,182 @@
+<div id="details-annuaires">
+  <div class="header">
+    
+    <!--Menu onglet Tabs-->
+    
+
+    <ul class="nav nav-tabs" role="tablist">
+      <!-- les onglets précédents -->
+      <li role="presentation" *ngFor="let tab of previousTabs" (click)="setActiveTab(tab.codeInfo)">
+          <a>{{tab.nom}}</a>
+        </li>
+
+      <!-- Onglets informations -->
+     <li role="presentation" class="active">
+        <a>Informations</a>
+      </li>
+
+      <!-- les onglets suivant-->
+      <li role="presentation" *ngFor="let tab of nextTabs" (click)="setActiveTab(tab.codeInfo)">
+          <a>{{tab.nom}}</a>
+        </li>
+
+   </ul>
+  </div>
+
+  <div class="content details">
+    <div class="well well-lg" *ngIf="ressourceSelectionnee">
+       <div class="row">
+         <div class="col-xs-6">
+           <!--Nom-->
+            <div class="row">
+             <label class="col-xs-5 control-label">Nom</label>
+             <div class="col-xs-7">{{ressourceSelectionnee?.nom}}</div>
+            </div>
+            <!--Prénom-->
+            <div class="row">
+             <label class="col-xs-5 control-label">Prénom</label>
+             <div class="col-xs-7" >{{ressourceSelectionnee?.attributs[atts.PRENOM]?.valeur}}</div>
+            </div>
+            <!--E-mail-->
+            <div class="row">
+             <label class="col-xs-5 control-label">Adresse e-mail</label>
+             <div class="col-xs-7">{{ressourceSelectionnee?.attributs[atts.MAIL]?.valeur}}</div>
+            </div>
+            <!--numero TETRA-->
+            <div class="row">
+             <label class="col-xs-5 control-label">Numéro TETRA</label>
+             <div class="col-xs-7">{{ressourceSelectionnee?.attributs[atts.NUM_TETRA]?.valeur}}</div>
+            </div>
+            <!--numero FAX
+            <div class="row">
+             <label class="col-xs-5 control-label">Numéro de fax</label>
+             <div class="col-xs-7">04.50.88.88.99</div>
+            </div>-->
+         </div>
+
+         <div class="col-xs-6">
+           <div class="row">
+             <label class="col-xs-5 control-label">Téléphone au bureau</label>
+             <div class="col-xs-7">
+               <table class="table col-xs-12">
+                 <tbody>
+                 <tr>
+                   <td class="col-xs-5">
+                      {{ressourceSelectionnee?.attributs[atts.TEL_TRA1]?.valeur}}
+                   </td>
+                   <td class="col-xs-1" *ngIf="ressourceSelectionnee?.attributs[atts.TEL_TRA1]?.valeur">
+                      <button class="btn btn-default btn-xs trash" (click)="composerNumero(atts.TEL_TRA1)">
+                          <span aria-hidden="true" class="glyphicon glyphicon-earphone"></span>
+                        </button>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td class="col-xs-5">
+                      {{ressourceSelectionnee?.attributs[atts.TEL_TRA2]?.valeur}}
+                   </td>
+                   <td class="col-xs-1"  *ngIf="ressourceSelectionnee?.attributs[atts.TEL_TRA2]?.valeur">
+                      <button class="btn btn-default btn-xs trash" (click)="composerNumero(atts.TEL_TRA2)">
+                          <span aria-hidden="true" class="glyphicon glyphicon-earphone"></span>
+                        </button>
+                   </td>                   
+                 </tr>
+                 <tr>
+                   <td class="col-xs-5">
+                      {{ressourceSelectionnee?.attributs[atts.TEL_TRA3]?.valeur}}
+                   </td>
+                   <td class="col-xs-1"  *ngIf="ressourceSelectionnee?.attributs[atts.TEL_TRA3]?.valeur">
+                      <button class="btn btn-default btn-xs trash" (click)="composerNumero(atts.TEL_TRA3)">
+                          <span aria-hidden="true" class="glyphicon glyphicon-earphone"></span>
+                        </button>
+                   </td>                   
+                 </tr>
+               </tbody>
+             </table>
+             </div>
+           </div>
+             <!--Phone Portable-->
+             <div class="row">
+              <label class="col-xs-5 control-label">Téléphone portable</label>
+              <div class="col-xs-7">
+                <table class="table col-xs-12">
+                  <tbody>
+                  <tr>
+                    <td class="col-xs-5">
+                        {{ressourceSelectionnee?.attributs[atts.TEL_POR1]?.valeur}}
+                    </td>
+                    <td class="col-xs-1" *ngIf="ressourceSelectionnee?.attributs[atts.TEL_POR1]?.valeur">
+                        <button class="btn btn-default btn-xs trash" (click)="composerNumero(atts.TEL_POR1)">
+                            <span aria-hidden="true" class="glyphicon glyphicon-earphone"></span>
+                          </button>
+                     </td>                      
+                  </tr>
+                  <tr>
+                    <td class="col-xs-5">
+                        {{ressourceSelectionnee?.attributs[atts.TEL_POR2]?.valeur}}
+                    </td>
+                    <td class="col-xs-1"  *ngIf="ressourceSelectionnee?.attributs[atts.TEL_POR2]?.valeur">
+                        <button class="btn btn-default btn-xs trash" (click)="composerNumero(atts.TEL_POR2)">
+                            <span aria-hidden="true" class="glyphicon glyphicon-earphone"></span>
+                          </button>
+                     </td>                      
+                  </tr>
+                  <tr>
+                    <td class="col-xs-5">
+                        {{ressourceSelectionnee?.attributs[atts.TEL_POR3]?.valeur}}
+                    </td>
+                    <td class="col-xs-1"  *ngIf="ressourceSelectionnee?.attributs[atts.TEL_POR3]?.valeur">
+                        <button class="btn btn-default btn-xs trash" (click)="composerNumero(atts.TEL_POR3)">
+                            <span aria-hidden="true" class="glyphicon glyphicon-earphone"></span>
+                          </button>
+                     </td>                      
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+            <!--Phone Perso-->
+            <div class="row">
+             <label class="col-xs-5 control-label">Téléphone domicile</label>
+             <div class="col-xs-7">
+               <table class="table col-xs-12">
+                 <tbody>
+                 <tr>
+                   <td class="col-xs-5">
+                      {{ressourceSelectionnee?.attributs[atts.TEL_DOM1]?.valeur}}
+                   </td>
+                   <td class="col-xs-1" *ngIf="ressourceSelectionnee?.attributs[atts.TEL_DOM1]?.valeur">
+                      <button class="btn btn-default btn-xs trash" (click)="composerNumero(atts.TEL_DOM1)">
+                          <span aria-hidden="true" class="glyphicon glyphicon-earphone"></span>
+                        </button>
+                   </td> 
+                 </tr>
+                 <tr>
+                   <td class="col-xs-5">
+                      {{ressourceSelectionnee?.attributs[atts.TEL_DOM2]?.valeur}}
+                   </td>
+                   <td class="col-xs-1" *ngIf="ressourceSelectionnee?.attributs[atts.TEL_DOM2]?.valeur">
+                      <button class="btn btn-default btn-xs trash"  (click)="composerNumero(atts.TEL_DOM2)">
+                          <span aria-hidden="true" class="glyphicon glyphicon-earphone"></span>
+                        </button>
+                   </td>                    
+                 </tr>
+               </tbody>
+             </table>
+             </div>
+           </div>
+
+
+         </div>
+       </div>
+
+   </div>
+  </div>
+
+  <!--Footer evenement-->
+  <div class="footer">
+    <ul class="stat" >
+     </ul>
+     <ul class="boutons pull-right">
+      </ul>
+  </div>
+</div>

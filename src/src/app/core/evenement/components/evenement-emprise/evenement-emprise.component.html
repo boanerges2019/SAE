@@ -1,0 +1,193 @@
+<div class="well well-lg">
+  <div class="form-horizontal">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent">
+      <span
+        class="glyphicon"
+        [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+        aria-hidden="false"></span>
+        Emprise
+    </h4>
+     <!-- *ngIf="model.isEmprise" -->
+    <div [collapse]="isCollapsedContent" class="collapse">
+        <!--partie gauche -->
+        <div class="form-group">
+          <div
+            class="col-xs-6">
+            <div
+                class="row"
+                *ngFor="let emprise of getEntites().emprisesPrincipales">
+              <button
+                 *ngIf="evenement.codeModele === 'BAL'"
+                 class="btn btn-default btn-xs trash"
+                 (click)="allowAddSousEmprise(emprise)"
+                 ctxAccess
+                 [fieldName]="field.addSousEmpriseBtn"
+                 [currentCtx]="currentCtx"
+                 [hideExtraVar]="true">
+                 <span class="glyphicon glyphicon-plus" aria-hidden="true" ></span>
+              </button>
+
+              <button
+                 class="btn btn-default btn-xs trash"
+                 *ngIf="evenement.codeModele === 'BAL' && sousEmpriseRemoveBtnDisplayable(emprise, getEntites().sectionsPrincipales)"
+                 (click)="removeSousEmprise(emprise, getEntites().emprisesPrincipales,'emprises-1')"
+                 ctxAccess
+                 [fieldName]="field.removeSousEmpriseBtn"
+                 [currentCtx]="currentCtx"
+                 [hideExtraVar]="true">
+                 <span class="glyphicon glyphicon-minus" aria-hidden="true" ></span>
+              </button>
+
+               <div class="libelle_emprise">
+                 {{ evenement.localisant | prFormat: emprise.prDebut.codeAxe:getSens(emprise, getEntites().sectionsPrincipales):emprise.prDebut: getPrFinEmprise(emprise, getEntites().sectionsPrincipales)}}
+               </div>
+               <button
+                    class="btn btn-default btn-xs emprise pull-right"
+                    ctxAccess
+                    [fieldName]="field.emprisesBtn"
+                    [currentCtx]="currentCtx"
+                    *ngFor="let voie of getVoiesDisponibles(emprise, getEntites().sectionsPrincipales)"
+                    [ngClass]="{ active: isActive(voie.codeInfo, emprise, getEntites().emprisesPrincipales) }"
+                    (click)="addOrRemoveVoie(voie, emprise, getEntites().emprisesPrincipales)">{{ voie.nom | slice:0:3 }}
+              </button>
+
+              <div class="form-group form-horizontal"
+                    *ngIf="evenement.codeModele === 'BAL' &&
+                    model.ctx.emprise && (model.ctx.emprise.codeSection === emprise.codeSection &&
+                    model.ctx.emprise.prDebut.numero === emprise.prDebut.numero &&
+                    model.ctx.emprise.prDebut.abscisse === emprise.prDebut.abscisse &&
+                    model.ctx.emprise.prFin.numero === emprise.prFin.numero &&
+                    model.ctx.emprise.prFin.abscisse === emprise.prFin.abscisse)">
+                 <div class="col-xs-12">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="127+180"
+                    maxlength="7"
+                    [(ngModel)]="model.pr"
+                    (keyup.enter)="validateAddSousEmprise($event, emprise, getEntites().emprisesPrincipales, 'emprises-1')"
+                    checkSousEmpriseDirective
+                    [emprise]="emprise"
+                    [isSectionsSens2]="isCodeSectionsSens2(emprise.codeSection)"
+                    ctxAccess
+                    [fieldName]="field.addSousEmpriseInput"
+                    [currentCtx]="currentCtx">
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-default btn-xs action"
+                    [disabled]="model.hadValidationErrors"
+                    (click)="validateAddSousEmprise($event, emprise, getEntites().emprisesPrincipales, 'emprises-1')"
+                    ctxAccess
+                    [fieldName]="field.validateAddSousEmpriseBtn"
+                    [currentCtx]="currentCtx"
+                    [hideExtraVar]="true"
+                    [innerHTML]="'Valider'">
+                </button>
+                <button
+                    type="submit"
+                    class="btn btn-default btn-xs action"
+                    (click)="cancelAddSousEmprise($event)"
+                    ctxAccess
+                    [fieldName]="field.cancelAddSousEmpriseBtn"
+                    [currentCtx]="currentCtx"
+                    [hideExtraVar]="true"
+                    [innerHTML]="'Annuler'">
+                </button>
+              </div>
+           </div>
+         </div>
+         <!--partie droite -->
+         <div class="col-xs-6"  *ngIf="evenement.localisant.impliqueDeuxSens">
+           <div
+                class="row"
+                *ngFor="let emprise of getEntites().emprisesSecondaires">
+             <button
+                 *ngIf="evenement.codeModele === 'BAL'"
+                 class="btn btn-default btn-xs trash"
+                (click)="allowAddSousEmprise(emprise)"
+                ctxAccess
+                [fieldName]="field.addSousEmpriseBtn"
+                [currentCtx]="currentCtx"
+                [hideExtraVar]="true">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true" ></span>
+             </button>
+
+             <button
+                class="btn btn-default btn-xs trash"
+                *ngIf="evenement.codeModele === 'BAL' && sousEmpriseRemoveBtnDisplayable(emprise, getEntites().sectionsSecondaires)"
+                (click)="removeSousEmprise(emprise, getEntites().emprisesSecondaires,'emprises-2')"
+                ctxAccess
+                [fieldName]="field.removeSousEmpriseBtn"
+                [currentCtx]="currentCtx"
+                [hideExtraVar]="true">
+                <span class="glyphicon glyphicon-minus" aria-hidden="true" ></span>
+             </button>
+
+             <div class="libelle_emprise" >
+                {{ evenement.localisant | prFormat: emprise.prDebut.codeAxe:getSens(emprise, getEntites().sectionsSecondaires):emprise.prDebut: getPrFinEmprise(emprise, getEntites().sectionsSecondaires)}}
+             </div>
+
+              <button
+                class="btn btn-default btn-xs emprise pull-right"
+                ctxAccess
+                [fieldName]="field.emprisesBtn"
+                [currentCtx]="currentCtx"
+                *ngFor="let voie of getVoiesDisponibles(emprise, getEntites().sectionsSecondaires)"
+                [ngClass]="{ active: isActive(voie.codeInfo, emprise, getEntites().emprisesSecondaires) }"
+                (click)="addOrRemoveVoie(voie, emprise, getEntites().emprisesSecondaires)">{{ voie.nom | slice:0:3 }}
+             </button>
+
+             <div
+                class="form-group form-horizontal"
+                *ngIf="evenement.codeModele === 'BAL' &&
+                    model.ctx.emprise && (model.ctx.emprise.codeSection === emprise.codeSection &&
+                   model.ctx.emprise.prDebut.numero === emprise.prDebut.numero &&
+                   model.ctx.emprise.prDebut.abscisse === emprise.prDebut.abscisse &&
+                   model.ctx.emprise.prFin.numero === emprise.prFin.numero &&
+                   model.ctx.emprise.prFin.abscisse === emprise.prFin.abscisse)">
+                   <div class="col-xs-5">
+                       <input
+                            type="text"
+                            class="form-control col-xs-2"
+                            placeholder="127+180"
+                            maxlength="7"
+                            [(ngModel)]="model.pr"
+                            (keyup.enter)="validateAddSousEmprise($event, emprise, getEntites().emprisesSecondaires, 'emprises-2')"
+                            checkSousEmpriseDirective
+                            [emprise]="emprise"
+                            [isSectionsSens2]="isCodeSectionsSens2(emprise.codeSection)"
+                            ctxAccess
+                            [fieldName]="field.addSousEmpriseInput"
+                            [currentCtx]="currentCtx">
+                   </div>
+
+               <button
+                    type="submit"
+                    class="btn btn-default btn-xs action"
+                    [disabled]="model.hadValidationErrors"
+                    (click)="validateAddSousEmprise($event, emprise, getEntites().emprisesSecondaires, 'emprises-2')"
+                    ctxAccess
+                    [fieldName]="field.validateAddSousEmpriseBtn"
+                    [currentCtx]="currentCtx"
+                    [hideExtraVar]="true"
+                    [innerHTML]="'Valider'">
+               </button>
+               <button
+                    type="submit"
+                    class="btn btn-default btn-xs action"
+                    (click)="cancelAddSousEmprise($event)"
+                    ctxAccess
+                    [fieldName]="field.cancelAddSousEmpriseBtn"
+                    [currentCtx]="currentCtx"
+                    [hideExtraVar]="true"
+                    [innerHTML]="'Annuler'">
+               </button>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

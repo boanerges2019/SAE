@@ -1,0 +1,43 @@
+<div id="login">
+    <div [hidden]="notShowFormLogin">
+        <h1 class="centrer">Connexion</h1>
+        <table class="table">
+            <tr>
+                <td>
+                    <label>
+                        Login
+                    </label>
+                </td>
+                <td>
+                    <input type="text" [(ngModel)]="login">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>
+                        Mot de passe
+                    </label>
+                </td>
+                <td>
+                    <input type="password" [(ngModel)]="mdp">
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <button type="submit" class="btn btn-default btn-xs action"
+                            (click)="connexion()"
+                        >Connexion
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div [hidden]="!notShowFormLogin">
+        <h1 class="centrer_1"> Merci de vous connecter via la supervision </h1>
+    </div>
+
+</div>

@@ -1,0 +1,66 @@
+<div class="well well-lg">
+    <form [formGroup]="formGroup" novalidate class="form-horizontal">
+        <!-- Line -->
+        <div class="form-group" *ngIf="!idEvenement">
+            <div class="col-xs-4">
+                <div class="checkbox">
+                    <label>
+                        <input
+                            type="radio"
+                            formControlName="typeStrategie"
+                            [checked]="formGroup.controls.typeStrategie.value === model.radios.radioManuel.value"
+                            [value]="model.radios.radioManuel.value"
+                            (click)="typeStrategieChange($event, model.radios.radioManuel.value); $event.stopPropagation();"
+                            ctxAccess
+                            [fieldName]="model.field.manualStrategieCb"
+                            [currentCtx]="currentCtx"
+                            [configCte]="model.configCte"/>Strategie Manuelle
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="checkbox">
+                    <label>
+                        <input
+                            type="radio"
+                            formControlName="typeStrategie"
+                            [checked]="formGroup.controls.typeStrategie.value === model.radios.radioTempsParcours.value"
+                            [value]="model.radios.radioTempsParcours.value"
+                            (click)="typeStrategieChange($event, model.radios.radioTempsParcours.value); $event.stopPropagation();"
+                            ctxAccess
+                            [fieldName]="model.field.tdpCb"
+                            [currentCtx]="currentCtx"
+                            [configCte]="model.configCte"/>Strategie temps de parcours
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Line  -->
+        <div class="form-group" *ngIf="!strategie">
+            <label class="col-xs-2 control-label">Initialiser</label>
+            <div class="col-xs-8">
+                <ng-select
+                    ctxAccess
+                    [fieldName]="model.field.manualStrategieCb"
+                    [currentCtx]="currentCtx"
+                    [configCte]="model.configCte"
+                    formControlName="strategieModel"
+                    [items]="model.strategieModels.current"
+                    placeholder="Sélectionner un modèle de stratégie ...">
+                 </ng-select>
+            </div>
+            <div class="col-xs-2 btn-group">
+                <button type="submit"
+                        class="btn btn-default btn-md action"
+                        [disabled]="!formGroup.controls.typeStrategie.value || !formGroup.controls.strategieModel.value"
+                        (click)="instantiateStrategie()"
+                        ctxAccess
+                        [fieldName]="model.field.initialiseBtn"
+                        [currentCtx]="currentCtx"
+                        [configCte]="model.configCte"> Initialiser
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

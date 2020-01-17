@@ -1,0 +1,71 @@
+<div id="navigation-principale">
+    <ul class="liens">
+      <li class="no_btn"><span class="bold">accès : </span> </li>
+      <li>
+          <button
+          class="btn1"
+          [ngClass]="{'blanc': menuSelected[0]}"
+          ConfirmAction
+          (confirmActionResponse)="gotoLink('situation-courante')">Situation courante</button></li>
+      <li>
+          <button
+              class="btn1"
+              [ngClass]="{'blanc': menuSelected[1]}"
+          ConfirmAction
+          (confirmActionResponse)="gotoLink('journal-alertes')">Journal des alertes</button></li>
+      <li>
+          <button
+              class="btn1"
+              [ngClass]="{'blanc': menuSelected[2]}"
+          ConfirmAction
+          (confirmActionResponse)="gotoLink('strategies')">Stratégies d'affichage</button></li>
+      <li>
+          <button
+              class="btn1"
+              [ngClass]="{'blanc': menuSelected[3]}"
+          ConfirmAction
+          (confirmActionResponse)="gotoLink('macro-commande')">Macro-commandes</button></li>
+      <li>
+          <button
+              class="btn1"
+              [ngClass]="{'blanc': menuSelected[4]}"
+          ConfirmAction
+          (confirmActionResponse)="gotoLink('bulletins')">Bulletins</button></li>
+      <li>
+          <button
+              class="btn1"
+              [ngClass]="{'blanc': menuSelected[5]}"
+          ConfirmAction
+          (confirmActionResponse)="gotoLink('balisages')">Balisages</button></li>
+      <li>
+          <button
+              class="btn1"
+              [ngClass]="{'blanc': menuSelected[6]}"
+          ConfirmAction
+          (confirmActionResponse)="gotoLink('viabilite-hivernale')">Viabilité Hivernale</button></li>
+      <li>
+          <button
+              class="btn1"
+              [ngClass]="{'blanc': menuSelected[7]}"
+          ConfirmAction
+          (confirmActionResponse)="gotoLink('astreintes')">Astreintes</button></li>
+      <li>
+          <button
+              class="btn1"
+              [ngClass]="{'blanc': menuSelected[8]}"
+          ConfirmAction
+          (confirmActionResponse)="gotoLink('annuaires')">Annuaires</button></li>
+      <li>
+          <button
+              class="btn1"
+              [ngClass]="{'blanc': menuSelected[9]}"
+          ConfirmAction
+          (confirmActionResponse)="gotoLink('journaux-historiques')">  Journaux / Historiques</button> </li>
+      <li>
+          <button
+              class="btn1"
+              [ngClass]="{'blanc': menuSelected[10]}"
+          ConfirmAction
+          (confirmActionResponse)="gotoLink('notes-infos')">Aujourd'hui</button></li>
+    </ul>
+</div>

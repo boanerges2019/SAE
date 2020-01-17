@@ -1,0 +1,21 @@
+<div id="right-vh">
+  <div class="header">
+    <!--Menu onglet Tabs-->
+    <ul class="nav nav-tabs" role="tablist">
+     <li role="presentation" [ngClass]="{ 'active': ongletActif.intervenantAstreinte }">
+        <a (click)="gotoOnglet('intervenantAstreinte')" >intervenants d’astreinte</a>
+      </li>
+      <li role="presentation" [ngClass]="{ 'active': ongletActif.vehiculeSftrf }">
+         <a (click)="gotoOnglet('vehiculeSftrf')">véhicules SFTRF</a>
+       </li>
+   </ul>
+ </div>
+<intervenants-astreinte *ngIf="ongletActif.intervenantAstreinte"></intervenants-astreinte>
+<vehicules-sftrf *ngIf="ongletActif.vehiculeSftrf"></vehicules-sftrf>
+
+  <!--Footer macro planifies-->
+  <div class="footer planifies">
+    <ul class="boutons pull-right">
+     </ul>
+  </div>
+</div>

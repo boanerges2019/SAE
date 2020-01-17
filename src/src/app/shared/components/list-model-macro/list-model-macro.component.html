@@ -1,0 +1,179 @@
+
+<div id="modeleMacros">
+
+    <div class="content" *ngIf="!isPlanifier" [style.height.px]="model.contentHeight">
+        <div class="contenu" [perfect-scrollbar] [style.height.px]="model.contenuHeight">
+            <!--Affichage Modele de macro-->
+            <div *ngIf="!model.isPacMacro">
+                <!--Table intitulé-->
+                <table class="table firstline">
+                    <thead>
+                    <tr class="first">
+                        <th class="libelle maco">Macro-commandes</th>
+                        <th class="libelle exe">Prochaine éxécution</th>
+                        <th class="libelle exe">Planifier</th>
+                    </tr>
+                    </thead>
+                </table>
+
+                <!--Table contenu -->
+                <table class="table">
+                    <tbody>
+                    <!--macro planifés -->
+                    <tr *ngFor="let modeleMacroCommande of macrosModelesCommandes"
+                        [ngClass]="{ 'en-cours': modeleMacroCommande.isSelect}"
+                        (click)="selectMacroCommande($event, modeleMacroCommande)"
+                        >
+                        <td class="libelle maco">
+                            {{modeleMacroCommande.nom}}
+                        </td>
+                        <td class="libelle exe">
+                            <div class="progress macro"
+                                 *ngIf="modeleMacroCommande.codeEtat==model.configCte.CODE_ETAT_MACRO.DEMANDER">
+                                <div class="progress-bar progress-bar progress-bar-striped active" role="progressbar"
+                                     aria-valuenow="70" aria-valuemin="70" aria-valuemax="100" style="width:100%">
+                                </div>
+                            </div>
+                            <button disabled class="croix"
+                                    *ngIf="modeleMacroCommande.codeEtat==model.configCte.CODE_ETAT_MACRO.EN_COURS">
+                                En Cours
+                            </button>
+                            <button disabled class="croix"
+                                    *ngIf="modeleMacroCommande.codeEtat==model.configCte.CODE_ETAT_MACRO.SUSPENDU">
+                                Suspendu
+                            </button>
+                            <!--button disabled class="btn btn-default btn-xs action"
+                                    *ngIf="modeleMacroCommande.codeEtat==model.configCte.CODE_ETAT_MACRO.ECHEC">
+                                Echec
+                            </button-->
+                            <button disabled class="croix"
+                                    *ngIf="modeleMacroCommande.codeEtat==model.configCte.CODE_ETAT_MACRO.ANNULE">
+                                Annulé
+                            </button>
+                            <button
+                                ctxAccess [fieldName]="model.field.lancer" [currentCtx]="model.currentCtx"
+                                [configCte]="model.configCte"
+                                *ngIf="modeleMacroCommande.codeEtat!==model.configCte.CODE_ETAT_MACRO.EN_COURS
+                            && modeleMacroCommande.codeEtat!==model.configCte.CODE_ETAT_MACRO.DEMANDER
+                            && modeleMacroCommande.codeEtat!==model.configCte.CODE_ETAT_MACRO.SUSPENDU
+                            && modeleMacroCommande.codeEtat!==model.configCte.CODE_ETAT_MACRO.ANNULE"
+                                class="btn btn-default btn-xs action"
+                                (click)="lancerMacroCommande($event, modeleMacroCommande)">
+                                Lancer
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default"
+                                    (click)="clickOnPlanifierBtn($event, modeleMacroCommande)"
+                                    ctxAccess [fieldName]="model.field.planifier" [currentCtx]="model.currentCtx"
+                                    [configCte]="model.configCte">
+                                Planifier
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--Affichage de macro liées à un evenement-->
+            <div *ngIf="model.isPacMacro && !createMacroFromPac">
+                <!--Table intitulé-->
+                <table class="table firstline">
+                    <thead>
+                    <tr class="first">
+                        <th class="libelle maco">Macro-commandes en cours</th>
+                        <th class="libelle exe">Statut</th>
+                    </tr>
+                    </thead>
+                </table>
+
+                <!--Table contenu -->
+                <table class="table">
+                    <tbody>
+                    <!--macro planifés -->
+                    <tr *ngFor="let macroCommande of macrosCommandesEvts"
+                        [ngClass]="{ 'en-cours': macroCommande.isSelect}"
+                        (click)="selectMacroCommandePac($event, macroCommande)"
+                        >
+                        <td class="libelle maco">
+                            {{macroCommande.nom}}
+                        </td>
+                        <td class="libelle exe">
+                            <div class="progress macro"
+                                 *ngIf="macroCommande.code_etat==model.configCte.CODE_ETAT_MACRO.DEMANDER">
+                                <div class="progress-bar progress-bar progress-bar-striped active" role="progressbar"
+                                     aria-valuenow="70" aria-valuemin="70" aria-valuemax="100" style="width:100%">
+                                </div>
+                            </div>
+                            <button disabled class="croix"
+                                    *ngIf="macroCommande.code_etat==model.configCte.CODE_ETAT_MACRO.EN_COURS">
+                                En Cours
+                            </button>
+                            <button disabled class="croix"
+                                    *ngIf="macroCommande.code_etat==model.configCte.CODE_ETAT_MACRO.SUSPENDU">
+                                Suspendu
+                            </button>
+                            <button disabled class="croix"
+                                    *ngIf="macroCommande.code_etat==model.configCte.CODE_ETAT_MACRO.ANNULE">
+                                Annulé
+                            </button>
+                            <button disabled class=""
+                                    *ngIf="macroCommande.code_etat==model.configCte.CODE_ETAT_MACRO.SUCCES">
+                                Annulé
+                            </button>                            
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div *ngIf="model.isPacMacro && createMacroFromPac" class="form-group espace_haut">
+                <div class="col-xs-2">
+                    <label class="labelInitialiser">Initialiser</label>
+                </div>
+                <div class="col-xs-6">
+                    <ng-select
+                        (selected)="selectModelMacroCommande($event)"
+                        [items]="macrosModelesCommandesEvt"
+                        placeholder="Modèles de macro commandes">
+                    </ng-select>
+                </div>
+                <div class="col-xs-2 btn-group">
+                    <button type="submit" class="btn btn-default btn-md action"
+                            (click)="lancerMacroCommandePac()"
+                            ctxAccess [fieldName]="model.field.lancer" [currentCtx]="currentCtx"
+                            [configCte]="model.configCte"> Lancer
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!--Footer modele macro -->
+        <div class="footer">
+            <ul *ngIf="!model.isPacMacro" class="stat">
+                <li><span class="bold">{{model.enCoursCount}}/{{model.total}} </span> macro-commandes en cours</li>
+            </ul>
+            <ul *ngIf="model.isPacMacro" class="stat">
+                <li><span class="bold">{{model.enCoursCountEvt}}/{{model.total}} </span> macro-commandes en cours</li>
+            </ul>
+            <ul class="boutons pull-right">
+                <li *ngIf="model.isPacMacro && !createMacroFromPac">
+                    <button type="button" class="btn btn-default"
+                            (click)="lancerMacroDepuisPac($event)"
+                            ctxAccess [fieldName]="model.field.lancer" [currentCtx]="model.currentCtx"
+                            [configCte]="model.configCte">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true" style="margin-right:10px"></span>Lancer Macro Commande
+                    </button>
+                </li>
+                <li *ngIf="createMacroFromPac">
+                    <button type="button" class="btn btn-default"
+                            (click)="annulerLancerMacroDepuisPac($event)"
+                            ctxAccess [fieldName]="model.field.annuler" [currentCtx]="model.currentCtx"
+                            [configCte]="model.configCte">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-right:10px"></span>Annuler
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

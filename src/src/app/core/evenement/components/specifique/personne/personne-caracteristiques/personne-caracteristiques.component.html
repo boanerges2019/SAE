@@ -1,0 +1,23 @@
+<div class="well well-lg">
+  <div class="form-horizontal">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent" data-toggle="collapse">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+    aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+      <!--Type de personnes-->
+       <div class="form-group">
+         <label class="col-xs-3 control-label">Type</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.typePersonne]"
+            [items]="typesPersonnes"
+            [enumName]="modeleEvenementCte.TYPES_PERSONNES"
+            [fieldName]="field.typePersonne"
+            [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       </div>
+     </div>
+  </div>
+</div>

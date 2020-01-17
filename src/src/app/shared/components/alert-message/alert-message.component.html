@@ -1,0 +1,13 @@
+<div class="container col-xs-12">
+    <div  *ngIf="alertMessages && alertMessages.length > 0" class="alert alert-danger" role="alert">
+      <button alertMessagetype="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <p *ngFor="let alertMessage of alertMessages"  role="alert">{{ alertMessage.message }}</p>
+    </div>
+
+    <div  *ngIf="warningEvtEdit" class="alert alert-danger" role="alert">
+        <p role="alert" class="rouge"><span class="glyphicon glyphicon-exclamation-sign rouge"></span>{{ warningEvtEdit.message }}</p>
+    </div>
+
+</div>

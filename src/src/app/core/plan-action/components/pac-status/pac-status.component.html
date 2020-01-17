@@ -1,0 +1,28 @@
+<!--Affichage du libellé statut -->
+<td *ngIf="actionApplicable.codeEtatDerniereExecution != model.planActionCte.ETATS.EN_COURS" >
+  <div class="statut valide" [ngClass]="getCssStatus(actionApplicable.codeEtatDerniereExecution)" >{{model.labels.etats[actionApplicable.codeEtatDerniereExecution] }}</div>
+  <!-- <div class="statut valide" [ngClass]="getCssStatus(actionApplicable.codeEtatDerniereExecution)" >{{model.labels.etats[actionApplicable.codeEtatDerniereExecution] }}</div> -->
+</td>
+<td *ngIf="actionApplicable.codeEtatDerniereExecution === model.planActionCte.ETATS.EN_COURS">
+  <div class="progress macro">
+  <div class="progress-bar progress-bar progress-bar-striped active" role="progressbar"
+  aria-valuenow="70" aria-valuemin="70" aria-valuemax="100" style="width:100%"></div>
+  </div>
+</td>
+
+<!-- Bouton attitré -->
+<td *ngIf="actionApplicable.codeEtatDerniereExecution === model.planActionCte.ETATS.ECHEC">
+  <button class="btn btn-default btn-xs action pause" (click)="execAction($event, actionApplicable)">
+    <span aria-hidden="true" class="glyphicon glyphicon-refresh"></span>
+  </button>
+</td>
+<td *ngIf="actionApplicable.codeEtatDerniereExecution === model.planActionCte.ETATS.SUCCES">
+  <button class="btn btn-default btn-xs action pause" (click)="execAction($event, actionApplicable)">
+    <span aria-hidden="true" class="glyphicon glyphicon-refresh"></span>
+  </button>
+</td>
+<td *ngIf="modeExecution === model.modesExecutions.MANUEL && !actionApplicable.codeEtatDerniereExecution">
+  <button class="btn btn-default btn-xs action pause" (click)="execAction($event, actionApplicable)">
+    <span aria-hidden="true" class="glyphicon glyphicon-play"></span>
+  </button>
+</td>

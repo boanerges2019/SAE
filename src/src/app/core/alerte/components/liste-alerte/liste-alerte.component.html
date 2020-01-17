@@ -1,0 +1,68 @@
+<div id="alerte">
+	<!-- Background du bloc alertes (gris & blanc)-->
+	<div class="bg_header"></div>
+	<div class="bg_content"></div>
+	<!-- Liste des alertes-->
+  	<div class="absolute">
+  	<div >
+  		<ul class="list_alertes pull-right">
+        	<li *ngFor="let alerte of alertes" class="simple" selectAlerteDirective [applyClassesOnSelect]="'double'" [applyClassesOnDeSelect]="'simple'">
+        		<div class="header">
+	        		<div class="border"></div>
+                        <div class="heure">{{ alerte.horodateDebut | date:'dd/MM/yyyy HH:mm:ss' }}</div>
+							<ul class="type" [ngSwitch]="alerte.level">
+
+								<li *ngSwitchCase="'degrade'"><div class="cercle degrade"></div></li>
+								<li *ngSwitchCase="'degrade'"><div class="cercle"></div></li>
+								<li *ngSwitchCase="'degrade'"><div class="cercle"></div></li>
+
+								<li *ngSwitchCase="'critique'"><div class="cercle critique"></div></li>
+								<li *ngSwitchCase="'critique'"><div class="cercle critique"></div></li>
+								<li *ngSwitchCase="'critique'"><div class="cercle"></div></li>
+
+								<li *ngSwitchCase="'fermeture'"><div class="fermeture">CME niveau 3</div></li>
+
+								<!-- <li><div class="cercle" [ngClass]="{ 'critique': alerte[field.critique]}"></div></li>
+								<li><div class="cercle" [ngClass]="{ 'fermeture': alerte[field.fermeture]}"></div></li> -->
+							</ul>
+							<button class="btn btn-default btn-xs pull-right create-evenement"
+							(click)="createEvenement($event, alerte)">Créer un événement</button>
+				    </div>
+					  <div class="contenu">
+		        	<div class="content" [perfect-scrollbar]>
+		        		<!--<div class="nom" [innerHTML]="getTypeAlerte(alerte.codeModele).nom"></div>-->
+                        <div class="nom" [innerHTML]="alerte?.nom"></div>
+		        		<div class="localisation"  [innerHTML]="alerte?.nomLocalisant"></div>
+		        	</div>
+							<div class="action" >
+								<select class="form-control" [(ngModel)]="model.linkWithEvenement">
+									<option value="">Lier à...</option>
+									<option *ngFor="let evenement of evenementsEnCours"
+									[value]="evenement.identifiant" [innerHTML]="evenement.identifiant + ' - '+ evenement.nomLocalisant"></option>
+								</select>
+								<div class="first btn-group">
+									<button class="btn btn-default btn-xs" (click)="validateAlertWithoutEvenement($event, alerte)">VRAIE</button>
+									<button class="btn btn-default btn-xs" (click)="rejectAlert($event, alerte)">FAUSSE</button>
+									<button class="btn btn-default btn-xs" (click)="validateAlertWithEvenement(alerte)" [disabled]="!model.linkWithEvenement">LIER</button>
+								</div>
+								<div class="second btn-group">
+									<button class="btn btn-default btn-xs glyphicon" (click)="localiserAlert($event, alerte)"><span class="glyphicon glyphicon-map-marker"></span></button>
+									<button class="btn btn-default btn-xs glyphicon" (click)="visualiserAlert($event, alerte)"><span class="glyphicon glyphicon-facetime-video"></span></button>
+									<button class="btn btn-default btn-xs glyphicon"><span class="glyphicon glyphicon-camera"></span></button>
+								</div>
+							</div>
+						</div>
+        	</li>
+        </ul>
+    	</div>
+		</div>
+		<!-- Titre & nombre alerte-->
+    <div class="absolute titre">
+	    <div class="encart">
+		    <div class="intitule">alertes</div>
+		    <span class="badge_option">
+		    	<a class="badge_notification" [innerHTML]="alertes.length"></a>
+				</span>
+		 	</div>
+	  </div>
+</div>

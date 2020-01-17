@@ -1,0 +1,90 @@
+<div class="well well-lg">
+  <div  class="form-horizontal">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent" data-toggle="collapse">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+    aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+       <!--Motif-->
+       <div class="form-group">
+         <label class="col-xs-3 control-label">Motif</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.motifSecoursPersonne]"
+            [items]="motifsSecoursPersonne"
+            [enumName]="modeleEvenementCte.MOTIFS_SECOURS_PERSONNE"
+            [fieldName]="field.motifSecoursPersonne"
+            [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       </div>
+       <!--Personnes-->
+       <div class="form-group">
+         <div class="col-xs-3">
+             <div class="checkbox">
+                 <label>
+                   <cesam-input [type]="'checkbox'"
+                   [model]="evenement.attributs[field.personnelSftrf]"
+                   [innerHTML]="'Personnel SFTRF'"
+                   [fieldName]="field.personnelSftrf"
+                   [currentCtx]="currentCtx"></cesam-input>
+                </label>
+            </div>
+         </div>
+         <div class="col-xs-3">
+             <div class="checkbox">
+                 <label>
+                   <cesam-input [type]="'checkbox'"
+                   [model]="evenement.attributs[field.accidentTravail]"
+                   [innerHTML]="'Accident du travail'"
+                   [fieldName]="field.accidentTravail"
+                   [currentCtx]="currentCtx"></cesam-input>
+                 </label>
+            </div>
+         </div>
+         <div class="col-xs-3">
+             <div class="checkbox">
+                 <label>
+                   <cesam-input [type]="'checkbox'"
+                   [model]="evenement.attributs[field.presenceVIP]"
+                   [innerHTML]="'Présence VIP'"
+                   [fieldName]="field.presenceVIP"
+                   [currentCtx]="currentCtx"></cesam-input>
+                </label>
+            </div>
+         </div>
+       </div>
+       <!--Gravité-->
+       <div class="form-group">
+         <label class="col-xs-3 control-label">Nb. de personnes impliquées</label>
+         <div class="col-xs-1">
+           <cesam-input [type]="'number'" [model]="evenement.attributs[field.gravitePersonnesImpliquees][field.nbPersonnesImpliquees]" [fieldName]="field.nbPersonnesImpliquees" [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       </div>
+       <div class="form-group">
+          <label class="col-xs-1 control-label">Indemnes</label>
+          <div class="col-xs-1">
+            <cesam-input [type]="'number'" [model]="evenement.attributs[field.gravitePersonnesImpliquees][field.indemnes]" [fieldName]="field.indemnes" [currentCtx]="currentCtx"></cesam-input>
+          </div>
+        <div class="col-xs-1"></div>
+          <label class="col-xs-2 control-label">Blessés légers</label>
+          <div class="col-xs-1">
+            <cesam-input [type]="'number'" [model]="evenement.attributs[field.gravitePersonnesImpliquees][field.blessesLegers]" [fieldName]="field.blessesLegers" [currentCtx]="currentCtx"></cesam-input>
+          </div>
+          <label class="col-xs-2 control-label">Blessés graves</label>
+          <div class="col-xs-1">
+            <cesam-input [type]="'number'" [model]="evenement.attributs[field.gravitePersonnesImpliquees][field.blessesGraves]" [fieldName]="field.blessesGraves" [currentCtx]="currentCtx"></cesam-input>
+          </div>
+          <div class="col-xs-1"></div>
+          <label class="col-xs-1 control-label">Décédés</label>
+          <div class="col-xs-1">
+            <cesam-input [type]="'number'" [model]="evenement.attributs[field.gravitePersonnesImpliquees][field.decedes]" [fieldName]="field.decedes" [currentCtx]="currentCtx"></cesam-input>
+          </div>
+       </div>
+        <!--Séparator-->
+        <div class="row">
+          <div class="col-xs-12 control-label separation"></div>
+        </div>
+     </div>
+  </div>
+</div>

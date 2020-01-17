@@ -1,0 +1,45 @@
+<div class="well well-lg">
+  <div class="form-horizontal">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent" data-toggle="collapse">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+    aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+      <!--Type de crue-->
+       <div class="form-group">
+         <label class="col-xs-3 control-label">Type obstacle</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.typeObstacle]"
+            [items]="typesObstacles"
+            [enumName]="modeleEvenementCte.TYPES_OBSTACLES"
+            [fieldName]="field.typeObstacle"
+            [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       </div>
+       <!--Dégats aux domaines-->
+       <div class="form-group">
+         <div class="col-xs-3">
+             <div class="checkbox">
+               <label>
+                 <cesam-input [type]="'checkbox'"
+                 [model]="evenement.attributs[field.degatsAuxDomaines]"
+                 [innerHTML]="'Dégâts aux domaines'"
+                 [fieldName]="field.degatsAuxDomaines"
+                 [currentCtx]="currentCtx"></cesam-input>
+               </label>
+            </div>
+         </div>
+         <div class="col-xs-9">
+           <cesam-input [type]="'textarea'"
+             [rows]="3" [maxlength]="255"
+             [innerHTML]="'Descriptions à saisir'"
+             [model]="evenement.attributs[field.descriptionDegatsAuxDomaines]"
+             [fieldName]="field.descriptionDegatsAuxDomaines"
+             [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       </div>
+     </div>
+  </div>
+</div>

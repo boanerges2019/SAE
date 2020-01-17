@@ -1,0 +1,176 @@
+@import 'src/styles/variables/variables.scss';
+/*Contenu Global - Tableau evenements*/
+ .content{
+   background-color:$blanc;
+   height:520px;
+   width:100%;
+   display:block;
+   float:left;
+   overflow-y: scroll;
+   box-shadow: inset 0 -10px 10px -10px $gris_fonce;
+
+   &.vehicule{
+     height:268px!important;
+     overflow:hidden;
+     .contenu{
+       height:234px!important;
+       overflow: hidden!important;
+     }
+   }
+   .contenu{
+      height:463px;
+   }
+   ul.dropdown-menu{
+      padding:0;
+      cursor:pointer;
+      li{
+        border-bottom:1px solid #e0e0e0;
+        border-left:6px solid $blanc;
+        min-height:30px;
+        margin-top:0;
+        &:hover{
+          background:$bleu_pale!important;
+          border-left:6px solid $bleu;
+        }
+        a{
+          color:black;
+          text-decoration:none;
+          padding: 5px 10px;
+          font-size:14px;
+          word-wrap: break-word;
+          white-space: normal;
+          &.dropdown-toggle{
+            text-decoration:none;
+            padding: 10px 0px 10px 0px;
+          }
+          &:hover{
+            background:$bleu_pale;
+          }
+        }
+      }
+    }
+   .table {
+     margin-bottom:0;
+     thead tr.first{
+       height:30px;
+       th{border-bottom: 1px solid #ddd;}
+     }
+     .separator{
+       height: 5px !important;
+       .ligne{
+         border-bottom:1px dashed #e5e5e5!important;
+       }
+     }
+     .bleu{
+       color:$bleu;
+     }
+
+     thead,
+     > tbody{
+     tr{
+        height: 50px;
+        padding: 0 8px 0 8px;
+        vertical-align: middle;
+        &.evenement-titre{
+            border-top:1px solid $blanc;
+        }
+        > td{
+          vertical-align:middle;
+          border:none;
+          padding: 0;
+          .btn{
+            height: 28px;
+            border-radius: 5px;
+            color: $blanc;
+            background: $bleu;
+            padding: 8px 10px;
+            line-height: 0;
+            text-transform: uppercase;
+            font-weight:600;
+            border: 1px solid $blanc;
+            font-size:$ft_standard;
+            &:hover,
+            &:focus{
+              background-color:$bleu_fonce;
+            }
+          }
+          &.options_btn{
+            display:none;
+          }
+        }
+        th{
+          vertical-align:middle;
+          color:$gris_clair;
+          cursor:pointer;
+          &.sorted{
+            color:$bleu;
+          }
+          .type{
+            padding-left:20px;
+          }
+        }
+        .libelle{
+          &.type{
+            padding: 0 18px 0 20px!important;
+            width: 150px;
+           /* font-weight:600;*/
+          }
+          &.nom{
+            width: 300px;
+            padding: 0 18px 0 0;
+            /*font-weight:600;*/
+          }
+          &.localisation{
+            width: 200px;
+            padding: 0 18px 0 0;
+          }
+          &.horodate{
+            padding: 0 18px 0 0!important;
+          }
+        }
+
+        &.groupe{
+          background:$gris_drop;
+          ul.boutons{
+            margin:0;
+            padding: 0;
+            li{
+              float: left;
+              margin-left:10px;
+              position: relative;
+              display: block;
+            }
+          }
+          &.selected{
+            background:$bleu_fonce!important;
+            color:$blanc!important;
+          }
+
+        }
+        &.child{
+          background:$bleu_groupe;
+          color:$noir;
+        }
+        &.event-selected{
+          &.child{
+            background:$bleu!important;
+            color:$blanc!important;
+          }
+        }
+      }
+    }
+   }
+   .event-selected {
+     background-color: $bleu; //orange
+     color: $blanc;
+     td.options_btn{
+       display: table-cell!important;
+       vertical-align: middle;
+        border: none;
+        padding: 0;
+     }
+     .statut{
+       color:$blanc!important;
+     }
+   }
+ }

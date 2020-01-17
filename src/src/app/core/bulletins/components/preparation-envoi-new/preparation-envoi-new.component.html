@@ -1,0 +1,203 @@
+<div id="presentation-envoi-new">
+    <table class="espace">
+        <tbody>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Nom</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div>
+                    <input type="text" placeholder="Entrer le nom" [(ngModel)]="data.nom"
+                           (keyup)="nameChange($event)" class="form-control"/>
+                </div>
+            </td>
+            <td class="colonne3">
+            </td>
+        </tr>
+        <br>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Description</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div>
+                    <input type="text" placeholder="Entrer la description" [(ngModel)]="data.description"
+                           (keyup)="descriptionChange($event)" class="form-control"/>
+                </div>
+            </td>
+            <td class="colonne3">
+            </td>
+        </tr>
+        <br>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Choix type Destinataire</label>
+                </div>
+            </td>
+            <td class="colonne4">
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <label>
+                                <input
+                                    type="radio"
+                                    [checked]="isDestinataire"
+                                    (click)="getDestinataire(); $event.stopPropagation();"
+                                    /> Destinataire.
+                            </label>
+                        </div>
+                    </td>
+                    <td class="colonne1">
+                        <div class="checkbox">
+                            <label>
+                                <input
+                                    type="radio"
+                                    [checked]="!isDestinataire"
+                                    (click)="getGroupeDestinataire(); $event.stopPropagation();"
+                                    /> Groupe Destinataire.
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+        </td>
+        <td class="colonne5">
+
+        </td>
+        </tr>
+        <br>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div *ngIf="isDestinataire">
+                    <label>Nom destinataire</label>
+                </div>
+                <div *ngIf="!isDestinataire">
+                    <label>Nom Groupe Destinataire</label>
+                </div>
+            </td>
+            <td class="colonne1">
+                <div *ngIf="isDestinataire">
+                    <ng-select
+                       (selected)="destinataireChange($event)"
+                        [items]="paramDestinataires.valeurPossibles"
+                        placeholder="Sélectionner un destinataire...">
+                    </ng-select>
+                </div>
+                <div *ngIf="!isDestinataire">
+                    <ng-select
+                        (selected)="destinataireChange($event)"
+                        [items]="paramGroupeDestinataires.valeurPossibles"
+                        placeholder="Sélectionner un groupe de destinataires ...">
+                    </ng-select>
+                </div>
+            </td>
+            <td class="colonne2">
+
+            </td>
+        </tr>
+        <br>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Modèle bulletin</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div>
+                    <ng-select
+                        (selected)="modeleBulletinChange($event)"
+                        [items]="bulletins"
+						[active]="selectedBulletin"
+                        placeholder="Sélectionner un modèle de bulletins ..."
+						>
+                    </ng-select>
+                </div>
+            </td>
+            <td class="colonne2">
+
+            </td>
+        </tr>
+		<br/>        
+        <tr class="ligne" *ngIf="showListeEvenements">
+            <td class="colonne1">
+                <div>
+                    <label>Evénement</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div>
+                    <ng-select
+                               (selected)="evenementChange($event)"
+                               [items]="evenements"
+                               placeholder="Sélectionner un événement...">
+                    </ng-select>
+                </div>
+            </td>
+            <td class="colonne2">
+
+            </td>
+        </tr>
+        <br *ngIf="showListeEvenements"/>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Format</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div *ngIf="paramFormats.paramValue">
+                    <ng-select
+                        (selected)="formatChange($event)"
+                        [items]="paramFormats.valeurPossibles"
+						[active]="[paramFormats.paramValue]"
+                        placeholder="Sélectionner un Format ...">
+                    </ng-select>
+                </div>
+            </td>
+            <td class="colonne2">
+            </td>
+        </tr>
+        <br>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Media</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div *ngIf="paramMedias.paramValue">
+                    <ng-select
+                        (selected)="mediaChange($event)"
+                        [items]="paramMedias.valeurPossibles"
+						[active]="[paramMedias.paramValue]"
+                        placeholder="Sélectionner un Media ...">
+                    </ng-select>
+                </div>
+            </td>
+            <td class="colonne2">
+            </td>
+        </tr>
+        <br>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Commentaire</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div>
+                    <textarea placeholder="Commentaire"  [(ngModel)]="data.commentaire"
+                              (keyup)="commentaireChange($event)"class="commentaire"></textarea>
+                </div>
+            </td>
+            <td class="colonne2">
+            </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+

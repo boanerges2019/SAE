@@ -1,0 +1,72 @@
+<div class="well well-lg">
+  <div  class="form-horizontal">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent" data-toggle="collapse">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+    aria-hidden="false"></span>
+            Véhicules
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+      <!--Véhicules -->
+      <div class="form-group tabled" [ngClass]="[currentCtx === contexte.READ ? 'tabledisabled': '']">
+        <table class="table table-bordered table-condensed input col-xs-12">
+          <thead>
+            <th class="col-xs-6">Description du Véhicule</th>
+            <th class="col-xs-6">Dégâts matériels</th>
+          </thead>
+        <tbody>
+          <tr  *ngFor="let item of listeVehicules[field.itemVehicule]; let i=index">
+            <td class="col-xs-6">
+              <cesam-input [type]="'text'" [model]="item[field.descriptionVehicule]"  [fieldName]="field.descriptionVehicule" [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-6">
+              <tr>
+                <td class="check">
+                    <cesam-input [type]="'checkbox'"
+                      [model]="item[field.degatVehicule]"
+                      [fieldName]="field.degatVehicule"
+                      [currentCtx]="currentCtx"></cesam-input>
+                </td>
+                <td class="input">
+                  <cesam-input [type]="'text'" [model]="item[field.descriptionDegatVehicule]"  [fieldName]="field.descriptionDegatVehicule" [currentCtx]="currentCtx"></cesam-input>
+               </td>
+                <td class="buton">
+                  <button class="btn btn-default btn-xs trash"
+                    (click)="removeItem(i)"
+                    ctxAccess [fieldName]="field.removeVehiculeBtn" [currentCtx]="currentCtx" [hideExtraVar]="true">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                 </button>
+               </td>
+             </tr>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-xs-6">
+              <cesam-input [type]="'text'" [model]="model[field.descriptionVehicule]"  [fieldName]="field.descriptionVehicule" [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-6">
+              <tr>
+                <td class="check">
+                  <cesam-input [type]="'checkbox'"
+                    [model]="model[field.degatVehicule]"
+                    [fieldName]="field.degatVehicule"
+                    [currentCtx]="currentCtx"></cesam-input>
+                </td>
+                <td class="input tall">
+                  <cesam-input [type]="'text'" [model]="model[field.descriptionDegatVehicule]"  [fieldName]="field.descriptionDegatVehicule" [currentCtx]="currentCtx"></cesam-input>
+               </td>
+             </tr>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-group">
+       <div class="col-xs-12 control-label">
+         <button class="btn btn-default btn-xs action right"
+           (click)="addItem()"
+           ctxAccess [fieldName]="field.addVehiculeBtn" [currentCtx]="currentCtx" [hideExtraVar]="true">AJOUTER</button>
+       </div>
+    </div>
+     </div>
+  </div>
+</div>

@@ -1,0 +1,166 @@
+<div class="well well-lg">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Liens
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse evt-liens-content">
+      <!--Evenement cause -->
+      <div class="form-group form-horizontal" *ngIf="evenement.codeModele !== 'BAL'">
+        <label class="col-xs-2 control-label">Evènement cause</label>
+         <div class="col-xs-8">
+             <h5 *ngIf="currentCtx !== model.contexte.READ">
+                     {{ model.evenementCause?.localisant?.nom || model.evenementCause?.nom }}
+             </h5>
+             <h5 *ngIf="currentCtx === model.contexte.READ">
+                 <a (click)="loadAnotherEvenement(model.evenementCause.identifiant)">
+                     {{ model.evenementCause?.localisant?.nom || model.evenementCause?.nom}}
+                 </a>
+             </h5>
+         </div>
+         <div class="col-xs-2">
+            <button
+                ctxAccess
+                [fieldName]="model.field.updateEvenementCause"
+                [currentCtx]="model.currentCtx"
+                class="btn btn-default btn-xs action dropdown-toggle pull-right"
+                type="button"
+                id="btn_alertes_rattachees"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+              Modifier
+          </button>
+            <ul
+                class="dropdown-menu dropdown-menu-right"
+                aria-labelledby="btn_alertes_rattachees">
+              <li *ngFor="let item of model.listeEvenementWithoutCause">
+                    <a (click)="updateEvenementCause(item)">
+                        {{ item?.localisant?.nom }}
+                    </a>
+              </li>
+            </ul>
+          </div>
+      </div>
+
+      <!--Alerte source -->
+      <div class="form-group form-horizontal" *ngIf="evenement.codeModele !== 'BAL'">
+        <label class="col-xs-2 control-label">Alerte source</label>
+         <div class="col-xs-8">
+            <h5>{{  model?.alerteSource?.nomLocalisant }} </h5>
+         </div>
+         <div class="col-xs-2">
+            <button
+                ctxAccess
+                [fieldName]="model.field.removeAlerteSource"
+                [currentCtx]="model.currentCtx"
+                *ngIf="model.alerteSource.identifiant"
+                class="btn btn-default btn-xs action pull-right"
+                type="button"
+                (click)="cancelLink(model.alerteSource.identifiant)">
+              délier
+            </button>
+          </div>
+
+       </div>
+
+      <!--Alertes rattachées -->
+      <div class="form-group form-horizontal" *ngIf="evenement.codeModele !== 'BAL'">
+
+        <label class="col-xs-12 control-label">Alertes rattachées</label>
+         <div class="col-xs-12">
+           <table class="table">
+            <tbody>
+              <tr *ngFor="let alerteLiee of model.alertesLiees">
+                <td
+                    *ngIf="alerteLiee.idEvenementAttache"
+                    [innerHTML]="alerteLiee?.nomLocalisant">
+                </td>
+                <td>
+                    <button
+                        ctxAccess
+                        [fieldName]="model.field.removeAlerteRattachee"
+                        [currentCtx]="model.currentCtx"
+                        class="btn btn-default btn-xs action pull-right"
+                        type="button"
+                        (click)="cancelLink(alerteLiee.identifiant)">
+                      délier
+                    </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+         </div>
+      </div>
+
+        <!--Entités rattachées -->
+        <div class="form-group form-horizontal">
+
+         <label class="col-xs-10 control-label"> {{ model.i18n[currentEntity] }} rattaché(s)</label>
+         <div class="col-xs-2">
+            <button
+                ctxAccess
+                [fieldName]="model.field.addEvenementRattache"
+                [currentCtx]="model.currentCtx"
+                class="btn btn-default action btn-xs dropdown-toggle pull-right"
+                type="button"
+                id="btn_alertes_rattachees"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+              Ajouter
+            </button>
+            <ul
+                class="dropdown-menu dropdown-menu-right"
+                aria-labelledby="btn_alertes_rattachees">
+              <li *ngFor="let item of available">
+                    <a
+                        ctxAccess
+                        [fieldName]="model.field.addEvenementRattache"
+                        [currentCtx]="model.currentCtx"
+                        (click)="addToAlreadyAdded(item)">
+                        {{ item?.nomLocalisant  || item?.nom }}
+                    </a>
+              </li>
+            </ul>
+          </div>
+           <div class="col-xs-12">
+             <table class="table table-condensed table-hover">
+                 <thead></thead>
+              <tbody>
+                <tr *ngFor="let item of added">
+                  <td>
+                      <span *ngIf="currentCtx !== model.contexte.READ">
+                          {{
+                            item[this.typeEntities[this.currentEntity].entiteRattachee].nomLocalisant ||
+                            item[this.typeEntities[this.currentEntity].entiteRattachee].nom
+                          }}
+                      </span>
+
+                      <a  *ngIf="currentCtx === model.contexte.READ"
+                          (click)="gotoEvenement(item)">
+                          {{
+                            item[this.typeEntities[this.currentEntity].entiteRattachee].nomLocalisant ||
+                            item[this.typeEntities[this.currentEntity].entiteRattachee].nom
+                          }}
+                      </a>
+
+                  </td>
+                  <td>
+                      <button
+                          ctxAccess
+                          [fieldName]="model.field.removeEvenementRattache"
+                          [currentCtx]="model.currentCtx"
+                          class="btn btn-default btn-xs action pull-right"
+                          type="button"
+                          (click)="removeFromAlreadyAdded(item)">
+                        délier
+                      </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+           </div>
+        </div>
+    </div>
+</div>

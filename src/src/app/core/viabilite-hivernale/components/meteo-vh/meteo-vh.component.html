@@ -1,0 +1,169 @@
+<div id="meteo-vh">
+    <div class="header">
+        <!--Menu onglet Tabs-->
+       <!-- <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a>informations météo</a>
+            </li>
+        </ul>-->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" [ngClass]="{ 'active': ongletActif.meteo }">
+                <a (click)="gotoOnglet('meteo')">informations météo</a>
+            </li>
+            <li role="presentation" [ngClass]="{ 'active': ongletActif.intervenantAstreinte }">
+                <a (click)="gotoOnglet('intervenantAstreinte')" >intervenants d’astreinte</a>
+            </li>
+            <li role="presentation" [ngClass]="{ 'active': ongletActif.vehiculeSftrf }">
+                <a (click)="gotoOnglet('vehiculeSftrf')">véhicules SFTRF</a>
+            </li>
+        </ul>
+    </div>
+
+    <div *ngIf="ongletActif.meteo" class="content meteo">
+        <table class="table firstline">
+            <thead>
+            <tr class="first">
+                <th class="libelle nom" title="Nom de la localisation de la station">
+                    Nom
+                </th>
+                <th class="libelle date" title="Horodate dernières mesures">
+                    Date dernières mesures
+                </th>
+                <th class="libelle syntheses" title="Synthèses de conditions pluies">
+                    Pluie
+                </th>
+                <th class="libelle syntheses" title="Synthèses de conditions neiges">
+                    Neige
+                </th>
+                <th class="libelle syntheses" title="Synthèses de conditions verglas">
+                    Risque de verglas
+                </th>
+                <th class="libelle ta" title="Température">
+                    Ta
+                </th>
+                <th class="libelle ts" title="Température de surface de la chaussée">
+                    Ts
+                </th>
+                <th class="libelle tp" title="Température de point de congélation">
+                    Tp
+                </th>
+                <th class="libelle rosee" title="Température du point de rosée">
+                    Td
+                </th>
+                <th class="libelle sol" title="Température de sous sol">
+                    TSS
+                </th>
+                <th class="libelle etatChaussee" title="Etat de la chaussée">
+                    Etat Chaussée
+                </th>
+                <th class="libelle humidite" title="Humidité relative dans l'aire">
+                    U
+                </th>
+                <th class="libelle vent" title="Vitesse maximale du vent">
+                    VV
+                </th>
+            </tr>
+            </thead>
+        </table>
+        <!--Table contenu -->
+        <div class="contenu" [perfect-scrollbar]>
+            <table class="table">
+                <tbody>
+                <!--Ex1 -->
+                    <tr *ngFor="let station of stations">
+                        <td class="libelle nom">
+                            {{station.description}}
+                        </td>
+                        <td class="libelle date">
+                            {{station.variables[model.fields.TEMPERATURE].horodateDerniereModification | date:'dd/MM/yyyy HH:mm' }}
+                        </td>
+                        <td class="libelle syntheses">
+                            {{station.variables[model.fields.ALARME_PLUIE].valeur==="1" ? "OUI":"NON"}}
+                        </td>
+                        <td class="libelle syntheses">
+                            {{station.variables[model.fields.ALARME_NEIGE].valeur==="1" ? "OUI":"NON"}}
+                        </td>
+                        <td class="libelle syntheses">
+                            {{station.variables[model.fields.ALARME_VERGLAS].valeur==="1" ? "OUI":"NON"}}
+                        </td>
+                        <td class="libelle ta">
+                            <div
+                                *ngIf="station.variables[model.fields.TEMPERATURE].valeur && station.variables[model.fields.TEMPERATURE].valeur?.slice(0,1)!=='-'">
+                                +{{station.variables[model.fields.TEMPERATURE].valeur?.slice(0,2)}}°C
+                            </div>
+                            <div
+                                *ngIf="station.variables[model.fields.TEMPERATURE].valeur && station.variables[model.fields.TEMPERATURE].valeur?.slice(0,1)==='-'">
+                                {{station.variables[model.fields.TEMPERATURE].valeur?.slice(0,3)}}°C
+                            </div>
+                        </td>
+                        <td class="libelle ts">
+                            <div
+                                *ngIf="station.variables[model.fields.TEMPERATURE_CHAUSSE].valeur && station.variables[model.fields.TEMPERATURE_CHAUSSE].valeur?.slice(0,1)!=='-'">
+                                +{{station.variables[model.fields.TEMPERATURE_CHAUSSE].valeur?.slice(0,2)}}°C
+                            </div>
+                            <div
+                                *ngIf="station.variables[model.fields.TEMPERATURE_CHAUSSE].valeur && station.variables[model.fields.TEMPERATURE_CHAUSSE].valeur?.slice(0,1)==='-'">
+                                {{station.variables[model.fields.TEMPERATURE_CHAUSSE].valeur?.slice(0,3)}}°C
+                            </div>
+                        </td>
+                        <td class="libelle tp">
+                            <div
+                                *ngIf="station.variables[model.fields.TEMPERATURE_POINT_CONGELATION].valeur && station.variables[model.fields.TEMPERATURE_POINT_CONGELATION].valeur?.slice(0,1)!=='-'">
+                                +{{station.variables[model.fields.TEMPERATURE_POINT_CONGELATION].valeur?.slice(0,2)}}°C
+                            </div>
+                            <div
+                                *ngIf="station.variables[model.fields.TEMPERATURE_POINT_CONGELATION].valeur && station.variables[model.fields.TEMPERATURE_POINT_CONGELATION].valeur?.slice(0,1)==='-'">
+                                {{station.variables[model.fields.TEMPERATURE_POINT_CONGELATION].valeur?.slice(0,3)}}°C
+                            </div>
+                        </td>
+                        <td class="libelle rosee">
+                            <div
+                                *ngIf="station.variables[model.fields.TEMPERATURE_PT_ROSEE].valeur && station.variables[model.fields.TEMPERATURE_PT_ROSEE].valeur?.slice(0,1)!=='-'">
+                                +{{station.variables[model.fields.TEMPERATURE_PT_ROSEE].valeur?.slice(0,2)}}°C
+                            </div>
+                            <div
+                                *ngIf="station.variables[model.fields.TEMPERATURE_PT_ROSEE].valeur && station.variables[model.fields.TEMPERATURE_PT_ROSEE].valeur?.slice(0,1)==='-'">
+                                {{station.variables[model.fields.TEMPERATURE_PT_ROSEE].valeur?.slice(0,3)}}°C
+                            </div>
+                        </td>
+                        <td class="libelle sol">
+                            <div
+                                *ngIf="station.variables[model.fields.TEMPERATURE_SOUS_SOL].valeur && station.variables[model.fields.TEMPERATURE_SOUS_SOL].valeur?.slice(0,1)!=='-'">
+                                +{{station.variables[model.fields.TEMPERATURE_SOUS_SOL].valeur?.slice(0,2)}}°C
+                            </div>
+                            <div
+                                *ngIf="station.variables[model.fields.TEMPERATURE_SOUS_SOL].valeur && station.variables[model.fields.TEMPERATURE_SOUS_SOL].valeur?.slice(0,1)==='-'">
+                                {{station.variables[model.fields.TEMPERATURE_SOUS_SOL].valeur?.slice(0,3)}}°C
+                            </div>
+                        </td>
+                        <td class="libelle etatChaussee">
+                            {{station.variables[model.fields.ETAT_CHAUSSEE].valeur==="1" ? "Chaussée humide":"Chaussée sèche"}}
+                        </td>
+                        <td class="libelle humidite">
+                            <div
+                                *ngIf="station.variables[model.fields.HUMIDITE_RELATIF_AIR].valeur">
+                                {{station.variables[model.fields.HUMIDITE_RELATIF_AIR].valeur?.slice(0,2)}}%
+                            </div>
+                        </td>
+                        <td class="libelle vent">
+                            <div
+                                *ngIf="station.variables[model.fields.VITESSE_DU_VENT].valeur && station.variables[model.fields.VITESSE_DU_VENT].valeur?.slice(2,3)===','">
+                                {{station.variables[model.fields.VITESSE_DU_VENT].valeur?.slice(0,2)}}Km/h
+                            </div>
+                            <div
+                                *ngIf="station.variables[model.fields.VITESSE_DU_VENT].valeur && station.variables[model.fields.VITESSE_DU_VENT].valeur?.slice(2,3)!==','">
+                                {{station.variables[model.fields.VITESSE_DU_VENT].valeur?.slice(0,3)}}Km/h
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <intervenants-astreinte *ngIf="ongletActif.intervenantAstreinte"></intervenants-astreinte>
+    <vehicules-sftrf *ngIf="ongletActif.vehiculeSftrf"></vehicules-sftrf>
+    <div class="footer planifies">
+        <ul class="boutons pull-right">
+        </ul>
+    </div>
+</div>

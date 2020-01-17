@@ -1,0 +1,175 @@
+<div id="preparation-envoi-list">
+    <div class="header">
+        <!--Menu onglet Tabs-->
+        <ul class="nav nav-tabs" role="tablist">
+            <!-- les onglets précédents -->
+            <li role="presentation" *ngFor="let tab of previousTabs"
+                ConfirmAction
+                (confirmActionResponse)=setActiveTab(tab?.codeInfo)>
+                <a>{{tab?.nom}}</a>
+            </li>
+            <!-- l'onglet astreintes classiques -->
+            <li role="presentation" class="active">
+                <a>Prerarations d'envois</a>
+            </li>
+            <!-- les onglets suivant-->
+            <li role="presentation" *ngFor="let tab of nextTabs"
+                ConfirmAction
+                (confirmActionResponse)=setActiveTab(tab?.codeInfo)
+                >
+                <a>{{tab?.nom}}</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content ev_strategies">
+        <!--Table intitulé-->
+        <table class="table firstline"
+               *ngIf="[model.contexte.LIST_BULLETINS_PREPARATIONS_ENVOIES].indexOf(model.currentCtx) > -1">
+            <thead>
+            <tr class="first">
+                <th class="libelle type">
+                    Type
+                </th>
+                <th class="libelle nom">Nom
+                </th>
+                <th class="libelle destinataire">Destinataire
+                </th>
+                <th class="libelle media">Média
+                </th>
+                <th class="libelle lie">Événement lié
+                </th>
+                <th class="libelle plannifie">Planifiée
+                </th>
+            </tr>
+            </thead>
+        </table>
+
+        <!--Table contenu -->
+        <div class="contenu" [perfect-scrollbar]>
+            <div [hidden]="model.contexte.BULLETIN_CREATE_PREPARATION_ENVOI===model.currentCtx ? false : true">
+                <preparation-envoi-new
+                    [currentCtx]="model.currentCtx">
+                </preparation-envoi-new>
+            </div>
+            <div [hidden]="(model.contexte.BULLETIN_EDITION_PREPARATION_ENVOI===model.currentCtx || model.contexte.BULLETIN_PLANIFICATION_PREPARATION_ENVOI===model.currentCtx) ? false : true">
+                <preparation-envoi-edit
+                    [isUpadtePlanif]="isUpadtePlanif"
+                    [currentCtx]="model.currentCtx">
+                </preparation-envoi-edit>
+            </div>
+            <table class="table"
+                   *ngIf="[model.contexte.LIST_BULLETINS_PREPARATIONS_ENVOIES].indexOf(model.currentCtx) > -1">
+                <tbody>
+                <!--Activée-->
+                <tr *ngFor="let preparation of preparationsEnvois" (click)="selectPreparationEnvoi(preparation)"
+                    selectItemDirective [applyClassesOnSelect]="'event-selected'" [model]="preparation"
+                    [ngClass]="[model.ctx.identifiant === preparation.identifiant ? 'event-selected':'']">
+                    <td class="libelle type">
+                        <img src="assets/img/icon/file.png"/>
+                    </td>
+                    <td class="libelle nom">
+                        <tr>
+                            <td class="nom_doc" [innerHTML]="preparation.nom"></td>
+                            <td class="nom_bouton options_btn">
+                              <span changeDropDirection [seuil]="850">
+                                  <span class="dropdown">
+                                    <button class="btn btn-default btn-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                            ctxAccess
+                                            [fieldName]="model.field.actions"
+                                            [currentCtx]="model.currentCtx"
+                                            [configCte]="model.configCte">actions</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a style="cursor:pointer" (click)="apercuPreparationEnvoi(preparation)">Aperçu</a></li>
+                                        <li><a style="cursor:pointer" (click)="editionPreparationEnvoi(preparation, model.contexte.BULLETIN_EDITION_PREPARATION_ENVOI, false)">Saisie commentaire</a></li>
+                                        <li *ngIf="!preparation.planification"><a style="cursor:pointer" (click)="editionPreparationEnvoi(preparation, model.contexte.BULLETIN_PLANIFICATION_PREPARATION_ENVOI, true)">Planifier</a></li>
+                                        <li><a style="cursor:pointer" (click)="emissionPreparationEnvoi(preparation)">Emission</a></li>
+                                        <li><a style="cursor:pointer" (click)="supprimerPreparationEnvoi(preparation)">Supprimer</a></li>
+                                        <li *ngIf="preparation.planification"><a style="cursor:pointer" (click)="supprimerPlanificationPreparationEnvoi(preparation)">Supprimer Planification</a></li>
+                                    </ul>
+                                  </span>
+                                </span>
+                            </td>
+                        </tr>
+                </td>
+                <td class="libelle destinataire"
+                    [innerHTML]="preparation.nomRessourceDestinataire ? preparation.nomRessourceDestinataire : preparation.nomGroupeDestinataire"></td>
+                <td class="libelle media" [innerHTML]="preparation.codeMedia==='MEDIA_DOC.MAIL' ? 'Mail' : ''"></td>
+                <td class="libelle lie" [innerHTML]="preparation.idObjetSource"></td>
+                <td class="libelle plannifie" [innerHTML]="preparation.planification ? 'OUI' : 'NON'"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--Footer strategie-->
+    <div class="footer strategie">
+        <ul class="stat">
+            <li class="stat"><span class="bold">{{preparationsEnvois.length}} </span> préparations d'envois</li>
+        </ul>
+        <ul class="boutons pull-right">
+            <li *ngIf="[model.contexte.LIST_BULLETINS_PREPARATIONS_ENVOIES].indexOf(model.currentCtx) > -1">
+                <button
+                    type="button"
+                    class="btn btn-default"
+                    (click)="showFormCreatePreparationEnvoi(model.contexte.BULLETIN_CREATE_PREPARATION_ENVOI)"
+                    ctxAccess
+                    [fieldName]="model.field.create"
+                    [currentCtx]="model.currentCtx"
+                    [configCte]="model.configCte">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Créer une préparation d’envoi
+                </button>
+            </li>
+            <li class="link" *ngIf="[model.contexte.BULLETIN_CREATE_PREPARATION_ENVOI, model.contexte.BULLETIN_EDITION_PREPARATION_ENVOI, model.contexte.BULLETIN_PLANIFICATION_PREPARATION_ENVOI].indexOf(model.currentCtx) > -1">
+                <button type="button"
+                        class="btn btn-default"
+                        (click)="cancelCreation(model.contexte.LIST_BULLETINS_PREPARATIONS_ENVOIES)"
+                        ctxAccess
+                        [fieldName]="model.field.annuler"
+                        [currentCtx]="model.currentCtx"
+                        [configCte]="model.configCte">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-right:10px"></span>Retour
+                </button>
+            </li>
+            <li class="link" *ngIf="[model.contexte.BULLETIN_CREATE_PREPARATION_ENVOI].indexOf(model.currentCtx) > -1">
+                <button type="button"
+                        class="btn btn-default"
+                        [disabled]="!isValid"
+                        (click)="createPreparationEnvoiAndSendToBack(model.contexte.LIST_BULLETINS_PREPARATIONS_ENVOIES)"
+                        ctxAccess
+                        [fieldName]="model.field.create"
+                        [currentCtx]="model.currentCtx"
+                        [configCte]="model.configCte">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:10px"></span>Creer
+                </button>
+            </li>
+            <li class="link" *ngIf="[model.contexte.BULLETIN_EDITION_PREPARATION_ENVOI].indexOf(model.currentCtx) > -1">
+                <button type="button"
+                        class="btn btn-default"
+                        [disabled]="!isValidModification"
+                        (click)="modifierPreparationEnvoiAndSendToBack(model.contexte.LIST_BULLETINS_PREPARATIONS_ENVOIES)"
+                        ctxAccess
+                        [fieldName]="model.field.valider"
+                        [currentCtx]="model.currentCtx"
+                        [configCte]="model.configCte">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true" style="margin-right:10px"></span>Valider
+                </button>
+            </li>
+            <li class="link" *ngIf="[model.contexte.BULLETIN_PLANIFICATION_PREPARATION_ENVOI].indexOf(model.currentCtx) > -1">
+                <button type="button"
+                        class="btn btn-default"
+                        [disabled]="!isValidPlanification"
+                        (click)="planifierPreparationEnvoiAlreadyCreatedAndSendToBack(model.contexte.LIST_BULLETINS_PREPARATIONS_ENVOIES)"
+                        ctxAccess
+                        [fieldName]="model.field.planifier"
+                        [currentCtx]="model.currentCtx"
+                        [configCte]="model.configCte">
+                    <span class="glyphicon glyphicon-time" aria-hidden="true" style="margin-right:10px"></span>Planifier
+                </button>
+            </li>
+
+
+        </ul>
+    </div>
+</div>

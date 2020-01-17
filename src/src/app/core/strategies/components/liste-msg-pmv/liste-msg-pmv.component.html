@@ -1,0 +1,145 @@
+<div id="liste-equipement" [style.height.px]="model.parentHeight">
+    <div class="header" *ngIf="[model.contexte.LIST_STRATEGIE].indexOf(model.currentCtx) > -1">
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a [innerHTML]="model.labels.ctx[model.currentCtx]"></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content ev_equipements" [style.height.px]="model.contentEvStrategiesHeight">
+        <!--Table intitulé-->
+        <table class="table firstline">
+            <thead>
+            <tr class="first">
+                <th class="libelle chevron"></th>
+                <th class="libelle nom_pmv"><span class="bleu">PMV</span> / Strategie</th>
+                <th class="libelle message">Message</th>
+            </tr>
+            </thead>
+        </table>
+        <!--Table contenu -->
+        <div
+            class="contenu"
+            [perfect-scrollbar]
+            [style.height.px]="model.contentHeight">
+            <table class="table">
+                <tbody>
+                    <ng-template ngFor let-equipement [ngForOf]="equipements" let-i="index">
+                        <tr (click)="equipement.isCollapsedContent = !equipement.isCollapsedContent">
+                            <td class="libelle chevron">
+                                <span [ngClass]="[ equipement.isCollapsedContent ? 'glyphicon glyphicon-triangle-bottom': 'glyphicon glyphicon-triangle-right']"
+                                      aria-hidden="true" data-toggle="collapse"
+                                      [attr.data-target]="'.'+equipement.identifiant">
+                                </span>
+                            </td>
+                            <td class="libelle nom_pmv">
+                                <div  [ngClass]="[ equipement?.messagePrioritaire?.identifiantStrategie === model.ctx.identifiant ? 'bleu': '' ]" >
+                                     <span class="bleu">{{ equipement.codeEquipement }}</span> / <span>{{ equipement?.messagePrioritaire?.nomStrategie }}</span>
+                                    <span class="badge"> {{ (equipement?.messagesEnAttentes?.length + 1) + ' strat.'}}</span>
+                                </div>
+                            </td>
+                            <td class="libelle message">
+                                <tr>
+                                    <td>
+                                        <div class="statut encart pourlimite">
+                                            <img *ngIf="equipement?.messagePrioritaire?.valeurs[getDynamicModel(equipement.messagePrioritaire, model.field.pictogramme)]"
+                                                src="{{ 'assets/img/icon/IconePictogramme/'+ equipement?.messagePrioritaire?.valeurs[getDynamicModel(equipement.messagePrioritaire, model.field.pictogramme)] +'.png' }}"  />
+                                            <img *ngIf="!equipement?.messagePrioritaire?.valeurs[getDynamicModel(equipement.messagePrioritaire, model.field.pictogramme)]"
+                                                src="{{ 'assets/img/icon/IconePictogramme/'+ model.defaultPicto +'.png' }}" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="statut encart pourmessage"
+                                            [style.minWidth.px]="getNbColonnes(equipement?.messagePrioritaire)">
+                                            <div
+                                                [style.whiteSpace]="getWhiteSpace(equipement?.messagePrioritaire?.valeurs[getDynamicModel(message, model.field.ligne1)])"
+                                                [style.minWidth.px]="getNbColonnes(equipement?.messagePrioritaire)"
+                                                [innerHTML]="equipement?.messagePrioritaire?.valeurs[getDynamicModel(equipement?.messagePrioritaire, model.field.ligne1)]"></div>
+                                            <div
+                                                [style.whiteSpace]="getWhiteSpace(equipement?.messagePrioritaire?.valeurs[getDynamicModel(message, model.field.ligne2)])"
+                                                [style.minWidth.px]="getNbColonnes(equipement?.messagePrioritaire)"
+                                                [innerHTML]="equipement?.messagePrioritaire?.valeurs[getDynamicModel(equipement?.messagePrioritaire, model.field.ligne2)]"></div>
+                                            <div
+                                                [style.whiteSpace]="getWhiteSpace(equipement?.messagePrioritaire?.valeurs[getDynamicModel(message, model.field.ligne3)])"
+                                                [style.minWidth.px]="getNbColonnes(equipement?.messagePrioritaire)"
+                                                [innerHTML]="equipement?.messagePrioritaire?.valeurs[getDynamicModel(equipement?.messagePrioritaire, model.field.ligne3)]"></div>
+                                            <div
+                                                [style.whiteSpace]="getWhiteSpace(equipement?.messagePrioritaire?.valeurs[getDynamicModel(message, model.field.ligne4)])"
+                                                [style.minWidth.px]="getNbColonnes(equipement?.messagePrioritaire)"
+                                                [innerHTML]="equipement?.messagePrioritaire?.valeurs[getDynamicModel(equipement?.messagePrioritaire, model.field.ligne4)]"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </td>
+                        </tr>
+
+                        <!--PMV 1.1 Collapse-->
+                        <tr *ngFor="let message of equipement?.messagesEnAttentes" class="collapse"
+                            [collapse]="!equipement.isCollapsedContent">
+                            <td class="libelle chevron"></td>
+                            <td class="libelle nom_pmv"
+                                [ngClass]="[ message.identifiantStrategie === model.ctx.identifiant ? 'bleu': '' ]"
+                                [innerHTML]="message.nomStrategie"></td>
+                            <td class="libelle message  disabled">
+                        <tr>
+                            <td>
+                                <div class="statut encart pourlimite">
+                                    <img *ngIf="message.valeurs[getDynamicModel(message, model.field.pictogramme)]"
+                                        src="{{ 'assets/img/icon/IconePictogramme/'+ message.valeurs[getDynamicModel(message, model.field.pictogramme)] +'.png' }}"/>
+                                    <img *ngIf="!message.valeurs[getDynamicModel(message, model.field.pictogramme)]"
+                                        src="{{ 'assets/img/icon/IconePictogramme/'+ model.defaultPicto +'.png' }}"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="statut encart pourmessage"
+                                    [style.minWidth.px]="getNbColonnes(message)">
+                                    <div
+                                        [style.whiteSpace]="getWhiteSpace(message?.valeurs[getDynamicModel(message, model.field.ligne1)])"
+                                        [style.minWidth.px]="getNbColonnes(message)"
+                                        [innerHTML]="message?.valeurs[getDynamicModel(message, model.field.ligne1)]"></div>
+
+                                    <div
+                                        [style.whiteSpace]="getWhiteSpace(message?.valeurs[getDynamicModel(message, model.field.ligne2)])"
+                                        [style.minWidth.px]="getNbColonnes(message)"
+                                        [innerHTML]="message?.valeurs[getDynamicModel(message, model.field.ligne2)]"></div>
+
+                                    <div
+                                        [style.whiteSpace]="getWhiteSpace(message?.valeurs[getDynamicModel(message, model.field.ligne3)])"
+                                        [style.minWidth.px]="getNbColonnes(message)"
+                                        [innerHTML]="message?.valeurs[getDynamicModel(message, model.field.ligne3)]"></div>
+
+                                    <div
+                                        [style.whiteSpace]="getWhiteSpace(message?.valeurs[getDynamicModel(message, model.field.ligne4)])"
+                                        [style.minWidth.px]="getNbColonnes(message)"
+                                        [innerHTML]="message?.valeurs[getDynamicModel(message, model.field.ligne4)]"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        </td>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--Footer strategie-->
+    <div class="footer strategie">
+        <ul class="stat">
+            <li>
+                <span class="bold" [innerHTML]="equipements?.length"> </span> équipements trouvés
+            </li>
+            <li *ngIf="model.ctx.identifiant">
+                <label>
+                    <input type="checkbox"
+                           [(ngModel)]="model.selectedStrategie"
+                           (click)="model.selectedStrategie = !model.selectedStrategie ; $event.stopPropagation();"
+                           (ngModelChange)="resolveFilterBySelectedStrategie($event)">
+                    Filtrer sur la stratégie sélectionnée
+                </label>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="situation-courante">
+  <liste-alerte></liste-alerte>
+  <alert-error></alert-error>
+  <liste-evenement
+      [idEvenementSelected]="idEvenementSelected"
+      [edition]="edition"
+      [creation]="creation"
+      [position]="position"
+      [idAlerteSource]="idAlerteSource"
+      [type]="type">
+  </liste-evenement>
+  <liste-plan-action *ngIf="type !== 'BAL'"></liste-plan-action>
+  <balisage-wrapper *ngIf="type === 'BAL'"></balisage-wrapper>
+</div>

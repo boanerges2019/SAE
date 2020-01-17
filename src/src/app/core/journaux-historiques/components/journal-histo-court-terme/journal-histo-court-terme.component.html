@@ -1,0 +1,134 @@
+<div id="journal-histo-court-terme" class="journal-historique">
+
+    <!-- Les onglets -->
+    <div class="header">
+      <!--Menu onglet Tabs-->
+      <ul class="nav nav-tabs" role="tablist">
+  
+        <!-- les onglets précédents -->
+        <li role="presentation" *ngFor="let tab of previousTabs" (click)="setActiveTab(tab.codeInfo)">
+          <a>{{tab.nom}}</a>
+        </li>
+  
+        <!-- l'onglet courant -->
+        <li role="presentation" class="active">
+          <a>Historique court terme</a>        
+        </li>
+        <!-- les onglets suivant-->
+        <li role="presentation" *ngFor="let tab of nextTabs" (click)="setActiveTab(tab.codeInfo)">
+          <a>{{tab.nom}}</a>
+        </li>
+  
+      </ul>
+      <div class="option">
+          <ul class="nav nav-pills pull-right">
+              <li class="selectbox">
+                <select class="form-control"   (change)="selectHisto($event.target.value)">
+                  <option value="">Choisir un historique</option>
+                  <option *ngFor="let histo of listeHistoCourtTerme" value="{{histo.codeInfo}}">{{histo.label}}</option> 
+                </select>            
+              </li>   
+              <li class="badge_option">
+                  <button 
+                    [ngClass]= "{'btn': true, 'badge_rechargement': true, 'force': forceRefresh}"
+                    role="button" 
+                    title="Recharger l'historique"
+                    (click)="$event.stopPropagation();charger(true);"></button>
+                </li>
+                <li class="badge_option">
+                  <button 
+                    [ngClass]= "{'btn': true, 'badge_clear_filter': true, 'force': forceRefresh}"
+                    role="button" 
+                    title="Effacer les filtres"
+                    (click)="$event.stopPropagation();clearFilter();"></button>
+                </li>                  
+          </ul>
+        </div>      
+    </div>
+  
+  
+    <!-- Le contenu de la page -->
+    <div class="content journal-historique" >
+        <div class="content empty" *ngIf="!selectedHisto">
+            <p>Sélectionnez l'historique court terme à afficher</p>
+        </div>
+        <!--Table intitulé-->
+        <table class="table firstline" *ngIf="selectedHisto">
+            <colgroup>
+            <ng-template ngFor let-champ [ngForOf]="selectedHisto.champs" let-i="index" >
+                <col span="1" [style.width.%]="champ.width">
+                <col *ngIf="champ.filtre && champ.date" span="1" [style.width.%]="champ.width">
+            </ng-template>
+            </colgroup>          
+            <thead>
+              <tr class="first">
+                  
+                  <ng-template ngFor let-champ [ngForOf]="selectedHisto.champs" let-i="index" >
+                      <th  class="libelle">
+                          {{champ.label}}
+                          <!-- pas de filtre -->
+                          <div *ngIf="!champ.filtre" class="form-control cache">&nbsp;<br/></div>  
+
+                          <!-- filtre de type texte -->
+                          <input 
+                          *ngIf="champ.filtre && !champ.date"
+                          type="text" 
+                          class="form-control" 
+                          [(ngModel)]="model.filtre[champ.colonne]"  
+                          (ngModelChange)="filterChange(champ.colonne)"/> 
+
+                          <!-- filtre de type date (début de période)-->
+                          <span *ngIf="champ.filtre && champ.date">                          
+                              <input class="form-control horodate"  
+                                [(ngModel)]="model.filtre[champ.colonne+'_DEBUT_PERIODE']"  
+                                (ngModelChange)="filterChange(champ.colonne+'_DEBUT_PERIODE')"
+                              date-format="DD/MM/YYYY HH:mm:ss" ng2-datetime-picker="" parse-format="DD/MM/YYYY HH:mm:ss" placeholder="Début de période">                      
+                          </span>                                                     
+                      </th>
+                      <th class="libelle horodate" *ngIf="champ.filtre && champ.date">
+                        <div>
+                          <br/>
+                          <span>
+                            <input class="form-control horodate" 
+                                [(ngModel)]="model.filtre[champ.colonne+'_FIN_PERIODE']" 
+                                (ngModelChange)="filterChange(champ.colonne+'_FIN_PERIODE')" 
+                                date-format="DD/MM/YYYY HH:mm:ss"
+                              ng2-datetime-picker="" parse-format="DD/MM/YYYY HH:mm:ss" placeholder="Fin de période">
+                          </span>
+                      
+                        </div>
+                      </th>
+                  </ng-template>
+              </tr>
+            </thead>        
+        </table>  
+        <div  #contenuJournalHisto class="contenu" [perfect-scrollbar] appInfiniteScroller *ngIf="selectedHisto"> 
+      
+            <table class="table">
+                <colgroup>
+                  <ng-template ngFor let-champ [ngForOf]="selectedHisto.champs" let-i="index" >
+                      <col span="1" [style.width.%]="champ.width">
+                      <col *ngIf="champ.filtre && champ.date"   span="1" [style.width.%]="champ.width">
+                  </ng-template>
+                </colgroup>               
+          
+                <tbody>
+                    <!-- Messages journal historique-->        
+                    <tr *ngFor="let item of contenuJournal; let even = even; let odd = odd" 
+                       [ngClass]="{ odd: odd, even: even }" >
+                       <ng-template ngFor let-champ [ngForOf]="selectedHisto.champs" let-i="index" >
+                          <td *ngIf="!champ.date" 
+                                [ngClass]="{'libelle': true, 'nature': true}"
+                                >{{item[champ.colonne]}}</td>
+                          <td *ngIf="champ.date" class="libelle  horodate">{{item[champ.colonne]  | date: "dd/MM/yyyy HH:mm:ss" }}</td>
+                          <td *ngIf="champ.date && champ.filtre" class="libelle  horodate"></td>
+                       </ng-template>
+                    </tr>                            
+                  </tbody>    
+            </table>
+          </div>        
+    </div>  
+  
+  </div>
+
+

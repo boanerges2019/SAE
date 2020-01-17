@@ -1,0 +1,108 @@
+<div id="liste-annuaires">
+  <div class="header">
+    <!--Menu onglet Tabs-->
+    <ul class="nav nav-tabs" role="tablist">
+     <li role="presentation" class="active">
+        <a>liste des contacts</a>
+      </li>
+   </ul>
+  <!--Options-->
+   <span class="option">
+
+    </span>
+  </div>
+
+  <div class="content liste">
+    <!--Table intitulé-->
+    <table class="table firstline">
+        <thead>
+          <tr class="first">
+            <th class="libelle type"></th>
+            <th class="libelle nom">Nom </th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <!--Table contenu -->
+      <div class="contenu" [perfect-scrollbar] >
+        <table class="table">
+            <tbody>
+
+              <!-- Racines 0-->
+              <ng-template ngFor let-racine [ngForOf]="getRacines()" let-i="index">
+                  <tr class="groupe" 
+                  [ngClass]="{'event-selected': racine?.codeInfo === ressourceSelectionnee?.codeInfo}">
+                    <td class="libelle type">
+                      <a href="#orgas_{{i}}" data-toggle="collapse"> <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="false" ></span> </a>
+                    </td>
+                    <td class="libelle nom"  (click)="selectionnerRessource(racine.codeInfo)">
+                      {{racine.nom}}
+                    </td>
+                  </tr>  
+
+
+                  <!--Organisation 1-->
+                  <tr id="orgas_{{i}}" class="collapse" >
+                      <td colspan="4">
+                        <table>
+                        <ng-template ngFor let-orga [ngForOf]="getOrganisations(racine.codeInfo)" let-j="index">
+                        <tr class="groupe"                         
+                        [ngClass]="{'event-selected': orga?.codeInfo === ressourceSelectionnee?.codeInfo}">
+                          <td class="libelle type">
+
+                          </td>
+                          <td class="libelle type">
+                            <a href="#ressources_{{i}}_{{j}}" data-toggle="collapse"> 
+                                <span 
+                                  [ngClass]="{'glyphicon': true, 'glyphicon-triangle-bottom': expandable[orga.codeInfo], 'glyphicon-triangle-right': !expandable[orga.codeInfo]}" 
+                                  aria-hidden="false" >
+                                </span> 
+                            </a>
+                          </td>
+                          <td class="libelle nom"  (click)="selectionnerRessource(orga.codeInfo)">
+                            {{orga.nom}}
+                          </td>
+                        </tr>  
+                        <tr id="ressources_{{i}}_{{j}}" class="collapse" *ngIf="expandable[orga.codeInfo]">
+                          <td colspan="4">
+                            <table>
+                                <ng-template ngFor let-ress [ngForOf]="getRessourcesOf(orga.codeInfo)" let-k="index">
+                                    <tr 
+                                        (click)="selectionnerRessource(ress.codeInfo)" 
+                                        [ngClass]="{'event-selected': ress?.codeInfo === ressourceSelectionnee?.codeInfo}"
+                                        >   
+                                        <td class="libelle type">
+                                        </td>
+                                        <td class="libelle type">
+                                        </td>                                        
+                                        <td class="libelle type">
+                                        </td>
+                                        <td class="libelle nom" >
+                                          {{ress.nom}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </table>
+                          </td>
+                          </tr>
+                  </ng-template>
+                  </table>
+                  </td>
+                </tr>
+              </ng-template>
+            </tbody>
+        </table>
+        <cesam-loader *ngIf="isLoading"></cesam-loader>
+    </div>
+
+  </div>
+
+  <!--Footer evenement-->
+  <div class="footer">
+    <ul class="stat" >
+     </ul>
+     <ul class="boutons pull-right">
+      </ul>
+  </div>
+</div>

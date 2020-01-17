@@ -1,0 +1,144 @@
+<div id="journal-activite" class="journal-historique">
+  <!-- Les onglets -->
+  <div class="header">
+    <!--Menu onglet Tabs-->
+    <ul class="nav nav-tabs" role="tablist">
+
+      <!-- les onglets précédents -->
+      <li role="presentation" *ngFor="let tab of previousTabs" (click)="setActiveTab(tab.codeInfo)">
+        <a>{{tab.nom}}</a>
+      </li>
+
+      <!-- l'onglet courant -->
+      <li role="presentation" class="active">
+        <a>Journal d'activité</a>
+      </li>
+
+      <!-- les onglets suivant-->
+      <li role="presentation" *ngFor="let tab of nextTabs" (click)="setActiveTab(tab.codeInfo)">
+        <a>{{tab.nom}}</a>
+      </li>
+
+    </ul>
+    <div class="option">
+      <ul class="nav nav-pills pull-right">
+          <li class="badge_option">
+              <button 
+                [ngClass]= "{'btn': true, 'badge_rechargement': true, 'force': forceRefresh}"
+                role="button" 
+                title="Recharger le journal d'activité"
+                (click)="$event.stopPropagation();charger(true);"></button>
+            </li>
+            <li class="badge_option">
+              <button 
+                [ngClass]= "{'btn': true, 'badge_clear_filter': true, 'force': forceRefresh}"
+                role="button" 
+                title="Effacer les filtres"
+                (click)="$event.stopPropagation();clearFilter();"></button>
+            </li>            
+      </ul>
+    </div>
+  </div>
+
+
+  
+
+  <!-- Le contenu de la page -->
+  <div class="content journal-historique">
+      <!--Table intitulé-->
+      <table class="table firstline">
+          <colgroup>
+            <col span="1" style="width: 10%">
+            <col span="1" style="width: 20%">
+            <col span="1" style="width: 7%">
+            <col span="1" style="width: 10%">
+            <col span="1" style="width: 15%">
+            <col span="1" style="width: 10%">
+            <col span="1" style="width: 8%">
+            <col span="1" style="width: 10%">
+            <col span="1" style="width: 10%">
+          </colgroup>
+          <thead>
+            <tr class="first">
+              <th class="libelle nature">Nature
+                  <input type="text" class="form-control" [(ngModel)]="filtre.nature"  (ngModelChange)="filterChange('nature')"/>
+              </th>              
+              <th class="libelle lib">Libellé
+                <input type="text" class="form-control" [(ngModel)]="filtre.description"  (ngModelChange)="filterChange('description')"/>
+              </th>
+              <th class="libelle etat">Etat
+                <input type="text" class="form-control" [(ngModel)]="filtre.etat"  (ngModelChange)="filterChange('etat')"/>
+              </th>
+              <th class="libelle equipement">Equipement
+                <input type="text" class="form-control"  [(ngModel)]="filtre.equipement"  (ngModelChange)="filterChange('equipement')"/>
+              </th>
+              <th class="libelle localisation">Localisation
+                <input type="text" class="form-control" [(ngModel)]="filtre.localisation"  (ngModelChange)="filterChange('localisation')"/>
+              </th>
+              <th class="libelle operateur">Opérateur
+                <input type="text" class="form-control" [(ngModel)]="filtre.operateur"  (ngModelChange)="filterChange('operateur')"/>
+              </th>
+              <th class="libelle poste">Poste
+                <input type="text" class="form-control" [(ngModel)]="filtre.poste"  (ngModelChange)="filterChange('poste')"/>
+              </th>
+              <th class="libelle horodate">
+                  <div>
+                      Horodate
+                      <span>                          
+                          <input class="form-control horodate"  [(ngModel)]="filtre.horodateDebut"  (ngModelChange)="filterChange('horodateDebut')"
+                          date-format="DD/MM/YYYY HH:mm:ss" ng2-datetime-picker="" parse-format="DD/MM/YYYY HH:mm:ss" placeholder="Début de période">                      
+                      </span>                      
+                  </div>
+              </th>
+              <th class="libelle horodate">
+                          <div>  
+                            <br/>                                  
+                      <span>
+                          <input class="form-control horodate"  [(ngModel)]="filtre.horodateFin"  (ngModelChange)="filterChange('horodateFin')"
+                          date-format="DD/MM/YYYY HH:mm:ss" ng2-datetime-picker="" parse-format="DD/MM/YYYY HH:mm:ss" placeholder="Fin de période">                   
+                      </span>
+                       
+                  </div>
+              </th>
+            </tr>
+          </thead>
+      
+      </table>
+      <div  #contenuJournalActivite class="contenu" [perfect-scrollbar] appInfiniteScroller> 
+      
+        <table class="table">
+            <colgroup>
+              <col span="1" style="width: 10%">
+              <col span="1" style="width: 20%">
+              <col span="1" style="width: 7%">
+              <col span="1" style="width: 10%">
+              <col span="1" style="width: 15%">
+              <col span="1" style="width: 10%">
+              <col span="1" style="width: 8%">
+              <col span="2" style="width: 20%">
+              
+            </colgroup>          
+            <tbody>
+                <!-- Messages journal activite-->
+    
+                <tr *ngFor="let item of contenuJournal; let even = even; let odd = odd" 
+                   [ngClass]="{ odd: odd, even: even }" >
+                  <td class="libelle nature">{{item.nature}}</td>
+                  <td class="libelle lib">{{item.description}}</td>
+                  <td class="libelle etat">{{item.etat}}</td>
+                   <!-- <div class="statut" [ngClass]=" getStateClass(item.etat)">{{item.etat}}</div></td> -->
+                  <td class="libelle equipement">{{item.equipement}}</td>
+                  <td class="libelle localisation">{{item.localisation}}</td>
+                  <td class="libelle operateur">{{item.operateur}}</td>
+                  <td class="libelle poste">{{item.poste}}</td>
+                  <td class="libelle horodate"> {{item.horodate | date: "dd/MM/yyyy HH:mm:ss"}}</td>
+                </tr>
+    
+                
+              </tbody>    
+        </table>
+      </div>
+    </div>
+  </div>  
+
+

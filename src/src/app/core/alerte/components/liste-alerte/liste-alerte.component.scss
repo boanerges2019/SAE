@@ -1,0 +1,268 @@
+@import 'src/styles/variables/variables.scss';
+#alerte{
+   width:100%;
+   display:block;
+   float:left;
+   margin-bottom:40px;
+   height:190px;
+   /* Background */
+   .bg_header{
+     background:$bg-titre;
+     height:60px;
+     width:100%;
+     display:block;
+     float:left;
+     border-radius:5px 5px 0 0;
+   }
+   .bg_content{
+     background: $blanc;
+     height:130px;
+     width:100%;
+     display:block;
+     float:left;
+     background-color:$blanc;
+     border-radius:0 0 5px 5px;
+   }
+    .absolute {
+    position: absolute;
+    width: 1840px;
+    height: 190px;
+      /* Liste des alertes */
+      .list_alertes{
+        padding:0;
+        list-style:none;
+        white-space:nowrap;
+        width: 1840px;
+        height: 190px;
+        overflow: hidden;
+        overflow-x: auto;
+        direction: rtl;
+
+         .btn{
+            height: 30px;
+            border-radius: 5px;
+            color: $blanc;
+            background: $bleu;
+            padding: 8px 10px;
+            line-height: 0;
+            text-transform: uppercase;
+            font-weight: 600;
+            border:none;
+            text-align: center;
+            margin-right:15px;
+            font-size:14px;
+            &:hover{
+              background: $bleu_fonce;
+            }
+         }
+
+        li{
+          display:inline-block;
+          position: relative;
+          text-align:left;
+          direction: ltr;
+        }
+
+        .simple{
+          width:201px;
+          height:190px;
+          padding:0;
+          cursor:pointer;
+          &:hover{
+            .content{
+              background:$bleu;
+              color:$blanc;
+            }
+          }
+          .create-evenement{
+            display:none;
+          }
+          .action{
+            display:none;
+          }
+        }
+
+        .double{
+          width:401px;
+          height:190px;
+          padding:0;
+          cursor:default;
+          .create-evenement{
+            display:block;
+          }
+          .contenu{
+            width:403px;
+            border-left:1px solid $gris_drop;
+            float:left;
+            background:$bleu;
+            color: $blanc;
+            white-space: initial;
+            .content{
+              width:200px;
+              border-left:none;
+              padding:10px 15px;
+              display:inline-block;
+            }
+            .action{
+              width:200px;
+              padding:5px 14px 0 5px;
+              display:inline-block;
+              .btn{
+                border:1px solid $blanc;
+                margin-right: 2px;
+                // width: 20px;
+              }
+              select{
+                height: 30px;
+                padding: 4px 2px;
+                margin-bottom:10px
+              }
+              .first,.second{
+                margin-bottom:10px;
+                display:block;
+                .btn.glyphicon{
+                  width:30px;
+                  padding: 0;
+                  font-size:16px;
+                }
+              }
+            }
+          }
+        }
+
+        .header{
+          height:60px;
+          padding:15px 0 0 0;
+          .btn{width:180px;}
+          .border{
+            border-left: 1px solid $gris_date;
+            float:left;
+            margin:8px 15px 0 0;
+            height: 20px;
+            display:inline-block;
+          }
+          .heure{
+            margin: 8px 10px 0 0;
+            float:left;
+            font-size:13px;
+            font-weight:600;
+            color:$gris_date;
+            display:inline-block;
+          }
+          ul.type{
+            float: left;
+            padding: 6px 0 0 0;
+            .cercle{
+              width: 20px;
+              height: 20px;
+              border-radius: 50%;
+              background: $gris_type;
+              float: left;
+              &.degrade{
+                background:$jaune;
+              }
+              &.critique{
+                background:$orange;
+              }
+              &.fermeture{
+                background:$noir;
+              }
+            }
+            .fermeture{
+              background:$blanc;
+              font-weight: 600;
+              text-align: center;
+              vertical-align: middle;
+              color: BLACK;
+              padding: 10px 5px;
+              line-height: 0;
+              display: inline-block;
+              margin-bottom: 0;
+            }
+          }
+        }
+
+        .content{
+          width:204px;
+          height:130px;
+          border-left:1px dashed $gris_drop;
+          padding:10px 15px;
+          overflow: hidden;
+          float:left;
+          white-space: initial;
+          .nom{
+            font-weight: 600;
+            font-size:16px;
+            margin-bottom:15px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+        }
+      }
+
+    /* Titre & Badge */
+    &.titre{
+      background-color: rgba(41, 50, 59, 0.8);
+      width: 135px;
+      height: 60px;
+      .encart{
+        margin-top: 15px;
+        display: block;
+        float: left;
+          /* Intitule */
+          .intitule{
+            display:inline-block;
+            color: $blanc;
+            border-right: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 16px;
+            float: left;
+            padding: 3px 10px 0px 20px;
+          }
+          /* Badge */
+          .badge_option{
+            padding: 0px;
+            float: left;
+            margin-top: 0px;
+            margin-left: 2px;
+            position: relative;
+            display: block;
+            float: left;
+            .badge_notification{
+            background: $gris_notif;
+            border-radius: 50%;
+            min-width: 30px;
+            height: 30px;
+            border: 2px solid $gris_notifborder;
+            line-height: 25px;
+            text-align: center;
+            font-size: $ft_tabs;
+            font-weight: bold;
+            color: $blanc;
+            padding: 0;
+            cursor: pointer;
+            text-decoration: none;
+            margin-right: 0px;
+            position: relative;
+            display: block;
+               &:hover{
+                 background:none;
+                 text-decoration:none;
+               }
+            }
+          }
+        }
+      }
+    }
+}
+
+.en-cours{
+  background-color: #FFA500; //orange
+  color: white;
+}
+.event-selected {
+  background-color: red; //orange
+  color: white;
+}

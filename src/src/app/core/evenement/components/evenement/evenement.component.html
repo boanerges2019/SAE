@@ -1,0 +1,178 @@
+<div *ngIf="warningEvtEdit">
+  <alert-message [warningEvtEdit]="warningEvtEdit"></alert-message>
+</div>
+
+<div *ngIf="alertMessages && alertMessages.length > 0">
+    <alert-message [alertMessages]="alertMessages"></alert-message>
+</div>
+
+<evenement-commun
+  *ngIf="isComposantMatchesWithType(composantsEvenement.commun, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></evenement-commun>
+
+<evenement-localisation
+  *ngIf="isComposantMatchesWithType(composantsEvenement.localisation, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"
+  (alertMessages)="resolveAlerteMessagesCallBack($event)">
+</evenement-localisation>
+
+<evenement-emprise
+  *ngIf="isComposantMatchesWithType(composantsEvenement.emprise, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></evenement-emprise>
+
+<accident-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.accidentCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></accident-caracteristiques>
+
+<accident-industriel-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.accidentIndustrielCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></accident-industriel-caracteristiques>
+
+<alerte-enlevement-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.alerteEnlevementCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></alerte-enlevement-caracteristiques>
+
+<alternat-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.alternatCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></alternat-caracteristiques>
+
+<animal-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.animalCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></animal-caracteristiques>
+
+<basculement-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.basculementCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></basculement-caracteristiques>
+
+<bouchon-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.bouchonCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></bouchon-caracteristiques>
+
+<contresens-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.contresensCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></contresens-caracteristiques>
+
+<convoi-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.convoiCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></convoi-caracteristiques>
+
+<crue-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.crueCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></crue-caracteristiques>
+
+<eboulement-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.eboulementCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></eboulement-caracteristiques>
+
+<fermeture-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.fermetureCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></fermeture-caracteristiques>
+
+<fuite-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.fuiteCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></fuite-caracteristiques>
+
+<hors-gabarit-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.horsGabaritCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></hors-gabarit-caracteristiques>
+
+<incendie-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.incendieCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></incendie-caracteristiques>
+
+<incendie-batiment-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.incendieBatimentCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></incendie-batiment-caracteristiques>
+
+<information-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.informationCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></information-caracteristiques>
+
+<malveillance-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.malveillanceCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></malveillance-caracteristiques>
+
+<manifestation-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.manifestationCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></manifestation-caracteristiques>
+
+<meteo-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.meteoCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></meteo-caracteristiques>
+
+<obstacle-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.obstacleCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></obstacle-caracteristiques>
+
+<personne-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.personneCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></personne-caracteristiques>
+
+<plan-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.planCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></plan-caracteristiques>
+
+<pollution-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.pollutionCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></pollution-caracteristiques>
+
+<reseau-area-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.reseauAreaCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></reseau-area-caracteristiques>
+
+<secours-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.secoursCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></secours-caracteristiques>
+
+<stockage-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.stockageCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></stockage-caracteristiques>
+
+<travaux-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.travauxCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></travaux-caracteristiques>
+
+<vehicule-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.vehiculeCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></vehicule-caracteristiques>
+
+<viabilite-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.viabiliteCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></viabilite-caracteristiques>
+
+  <balisage-caracteristiques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.balisageCaracteristiques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></balisage-caracteristiques>
+
+
+<evenement-secours
+  *ngIf="isComposantMatchesWithType(composantsEvenement.evenementSecours, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></evenement-secours>
+
+<evenement-depanneur
+  *ngIf="isComposantMatchesWithType(composantsEvenement.evenementDepanneur, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></evenement-depanneur>
+
+ <evenement-sftrf
+  *ngIf="isComposantMatchesWithType(composantsEvenement.evenementSftrf, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></evenement-sftrf>
+
+<vehicules
+  *ngIf="isComposantMatchesWithType(composantsEvenement.vehicules, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></vehicules>
+
+<impliques
+  *ngIf="isComposantMatchesWithType(composantsEvenement.impliques, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></impliques>
+
+<evenement-exploitation
+  *ngIf="isComposantMatchesWithType(composantsEvenement.evenementExploitation, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></evenement-exploitation>
+
+<evenement-liens
+  *ngIf="isComposantMatchesWithType(composantsEvenement.evenementLiens, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></evenement-liens>
+
+<evenement-commentaire
+  *ngIf="isComposantMatchesWithType(composantsEvenement.evenementCommentaire, evenement.codeModele)"
+  [evenement]="evenement" [currentCtx]="currentCtx"></evenement-commentaire>

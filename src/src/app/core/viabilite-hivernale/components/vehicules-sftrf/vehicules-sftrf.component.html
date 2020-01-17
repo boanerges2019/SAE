@@ -1,0 +1,43 @@
+<div class="content vehicule">
+  <!--Table intitulé-->
+  <table class="table firstline">
+      <thead>
+          <tr class="first">
+            <th class="libelle type">
+              Type de véhicules
+            </th>
+            <th class="libelle nom">
+              Nom du véhicule
+            </th>
+            <th class="libelle localisation">
+              Localisation
+            </th>
+            <th class="libelle horodate">
+              Horodate de cette position
+            </th>
+      </thead>
+  </table>
+  <!--Table contenu -->
+  <div class="contenu" [perfect-scrollbar] >
+      <table class="table">
+        <tbody>
+            <!--Vehicule 1 -->
+            <tr *ngFor="let vehicle of vehicles">
+              <td class="libelle type">
+                  {{vehicle.attributs[model.configCte.FIELDS.VEHICLE_TYPE].nom}}
+              </td>
+              <td class="libelle nom">
+                  {{vehicle.nom}}
+              </td>
+              <td class="libelle localisation">
+                  {{vehicle.localisation}}
+              </td>
+              <td class="libelle horodate">
+                  {{vehicle.variables[model.configCte.FIELDS.HORADATE_POSITION].valeur | date:'dd/MM/yyyy HH:mm'}}
+              </td>
+            </tr>
+
+        </tbody>
+      </table>
+    </div>
+</div>

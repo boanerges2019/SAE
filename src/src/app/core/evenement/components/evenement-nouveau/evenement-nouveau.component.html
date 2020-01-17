@@ -1,0 +1,103 @@
+<div class="page-header">
+  {{ model.labels.ctx[currentCtx] }}   {{ !!evenement ? evenement.identifiant : ''}}
+</div>
+
+<div *ngIf="alertMessages && alertMessages.length > 0">
+  <alert-message [alertMessages]="alertMessages"></alert-message>
+</div>
+
+<div class="well well-lg">
+  <form
+    [formGroup]="evenementFormGroup"
+    novalidate
+    class="form-horizontal" >
+    <div class="row">
+      <div class="form-group" >
+
+        <div *ngIf="type !== 'BAL'">
+          <label class="col-xs-1 control-label">Catégorie</label>
+          <div class="col-xs-3">
+            <select
+                class="form-control"
+                formControlName="categorie"
+                ctxAccess
+                [fieldName]="field.categorie"
+                [currentCtx]="currentCtx">
+              <option *ngFor="let item of categories"
+                  [value]="item.codeInfo"
+                  [innerHTML]="item.nom"
+                  [selected]="model.categorie === item.codeInfo">
+              </option>
+            </select>
+         </div>
+        </div>
+
+        <div *ngIf="type !== 'BAL'">
+           <label class="col-xs-1 control-label">Type</label>
+           <div class="col-xs-3">
+             <select
+                class="form-control"
+                formControlName="type"
+                ctxAccess
+                [fieldName]="field.type"
+                [currentCtx]="currentCtx">
+               <option value=""></option>
+               <option *ngFor="let item of types"
+                   [value]="item.codeInfo"
+                   [innerHTML]="item.nom"
+                   [selected]="model.type === item.codeInfo">
+               </option>
+             </select>
+           </div>
+         </div>
+
+         <div>
+            <label class="col-xs-1 control-label">Etat</label>
+            <div class="col-xs-3">
+              <select
+                class="form-control"
+                formControlName="etat"
+                ctxAccess
+                [fieldName]="field.etat"
+                [currentCtx]="currentCtx">
+                <option
+                    *ngFor="let etat of etats"
+                    [value]="etat"
+                    [selected]="model.etat === etat"> {{ model.labels.etats[etat] }}</option>
+              </select>
+            </div>
+         </div>
+      </div>
+
+     <div class="form-group">
+      <div class="col-xs-12 ">
+       <button
+            type="submit"
+            class="btn btn-default btn-xs action pull-right"
+            (click)="createManually()"
+            [disabled]="!evenementFormGroup.valid"
+            ctxAccess [fieldName]="field.createEvenementManually"
+            [currentCtx]="currentCtx"
+            [hideExtraVar]="true"> {{ model.labels.ctx.createButton[currentCtx] }}
+       </button>
+       <button
+            type="submit"
+            class="btn btn-default btn-xs action pull-right"
+            [disabled]="!evenementFormGroup.valid"
+            (click)="validate()"
+            ctxAccess [fieldName]="field.validerUpdateEvenement"
+            [currentCtx]="currentCtx"
+            [hideExtraVar]="true"> Valider
+       </button>
+       <button
+            type="button"
+            class="btn btn-default btn-xs action pull-right"
+            (click)="cancel()" > Annuler </button>
+      </div>
+     </div>
+   </div>
+  </form>
+
+  <cesam-loader *ngIf="model.isLoading"></cesam-loader>
+
+</div>

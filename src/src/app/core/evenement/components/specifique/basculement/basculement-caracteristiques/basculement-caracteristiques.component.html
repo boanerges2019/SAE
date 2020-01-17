@@ -1,0 +1,55 @@
+<div class="well well-lg">
+  <div  class="form-horizontal" >
+    <h4 (click)="isCollapsedContent = !isCollapsedContent">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+       <!-- Mode de circulation -->
+      <div class="form-group">
+        <label class="col-xs-4 control-label">Mode de circulation</label>
+        <div class="col-xs-3">
+          <cesam-input [type]="'select'"
+             [model]="evenement.attributs[field.modeDeCirculation]"
+             [items]="modesDeCirculation"
+             [enumName]="modeleEvenementCte.MODES_CIRCULATION"
+             [fieldName]="field.modeDeCirculation"
+             [currentCtx]="currentCtx"></cesam-input>
+        </div>
+      </div>
+      <!-- Double sens -->
+      <div class="form-group">
+        <label class="col-xs-4 control-label">Mise en circulation à double sens</label>
+        <div class="col-xs-3">
+          <cesam-input [type]="'date'" [model]="evenement.attributs[field.miseEnCirculationADoubleSens]" [fieldName]="field.miseEnCirculationADoubleSens" [currentCtx]="currentCtx"></cesam-input>
+        </div>
+        <label class="col-xs-1 control-label">ITPC</label>
+        <div class="col-xs-3">
+            <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.itpcDoubleSens]"
+            [items]="itemsItpc"
+            [itemsRequete]="listeItpc"
+            [fieldName]="field.itpcDoubleSens"
+            [currentCtx]="currentCtx"></cesam-input>          
+       </div>
+      </div>
+       <!-- sens unique-->
+       <div class="form-group">
+         <label class="col-xs-4 control-label">Mise en circulation à sens unique</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'date'" [model]="evenement.attributs[field.miseEnCirculationASensUnique]" [fieldName]="field.miseEnCirculationASensUnique" [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <label class="col-xs-1 control-label">ITPC</label>
+         <div class="col-xs-3">
+            <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.itpcSensUnique]"
+            [items]="itemsItpc"
+            [itemsRequete]="listeItpc"
+            [fieldName]="field.itpcSensUnique"
+            [currentCtx]="currentCtx"></cesam-input>
+        </div>
+       </div>
+     </div>
+  </div>
+</div>

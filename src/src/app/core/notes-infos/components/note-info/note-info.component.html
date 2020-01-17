@@ -1,0 +1,83 @@
+<div class={{classCss}}>
+    <div class=topBar>
+        <div class="pull-left permanente"></div>
+        <div class="pull-right">{{date}}</div>
+        <div *ngIf="canShowLecteur" class="pull-right espace_droite">
+            <tooltip-content #lecteurs>
+                <table>
+                    <thead>
+                    <tr>
+                        <td class="colonneLargeur">
+                            Nom
+                        </td>
+                        <!--<th class="colonneLargeur">
+                            Prenom
+                        </th>-->
+                        <!--<th class="colonneLargeur">
+                            Date
+                        </th>-->
+                    </tr>
+                    </thead>
+                </table>
+                <table>
+                    <tbody>
+                    <tr *ngFor="let lecteur of lecteursDeLaNote">
+                        <td class="colonneLargeur">
+                            {{lecteur.nom}}
+                        </td>
+                        <!--<td class="colonneLargeur">
+                            {{lecteur.prenom}}
+                        </td>-->
+                        <!--<td class="colonneLargeur">
+                            {{lecteur.date}}
+                        </td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </tooltip-content>
+            <span
+                aria-expanded="true"
+                class="glyphicon glyphicon-user"
+                [tooltip]="lecteurs">
+            </span>
+
+        </div>
+
+
+    </div>
+    <div class=form>
+        <div class="textAria">
+            {{note.description}}
+        </div>
+    </div>
+    <div class="bottomBar">
+        <span *ngIf="canUpdated" aria-expanded="true" class="glyphicon glyphicon-pencil pull-right"
+              (click)="modifierNote()"
+              ctxAccess
+              [fieldName]="model.field.modifierNote"
+              [currentCtx]="model.currentCtx"
+              [configCte]="model.configCte"
+            ></span>
+        <span *ngIf="canDelete" aria-hidden="true" class="glyphicon glyphicon-trash pull-right"
+              (click)="supprimerNote()"
+              ctxAccess
+              [fieldName]="model.field.supprimerNote"
+              [currentCtx]="model.currentCtx"
+              [configCte]="model.configCte"
+            ></span>
+        <span *ngIf="canSign" aria-hidden="true" class="glyphicon glyphicon-ok pull-right"
+              (click)="signerNote()"
+              ctxAccess
+              [fieldName]="model.field.signerNote"
+              [currentCtx]="model.currentCtx"
+              [configCte]="model.configCte"
+            ></span>
+        <span *ngIf="canOpenFile" aria-hidden="true" class="glyphicon glyphicon-open-file pull-right"
+              (click)="openFile()"
+              ctxAccess
+              [fieldName]="model.field.openFile"
+              [currentCtx]="model.currentCtx"
+              [configCte]="model.configCte"
+            ></span>
+    </div>
+</div>

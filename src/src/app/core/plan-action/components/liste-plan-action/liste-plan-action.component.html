@@ -1,0 +1,70 @@
+<div id="plan-action">
+    <div class="header">
+        <!--Menu onglet Tabs-->
+        <ul class="nav nav-tabs" role="tablist">
+            <li
+                role="presentation"
+                [ngClass]="{ 'active': ongletActif.planAction }">
+                <!--<a
+                    ConfirmAction
+                    (confirmActionResponse)="gotoOnglet('plan-action')"
+                    aria-controls=""
+                    role=""
+                    data-toggle="">plans d'actions</a>-->
+                <a
+                    aria-controls=""
+                    role=""
+                    data-toggle=""
+                    ConfirmAction (confirmActionResponse)="gotoOnglet('plan-action')">plans d'actions</a>
+            </li>
+            <li
+                role="presentation"
+                [ngClass]="{ 'active': ongletActif.strategie}">
+                <a
+                    aria-controls=""
+                    role=""
+                    data-toggle=""
+                    ConfirmAction (confirmActionResponse)="gotoOnglet('strategie')">stratégies d'affichage</a>
+            </li>
+            <li
+                role="presentation"
+                [ngClass]="{ 'active': ongletActif.macro}">
+                <a
+                    aria-controls=""
+                    role=""
+                    data-toggle=""
+                    ConfirmAction (confirmActionResponse)="gotoOnglet('macro')">macro
+                </a>
+            </li>
+            <li
+                role="presentation"
+                [ngClass]="{ 'active': ongletActif.communication}">
+                <a
+                    class="last"
+                    aria-controls=""
+                    role=""
+                    data-toggle=""
+                    ConfirmAction (confirmActionResponse)="gotoOnglet('communication')">communication</a>
+            </li>
+        </ul>
+    </div>
+    <div class="content empty" *ngIf="!planAction">
+        <p>Sélectionner un événement pour obtenir un plan d'action </p>
+    </div>
+    <plan-action
+        *ngIf="ongletActif.planAction && planAction"
+        [planAction]="planAction"
+        [idEvenement]="idEvenement"
+        >
+    </plan-action>
+    <strategie-tab
+        *ngIf="ongletActif.strategie"
+        [idEvenement]="idEvenement"
+        ></strategie-tab>
+    <macro
+        *ngIf="ongletActif.macro"
+        [idEvenement]="idEvenement"></macro>
+    <communication *ngIf="ongletActif.communication"
+                   [idEvenement]="idEvenement"></communication>
+
+</div>

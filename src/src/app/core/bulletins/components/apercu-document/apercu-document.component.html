@@ -1,0 +1,109 @@
+<div id="apercu-document">
+  <div class="header">
+    <!--Menu onglet Tabs-->
+    <ul class="nav nav-tabs" role="tablist">
+     <li role="presentation" class="active">
+         <a *ngIf="isEmisPage">Bulletins émis</a>
+         <a *ngIf="!isEmisPage">aperçu du document</a>
+      </li>
+      <li *ngIf="!isEmisPage" class="title" >
+        <div class="name" [innerHTML]="bulletin?.nom"></div>
+      </li>
+   </ul>
+ </div>
+
+  <div *ngIf="!isEmisPage" class="content apercu">
+    <!--Table contenu -->
+    <div class="contenu" [perfect-scrollbar] >
+      <cesam-pdf-viewer
+        *ngIf="bulletin && isPdf"
+        [bulletin]="bulletin">
+      </cesam-pdf-viewer>
+      <iframe *ngIf="bulletin && !isPdf && url"
+          [src]="url" width="900px" height="600px">
+      </iframe>
+    </div>
+  </div>
+
+    <div *ngIf="isEmisPage" class="content apercu">
+        <!--Table intitulé-->
+        <table class="table firstline">
+            <thead>
+                <tr class="first">
+                    <th class="libelle type">
+                        Type
+                    </th>
+                    <th class="libelle nom">Nom
+                    </th>
+                    <th class="libelle planifie">Horodate d'envoi
+                    </th>
+                    <th class="libelle destinataire">Destinataire
+                    </th>
+                    <th class="libelle media">Média
+                    </th>
+					<th class="libelle status">Statut d'envoi
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <!--Table contenu -->
+        <div class="contenu" [perfect-scrollbar]>
+            <table class="table">
+                <tbody>
+                <!--Activée-->
+                    <tr *ngFor="let bulletin of bulletinsEmis" (click)="selectBulletinEmis(bulletin)"
+                        selectItemDirective [applyClassesOnSelect]="'event-selected'" [model]="bulletin">
+                        <td class="libelle type">
+                            <img src="assets/img/icon/file.png"/>
+                        </td>
+                        <td class="libelle nom">
+                            <tr>
+                                <td class="nom_doc" [innerHTML]="bulletin.nom"></td>
+                                <td class="nom_bouton options_btn">
+                                    <span changeDropDirection [seuil]="850">
+                                        <span class="dropdown">
+                                            <button class="btn btn-default btn-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                                ctxAccess
+                                                [fieldName]="model.field.actions"
+                                                [currentCtx]="model.currentCtx"
+                                                [configCte]="model.configCte">actions</button>
+                                            <ul class="dropdown-menu">
+                                                <li><a style="cursor:pointer" (click)="apercuBulletionEmis(bulletin)">Aperçu</a></li>
+                                            </ul>
+                                        </span>
+                                    </span>
+                                </td>
+                            </tr>
+                        </td>
+                        <td class="libelle planifie" [innerHTML]="bulletin?.dateEnvoi | date:'dd/MM/yyyy HH:mm'"></td>
+                        <td class="libelle destinataire"
+                            [innerHTML]="bulletin.nomRessourceDestinataire ? bulletin.nomRessourceDestinataire : bulletin.nomGroupeDestinataire"></td>
+                        <td class="libelle media" [innerHTML]="bulletin.codeMedia==='MEDIA_DOC.MAIL' ? 'Mail' : ''"></td>
+						<td class="libelle status" [innerHTML]="bulletin?.statutEnvoi===0 ? 'Echec' : 'Envoyé'"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+  <!--Footer strategie-->
+  <div class="footer strategie">
+      <ul *ngIf="isEmisPage" class="stat">
+          <li class="stat"><span class="bold">{{bulletinsEmis.length}}</span> bulletins émis</li>
+      </ul>
+      <ul  *ngIf="!isEmisPage" class="boutons pull-right">
+          <li class="link">
+              <button type="button"
+                      class="btn btn-default"
+                      (click)="retourAuxBulletinsEmis()"
+                      ctxAccess
+                      [fieldName]="model.field.annuler"
+                      [currentCtx]="model.currentCtx"
+                      [configCte]="model.configCte">
+                  <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-right:10px"></span>Retour
+              </button>
+          </li>
+      </ul>
+  </div>
+</div>

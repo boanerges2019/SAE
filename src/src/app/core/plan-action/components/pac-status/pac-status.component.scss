@@ -1,0 +1,21 @@
+@import 'src/styles/variables/variables.scss';
+td {
+   vertical-align: middle;
+   border: none;
+   padding: 0;
+   height: 50px;
+}
+
+/*Barre de progression*/
+  .progress.macro {
+      background-color: $gris_drop;
+      margin-bottom:0;
+      width:75px;
+      height: 10px;
+      .progress-striped .progress-bar, .progress-bar-striped {
+             background-image: linear-gradient(135deg, $bleu 25%, transparent 25%, transparent 50%, $bleu 50%, $bleu 75%, transparent 75%, transparent);
+             background-color:transparent;
+             background-size:2rem 2rem;
+             width:100%;
+     }
+  }

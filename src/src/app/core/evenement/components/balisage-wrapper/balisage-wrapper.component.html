@@ -1,0 +1,73 @@
+<div id="evenement">
+  <div class="header">
+    <!--Menu onglet Tabs-->
+    <ul class="nav nav-tabs" role="tablist">
+         <li role="presentation"
+            class="active"
+            ConfirmAction
+            (confirmActionResponse)=resolveTab(model.onglet.evenementsCourants)>
+            <a
+                aria-controls="ev_balisages"
+                role="ev_balisages"
+                data-toggle="ev_balisages"
+                [innerHTML]="'Edition des Balisages'"></a>
+          </li>
+
+   </ul>
+  </div>
+
+  <div class="content ev_courant">
+      <!--Table contenu -->
+      <div
+        [perfect-scrollbar]
+        class="contenu edition">
+        <div *ngIf="[model.contexte.CREATE_EVENEMENT_MANUALLY, model.contexte.UPDATE_ETAT_EVENEMENT].indexOf(model.currentCtx) > -1">
+          <evenement-nouveau
+            [evenement]="editedEvenement"
+            [idAlerteSource]="model.idAlerteSource"
+            [position]="model.position"
+            [currentCtx]="model.currentCtx"
+            [currentOnglet]="model.currentOnglet">
+          </evenement-nouveau>
+        </div>
+        <div *ngIf="editedEvenement && [model.contexte.READ, model.contexte.EDIT_EVENEMENT].indexOf(model.currentCtx) > -1">
+            <evenement
+              [evenement]="editedEvenement"
+              [currentCtx]="model.currentCtx">
+            </evenement>
+        </div>
+    </div>
+  </div>
+
+  <!--Footer evenement-->
+  <div class="footer">
+     <ul class="boutons pull-right">
+         <li class="link" *ngIf="editedEvenement">
+             <button type="button"
+                     class="btn btn-default"
+                     (click)="cancelEdition($event)">
+                 <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-right:10px"></span>{{ model.i18n.ctx.cancelButton[model.currentCtx] }}
+             </button>
+
+              <!--<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              <span class="bold"
+                     (click)="cancelEdition($event)"
+                     [innerHTML]="model.i18n.ctx.cancelButton[model.currentCtx]"></span>-->
+         </li>
+        <li *ngIf="editedEvenement">
+          <button
+            *ngIf="editedEvenement"
+            type="button"
+            class="btn btn-default"
+            (click)="updateEvenement($event, editedEvenement)"
+            [disabled]="model.hadValidationErrors"
+            ctxAccess
+            [fieldName]="model.field.validerEvenementBtn"
+            [currentCtx]="model.currentCtx"
+            [hideExtraVar]="true">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true" style="margin-right:10px"></span> Valider
+          </button>
+        </li>
+      </ul>
+  </div>
+</div>

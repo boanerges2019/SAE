@@ -1,0 +1,168 @@
+
+<div class="content communication" *ngIf="model.contexte.PAC_APERCU_COMMUNICATION===model.currentCtx">
+    <!--Table contenu -->
+    <div class="contenu" [perfect-scrollbar] >
+        <cesam-pdf-viewer
+            *ngIf="bulletin && isPdf"
+            [bulletin]="bulletin">
+        </cesam-pdf-viewer>
+        <iframe *ngIf="bulletin && !isPdf && url"
+                [src]="url" width="900px" height="600px">
+        </iframe>
+    </div>
+</div>
+
+<div class="content communication" *ngIf="model.contexte.BULLETIN_EDITION_PREPARATION_ENVOI===model.currentCtx">
+    <preparation-envoi-edit
+        [isUpadtePlanif]="false"
+        [currentCtx]="model.currentCtx">
+    </preparation-envoi-edit>
+</div>
+
+<div class="content communication" *ngIf="model.contexte.PAC_COMMUNICATION===model.currentCtx">
+    <!--Table intitulé-->
+    <table class="table firstline">
+        <thead>
+        <tr class="first">
+            <th class="libelle type">Type
+            </th>
+            <th class="libelle nom">Informations
+            </th>
+            <th class="libelle plannifie">Date & Heure
+            </th>
+            <th class="libelle destinataire">Destinataire
+            </th>
+        </tr>
+        </thead>
+    </table>
+    <!--Table contenu -->
+    <div class="contenu" [perfect-scrollbar] >
+        <table class="table">
+            <tbody>
+            <!--Simple-->
+            <tr *ngFor="let communication of communications"
+                [ngClass]="{ 'event-selected': communication.isSelect}" (click)="selectCommunication(communication)">
+                <td class="libelle type">
+                    <span *ngIf="model.types.APPEL===communication.type" class="glyphicon glyphicon-earphone blue"></span>
+                    <span *ngIf="model.types.MESSAGE_VOCAL===communication.type" class="glyphicon glyphicon-volume-up blue"></span>
+                    <span *ngIf="model.types.PREPARATION===communication.type" class="glyphicon glyphicon-envelope blue"></span>
+                    <span *ngIf="model.types.BULLETIN===communication.type" class="glyphicon glyphicon-send blue"></span>
+                </td>
+                <td class="libelle nom">
+            <tr>
+                <td class="nom_doc">
+                    {{communication.nom}}
+                </td>
+                <td class="bouton options_btn">
+                          <span changeDropDirection [seuil]="850">
+                              <span class="dropdown">
+                                <button class="btn btn-default btn-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">actions</button>
+                                <ul class="dropdown-menu">
+                                    <li *ngIf="model.types.APPEL===communication.type"><a style="cursor:pointer" (click)="renvoyerOuRappeller(communication)">Renvoyer/Rappeller</a></li>
+                                    <li *ngIf="model.types.DIFFUSSION===communication.type"><a style="cursor:pointer" (click)="compteRendu(communication, model.contexte.PAC_COMPTE_RENDU_COMMUNICATION)">Détails</a></li>
+                                    <li *ngIf="model.types.PREPARATION===communication.type || model.types.BULLETIN===communication.type"><a style="cursor:pointer" (click)="apercuCommunication(communication, model.contexte.PAC_APERCU_COMMUNICATION)">Aperçu</a></li>
+                                    <li *ngIf="model.types.PREPARATION===communication.type"><a style="cursor:pointer" (click)="supprimerPreparationEnvoi(communication)">Supprimer</a></li>
+                                    <li *ngIf="model.types.PREPARATION===communication.type"><a style="cursor:pointer" (click)="editionPreparationEnvoi(communication, model.contexte.BULLETIN_EDITION_PREPARATION_ENVOI, false)">Saisir Commentaire</a></li>
+                                    <li *ngIf="model.types.PREPARATION===communication.type"><a style="cursor:pointer" (click)="emissionPreparationEnvoi(communication)">Emission</a></li>
+                                </ul>
+                              </span>
+                          </span>
+                </td>
+            </tr>
+            </td>
+            <td class="libelle plannifie">
+                {{communication.date | date:'dd/MM/yyyy HH:mm'}}
+            </td>
+            <td class="libelle destinataire"
+                [innerHTML]="communication.nomRessourceDestinataire ? communication.nomRessourceDestinataire : communication.nomGroupeDestinataire">
+            </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="content communication" *ngIf="model.contexte.PAC_COMPTE_RENDU_COMMUNICATION===model.currentCtx">
+  <!--Table intitulé-->
+    <table class="table firstline">
+        <thead>
+            <tr class="first">
+                <th class="libelle intitule">Intitulé astreinte
+                </th>
+                <th class="libelle intitule">Nom de l'intervenant
+                </th>
+                <th class="libelle plannifie">Date premier appel
+                </th>
+                <th class="libelle statut">Nombre d'appels
+                </th>
+                <th class="libelle statut">Statut
+                </th>
+                <th class="libelle plannifie">Date dernier appel
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <!--Table contenu -->
+    <div class="contenu" [perfect-scrollbar] >
+        <table class="table">
+          <tbody>
+          <!--Simple-->
+            <tr *ngFor="let cr of crs">
+                <td class="libelle intitule">
+                   {{cr.intitule}}
+                </td>
+                <td class="libelle intitule"
+                    [innerHTML]="cr.nomRessourceDestinataire ? cr.nomRessourceDestinataire : cr.nomGroupeDestinataire">
+                </td>
+                <td class="libelle plannifie">
+                    {{cr.date_1 | date:'dd/MM/yyyy HH:mm'}}
+                </td>
+                <td class="libelle statut">
+                    {{cr.nbrAppel}}
+                </td>
+                <td class="libelle statut">
+                    {{cr.statut}}
+                </td>
+                <td class="libelle plannifie">
+                    {{cr.date_2 | date:'dd/MM/yyyy HH:mm'}}
+                </td>
+            </tr>
+
+          </tbody>
+        </table>
+    </div>
+ </div>
+
+ <!--Footer plan-->
+ <div class="footer1">
+   <ul *ngIf="model.contexte.PAC_COMMUNICATION===model.currentCtx" class="stat">
+       <li *ngIf="nbrAppels <= 1"><span class="bold">{{nbrAppels}} </span> appel</li>
+     <li *ngIf="nbrAppels > 1"><span class="bold">{{nbrAppels}} </span> appels</li>
+       <li *ngIf="nbrDiffusion <= 1"><span class="bold">{{nbrDiffusion}} </span> message vocal</li>
+       <li  *ngIf="nbrDiffusion > 1"><span class="bold">{{nbrDiffusion}} </span> messages vocaux</li>
+     <li *ngIf="nbrMail <= 1"><span class="bold">{{nbrMail}} </span> émission</li>
+       <li *ngIf="nbrMail > 1"><span class="bold">{{nbrMail}} </span> émissions</li>
+     <li *ngIf="nbrDocuments <= 1"><span class="bold">{{nbrDocuments}} </span> préparation</li>
+       <li *ngIf="nbrDocuments > 1"><span class="bold">{{nbrDocuments}} </span> préparations</li>
+    </ul>
+     <ul  *ngIf="[model.contexte.BULLETIN_EDITION_PREPARATION_ENVOI, model.contexte.PAC_APERCU_COMMUNICATION, model.contexte.PAC_COMPTE_RENDU_COMMUNICATION].indexOf(model.currentCtx) > -1" class="boutons pull-right">
+         <li class="link">
+             <button type="button"
+                     class="btn btn-default"
+                     (click)="retourEcranCommunication(model.contexte.PAC_COMMUNICATION)"
+                     >
+                 <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-right:10px"></span>Retour
+             </button>
+         </li>
+         <li class="link" *ngIf="[model.contexte.BULLETIN_EDITION_PREPARATION_ENVOI].indexOf(model.currentCtx) > -1">
+             <button type="button"
+                     class="btn btn-default"
+                     [disabled]="!isValidModification"
+                     (click)="modifierPreparationEnvoiAndSendToBack(model.contexte.PAC_COMMUNICATION)"
+                     >
+                 <span class="glyphicon glyphicon-ok" aria-hidden="true" style="margin-right:10px"></span>Valider
+             </button>
+         </li>
+     </ul>
+ </div>

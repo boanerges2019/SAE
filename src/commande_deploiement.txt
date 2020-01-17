@@ -1,0 +1,4 @@
+ng build --env=prod1 --bh ./
+ng build --env=prod2 --bh ./
+ng build --env=dev --bh ./
+jar cvf0 cesam-front.war *.*

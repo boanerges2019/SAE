@@ -1,0 +1,32 @@
+<div class="well well-lg">
+  <div class="form-horizontal">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent" data-toggle="collapse">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+    aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+      <!--Zones-->
+       <div class="form-group">
+         <label class="col-xs-3 control-label">Zone urbaine Pays de Savoie</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.zoneUrbainePaysDeSavoie]"
+            [items]="pollutions"
+            [enumName]="modeleEvenementCte.POLLUTIONS"
+            [fieldName]="field.zoneUrbainePaysDeSavoie"
+            [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <label class="col-xs-3 control-label">Maurienne-Tarentaise</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.maurienneTarentaise]"
+            [items]="pollutions"
+            [enumName]="modeleEvenementCte.POLLUTIONS"
+            [fieldName]="field.maurienneTarentaise"
+            [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       </div>
+     </div>
+  </div>
+</div>

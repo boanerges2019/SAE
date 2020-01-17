@@ -1,0 +1,56 @@
+@import 'src/styles/variables/variables.scss';
+/*Header : Onglets + Option calendrier */
+ .header{
+   background:$bg-titre;
+   height:60px;
+   width:100%;
+   display:block;
+   float:left;
+   border-radius:5px 5px 0 0;
+   padding-right:10px;
+   /*Tabs Bootstrap */
+   .nav-tabs {
+    border-bottom:none;
+    float:left;
+    > li > a:focus {
+      padding: 20px 20px;
+      margin-top: 0px;
+      margin-right:0px;
+      color:$blanc;
+      border:none;
+      height: 60px;
+      background:$bg-titre;
+      border-right:1px solid $gris_fonce;
+    }
+    li{
+      width:225px;
+      height: 60px;
+      cursor: pointer;
+      > a {
+        border-radius:0;
+        padding: 20px 20px;
+        margin-top: 0px;
+        margin-right:0px;
+        text-transform: uppercase;
+        color:$blanc;
+        font-size:$ft_tabs;
+        border:none;
+        height: 60px;
+        border-right:1px solid $gris_fonce;
+      }
+      &.active > a {
+         border-top: 6px solid $bleu;
+         padding: 14px 20px 15px 20px;
+         color:$noir;
+         border-right:none;
+         font-weight:600;
+       }
+       &:hover > a,
+       &:focus > a {
+         color:$noir!important;
+         background:$blanc;
+         border-right:none;
+       }
+    }
+  }
+ }

@@ -1,0 +1,17 @@
+<div class="bulletins">
+    <liste-alerte></liste-alerte>
+    <alert-error></alert-error>
+    <preparation-envoi-planifies-list
+        [idBulletin]="idBulletin"
+        *ngIf="activeTab===tabs.TAB_BULLETINS_PLANIFIES.codeInfo"
+        [nextTabs]="[tabs.TAB_PREPARATIONS_ENVOIS]"
+        [parentComponent]="this">
+    </preparation-envoi-planifies-list>
+    <preparation-envoi-list
+        [idBulletin]="idBulletin"
+        *ngIf="activeTab===tabs.TAB_PREPARATIONS_ENVOIS.codeInfo"
+        [previousTabs]="[tabs.TAB_BULLETINS_PLANIFIES]"
+        [parentComponent]="this">
+    </preparation-envoi-list>
+    <apercu-document></apercu-document>
+</div>

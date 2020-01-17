@@ -1,0 +1,227 @@
+<div id="gestion-strategies">
+    <div
+        class="header"
+        *ngIf="[model.contexte.PAC_LIST_STRATEGIE].indexOf(model.currentCtx) <= -1 &&
+               [model.contexte.PAC_LIST_STRATEGIE].indexOf(model.sourceCtx) <= -1 &&
+                model.currentCtx !== model.contexte.PLANIFICATION_MACRO">
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a [innerHTML]="model.labels.ctx[model.currentCtx]"></a>
+            </li>
+        </ul>
+    </div>
+
+    <cesam-planification *ngIf="model.currentCtx === model.contexte.PLANIFICATION_MACRO"
+                         [currentCtx]="model.currentCtx"
+                         [type]="'strategie'"
+                         [modele]="plannedStrategie"
+                         [contentHeight]="520">
+    </cesam-planification>
+
+    <div class="content ev_strategies"
+         [style.height.px]="model.contentEvStrategiesHeight"
+         *ngIf="model.currentCtx !== model.contexte.PLANIFICATION_MACRO">
+
+
+
+        <!--Table intitulé-->
+        <table class="table firstline"
+               *ngIf="[model.contexte.LIST_STRATEGIE, model.contexte.PAC_LIST_STRATEGIE].indexOf(model.currentCtx) > -1">
+            <thead>
+            <tr class="first">
+                <th class="libelle strat">
+                    Stratégie
+                </th>
+                <th class="libelle"
+                    (click)="sortHeader(model.labels.headers[1])"
+                    [ngClass]="[model.labels.headers[1].identifiant, model.sort.header === model.labels.headers[1] ? 'sorted':'' ]">
+                    Priorité
+                </th>
+                <th class="libelle calendrier">
+                    Calendrier
+                </th>
+                <th class="libelle">
+                    Statut
+                </th>
+            </tr>
+            </thead>
+        </table>
+
+        <!--Table contenu -->
+        <div class="contenu"
+            [perfect-scrollbar]
+            appInfiniteScroller
+            [style.height.px]="model.contentHeight">
+            <div>
+                <strategie-new
+                    *ngIf="model.contexte.CREATE_STRATEGIE  === model.currentCtx"
+                    [idEvenement]="idEvenement"
+                    [sourceCtx]="model.sourceCtx"
+                    [currentCtx]="model.currentCtx"
+                    [strategieType]="strategieType">
+                </strategie-new>
+                <strategie-edit
+                    *ngIf="editedStrategie"
+                    [strategie]="editedStrategie"
+                    [currentCtx]="model.currentCtx">
+                </strategie-edit>
+            </div>
+            <table class="table"
+                   *ngIf="[model.contexte.LIST_STRATEGIE, model.contexte.PAC_LIST_STRATEGIE].indexOf(model.currentCtx) > -1">
+                <tbody>
+                    <tr *ngFor="let strategie of strategies"
+                        (click)="selectStrategie($event, strategie)"
+                        selectItemDirective
+                        [applyClassesOnSelect]="'event-selected'"
+                        [model]="strategie"
+                        deselectionConcerned="listeStrategies">
+                        <td class="libelle strat">
+                            <tr>
+                                <td [innerHTML]="strategie.nom"></td>
+                                <td class="bouton options_btn">
+                                  <span
+                                      *ngIf="[model.contexte.LIST_STRATEGIE].indexOf(model.currentCtx) > -1"
+                                      changeDropDirection [seuil]="750">
+                                    <button
+                                        aria-expanded="false"
+                                        aria-haspopup="true"
+                                        class="btn btn-default btn-xs"
+                                        data-toggle="dropdown"
+                                        role="button">ACTIONS
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li *ngIf="strategie.messagesEditables "><a
+                                               (click)="editStrategie($event, model.contexte.READ, strategie)">Consulter</a></li>
+                                        <li *ngIf="strategie.messagesEditables "><a
+                                               (click)="editStrategie($event, model.contexte.UPDATE_STRATEGIE, strategie)"
+                                               ctxAccess
+                                               [fieldName]="model.field.editStrategieBtn"
+                                               [currentCtx]="model.currentCtx"
+                                               [configCte]="model.configCte"
+                                               [hideExtraVar]="model.hideExtraVar">Editer</a></li>
+                                        <li><a
+                                             (click)="removeStrategie($event, strategie.identifiant)"
+                                             ctxAccess
+                                             [fieldName]="model.field.removeStrategieBtn"
+                                             [currentCtx]="model.currentCtx"
+                                             [configCte]="model.configCte"
+                                             [hideExtraVar]="model.hideExtraVar">Supprimer</a></li>
+                                        <li><a
+                                            (click)="planStrategie($event, strategie)"
+                                            ctxAccess
+                                            [fieldName]="model.field.planStrategieBtn"
+                                            [currentCtx]="model.currentCtx"
+                                            [configCte]="model.configCte"
+                                            [hideExtraVar]="model.hideExtraVar">Planifier</a></li>
+                                    </ul>
+                                  </span>
+                                </td>
+                            </tr>
+                        </td>
+                        <td class="libelle priorite"> {{ strategie.priorite }}
+                          <span class="sort pull-right">
+                            <span
+                                class="glyphicon glyphicon-chevron-down"
+                                aria-hidden="true"
+                                [ngClass]="{ 'first': strategie.priorite === 1}"
+                                *ngIf="strategies && strategies[strategies.length-1].identifiant  !== strategie.identifiant"
+                                (click)="changePriorite(strategie, 1)"></span>
+                            <span
+                                class="glyphicon glyphicon-chevron-up"
+                                aria-hidden="true"
+                                *ngIf="strategie.identifiant !== strategies[0].identifiant"
+                                (click)="changePriorite(strategie, -1)"></span>
+                          </span>
+                        </td>
+                        <td class="libelle calendrier">
+                            <div
+                                class="calendrier"
+                                [ngClass]="[getSuitableCalandarClass(strategie)]"
+                                [innerHTML]="getSuitableLabel(strategie)">
+                            </div>
+                        </td>
+                        <td class="libelle statut">
+                            <div class="btn-group bool" role="group">
+                                <button
+                                    type="button"
+                                    class="btn btn-default active"
+                                    (click)="toogleState($event, strategie, 'ETAT_STRATEGIE.ACTIVE')"
+                                    [ngClass]="{ 'active': strategie.codeEtat === 'ETAT_STRATEGIE.ACTIVE'}">activée
+                                </button>
+
+                                <button
+                                    [disabled]="!strategie.debrayable"
+                                    type="button"
+                                    class="btn btn-default desactive"
+                                    (click)="toogleState($event, strategie, 'ETAT_STRATEGIE.INACTIVE')"
+                                    [ngClass]="{ 'active': strategie.codeEtat !== 'ETAT_STRATEGIE.ACTIVE'}">désactivée
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--Footer strategie-->
+    <div class="footer strategie"  *ngIf="model.currentCtx !== model.contexte.PLANIFICATION_MACRO">
+        <ul class="stat"  *ngIf="[model.contexte.LIST_STRATEGIE, model.contexte.PAC_LIST_STRATEGIE].indexOf(model.currentCtx) > -1">
+            <li><span class="bold"> {{ model.activesCount + '/' + model.total }} </span> strat. activées</li>
+        </ul>
+        <ul class="boutons pull-right">
+            <li class="link" *ngIf="[model.contexte.PAC_LIST_STRATEGIE, model.contexte.LIST_STRATEGIE].indexOf(model.currentCtx) < 0">
+                <button type="button"
+                        class="btn btn-default"
+                        (click)="cancelCreation()">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-right:10px"></span>{{ model.labels.cancel[model.currentCtx] }}
+                </button>
+                <!--<span class="glyphicon glyphicon-remove en_bas" aria-hidden="true"></span>
+                <span class="bold en_haut" (click)="cancelCreation()"> {{ model.labels.cancel[model.currentCtx] }} </span>-->
+            </li>
+            <li *ngIf="[model.contexte.PAC_LIST_STRATEGIE].indexOf(model.currentCtx) > -1 && false">
+                <button
+                    type="button"
+                    class="btn btn-default"
+                    (click)="associateStrategie($event, model.contexte.CREATE_STRATEGIE)"
+                    ctxAccess
+                    [fieldName]="model.field.associateStrategieBtn"
+                    [currentCtx]="model.currentCtx"
+                    [configCte]="model.configCte"
+                    [hideExtraVar]="model.hideExtraVar">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Associer
+                </button>
+            </li>
+            <li>
+                <button
+                    type="button"
+                    class="btn btn-default"
+                    (click)="createStrategie($event, model.contexte.CREATE_STRATEGIE)"
+                    ctxAccess
+                    [fieldName]="model.field.createStrategieBtn"
+                    [currentCtx]="model.currentCtx"
+                    [configCte]="model.configCte"
+                    [hideExtraVar]="model.hideExtraVar">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Créer une stratégie
+                </button>
+            </li>
+            <!--<li *ngIf="[model.contexte.UPDATE_STRATEGIE].indexOf(model.currentCtx) > -1">
+                 <button
+                    type="button"
+                    class="btn btn-default"
+                    [disabled]="!editedStrategie"
+                    (click)="validateStrategie($event, model.contexte.CREATE_STRATEGIE)"
+                    ctxAccess
+                    [fieldName]="model.field.validateStrategieBtn"
+                    [currentCtx]="model.currentCtx"
+                    [configCte]="model.configCte"
+                    [hideExtraVar]="model.hideExtraVar">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Valider une stratégie
+                </button>
+            </li>-->
+        </ul>
+    </div>
+</div>
+
+

@@ -1,0 +1,138 @@
+<div class="well well-lg">
+  <form [formGroup]="evenementFormGroup" novalidate class="form-horizontal" >
+    <h4 (click)="isCollapsedContent = !isCollapsedContent">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Localisation
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+      <div class="form-group">
+         <label class="col-xs-2 control-label">Type de localisation</label>
+         <div class="col-xs-4" [ngClass]="{'has-error': !!formErrors.typeLocalisant}">
+             <select class="form-control"
+              formControlName="typeLocalisant"
+              (ngModelChange)="resolveTypeLocalisationChange($event)"
+              ctxAccess [fieldName]="field.typeLocalisant" [currentCtx]="currentCtx">
+                <option value=""></option>
+                <option *ngFor="let typeLocalisant of typesLocalisant"
+                  [value]="typeLocalisant.codeInfo" [innerHTML]="typeLocalisant.description"></option>
+             </select>
+         </div>
+       </div>
+
+       <div class="form-group">
+        <!-- Types de lieux & lieux-->
+          <div *ngIf="isLieu" >
+            <label class="col-xs-2 control-label">Type de lieu</label>
+            <div class="col-xs-4">
+                <select class="form-control"
+                formControlName="typeLieu"
+                (ngModelChange)="resolveTypeLieuChange($event)"
+                ctxAccess [fieldName]="field.typeLieu" [currentCtx]="currentCtx">
+                  <option value=""></option>
+                   <option *ngFor="let typeLieu of typesLieux" [value]="typeLieu.codeInfo" [innerHTML]="typeLieu.nom"></option>
+                </select>
+            </div>
+          </div>
+
+          <div *ngIf="isLieu">
+            <label class="col-xs-2 control-label">Localisation en lieu</label>
+            <div class="col-xs-4" [ngClass]="{'has-error': !!formErrors.lieu}">
+                <select class="form-control"
+                formControlName="lieu"
+                (ngModelChange)="resolveLieuChange($event)"
+                ctxAccess [fieldName]="field.lieu" [currentCtx]="currentCtx">
+                  <option value=""></option>
+                   <option *ngFor="let lieu of lieux" [value]="lieu.codeInfo" [innerHTML]="lieu.nom"></option>
+                </select>
+            </div>
+          </div>
+        </div>
+      <!-- Axes-->
+      <div class="form-group">
+         <label class="col-xs-2 control-label">Axe</label>
+         <div class="col-xs-4" [ngClass]="{'has-error': !!formErrors.axe}">
+             <select class="form-control"
+                formControlName="axe" (change)="resolveAxeChange($event)"
+                ctxAccess [fieldName]="field.axe" [currentCtx]="currentCtx">
+               <option value=""></option>
+               <option *ngFor="let axe of axes" [value]="axe" [innerHTML]="axe"></option>
+             </select>
+         </div>
+         <label class="col-xs-1 control-label">Sens</label>
+         <div class="col-xs-2" [ngClass]="{'has-error': !!formErrors.sens}">
+             <select class="form-control" (change)="resolveSensChange($event)"
+                formControlName="sens"
+                ctxAccess [fieldName]="field.sens" [currentCtx]="currentCtx">
+               <option *ngFor="let s of sens" [value]="s.codeInfo" [selected]="evenement.localisant[field.sens] == s.codeInfo" [innerHTML]="s.nom"></option>
+             </select>
+         </div>
+       </div>
+
+       <div class="form-group">
+          <div>
+            <label class="col-xs-2 control-label">PR Début</label>
+            <div class="col-xs-2"
+                [ngClass]="{'has-error': !!formErrors.prDebut}">
+                <input type="text"
+                    maxlength="7"
+                    class="form-control"
+                    formControlName="prDebut"
+                    (change)="resolvePrValidation($event)"
+                    ctxAccess
+                    [fieldName]="field.prDebut"
+                    [currentCtx]="currentCtx"/>
+                 <!-- <input [textMask]="{mask: mask}" formControlName="prDebut" type="text"/> -->
+            </div>
+          </div>
+          <div  *ngIf="isPrFin">
+            <label class="col-xs-2 control-label">PR Fin</label>
+            <div class="col-xs-2" [ngClass]="{'has-error': !!formErrors.prFin}">
+                <input type="text" maxlength="7"  class="form-control" formControlName="prFin"  (change)="resolvePrValidation($event)"
+                  ctxAccess [fieldName]="field.prFin" [currentCtx]="currentCtx"/>
+            </div>
+          </div>
+       </div>
+
+        <div class="form-group">
+          <label class="col-xs-3 control-label">Complément localisation</label>
+           <div class="col-xs-3" [ngClass]="{'has-error': !!formErrors.complementLocalisant}">
+             <select class="form-control"
+               formControlName="complementLocalisation"
+               ctxAccess [fieldName]="field.complementLocalisation" [currentCtx]="currentCtx">
+               <option *ngFor="let item of complementsLocalisation"
+                  [value]="item.codeInfo" [innerHTML]="item.nom" [selected]="evenement.attributs[field.complementLocalisation].valeur == item.valeur">
+                </option>
+             </select>
+           </div>
+         <div class="col-xs-5">
+             <div class="checkbox" [ngClass]="{'has-error': !!formErrors.impliqueDeuxSens}">
+                 <label>
+                    <input type="checkbox"
+                      formControlName="impliqueDeuxSens" [value]="impliqueDeuxSens"
+                      (click)="impliqueDeuxSens = !impliqueDeuxSens; $event.stopPropagation();"
+                      (ngModelChange)="impliqueDeuxSensChange($event)"
+                      ctxAccess [fieldName]="field.impliqueDeuxSens" [currentCtx]="currentCtx">Implique les deux sens
+                 </label>
+            </div>
+         </div>
+       </div>
+       <!-- Separator -->
+       <div class="row">
+         <div class="col-xs-12 control-label separation"></div>
+       </div>
+       <div class="form-group">
+         <label class="col-xs-2 control-label">Commune/lieu-dit</label>
+          <div class="col-xs-4" [ngClass]="{'has-error': !!formErrors.commune}">
+              <input class="form-control" formControlName="commune"
+                ctxAccess [fieldName]="field.commune" [currentCtx]="currentCtx"/>
+         </div>
+          <label class="col-xs-4 control-label">Longueur de l’évènement (en mètres)</label>
+           <div class="col-xs-2">
+               <input class="form-control" formControlName="longeurLocalisation"
+                ctxAccess [fieldName]="field.longeurLocalisation" [currentCtx]="currentCtx"/>
+           </div>
+       </div>
+    </div>
+  </form>
+</div>

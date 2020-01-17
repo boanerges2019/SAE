@@ -1,0 +1,100 @@
+<div class="well well-lg">
+  <div class="form-horizontal">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Interventions SFTRF
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+      <!--SFTRF -->
+      <div class="form-group tabled" [ngClass]="[currentCtx === contexte.READ ? 'tabledisabled': '']">
+        <table class="table table-bordered table-condensed input col-xs-12">
+          <thead>
+            <th class="col-xs-3">SFTRF</th>
+            <th class="col-xs-3">Alerte</th>
+            <th class="col-xs-3">Arrivée sur les lieux</th>
+            <th class="col-xs-3">Quitte les lieux</th>
+          </thead>
+        <tbody>
+          <tr  *ngFor="let item of listeInterventionsSftrf[field.itemInterventionSftrf]; let i=index">
+            <td class="col-xs-3">
+              <cesam-input [type]="'text'" [model]="item[field.intervenantSftrf]"  [fieldName]="field.intervenantSftrf" [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <cesam-input [type]="'date'" [model]="item[field.horodateAppelSftrf]" [fieldName]="field.horodateAppelSftrf" [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <cesam-input [type]="'date'" [model]="item[field.horodateArriveeLieuSftrf]" [fieldName]="field.horodateArriveeLieuSftrf" [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <tr>
+                <td class="col-xs-10">
+                  <cesam-input [type]="'date'" [model]="item[field.horodateQuitteLieuSftrf]" [fieldName]="field.horodateQuitteLieuSftrf" [currentCtx]="currentCtx"></cesam-input>
+                </td>
+                <td class="col-xs-2">
+                  <button class="btn btn-default btn-xs trash"
+                    (click)="removeIntervention(i)"
+                    ctxAccess [fieldName]="field.removeInterventionSftrfBtn" [currentCtx]="currentCtx"  [hideExtraVar]="true">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                 </button>
+               </td>
+             </tr>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-xs-3">
+              <cesam-input [type]="'text'" [model]="model[field.intervenantSftrf]"  [fieldName]="field.intervenantSftrf" [currentCtx]="currentCtx"></cesam-input>
+              </td>
+            <td class="col-xs-3">
+              <cesam-input [type]="'date'" [model]="model[field.horodateAppelSftrf]"  [fieldName]="field.horodateAppelSftrf" [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <cesam-input [type]="'date'" [model]="model[field.horodateArriveeLieuSftrf]"  [fieldName]="field.horodateArriveeLieuSftrf" [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <tr>
+                <td class="col-xs-10">
+                  <cesam-input [type]="'date'" [model]="model[field.horodateQuitteLieuSftrf]"  [fieldName]="field.horodateQuitteLieuSftrf" [currentCtx]="currentCtx"></cesam-input>
+                </td>
+                <td class="col-xs-2">
+               </td>
+             </tr>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-group">
+      <div class="col-xs-12 control-label">
+        <button class="btn btn-default btn-xs action right"
+          (click)="addIntervention()"
+          ctxAccess [fieldName]="field.addInterventionSftrfBtn" [currentCtx]="currentCtx"  [hideExtraVar]="true">AJOUTER</button>
+      </div>
+    </div>
+       <!--Intervention conjointe avec événement : -->
+         <div class="form-group">
+          <div class="col-xs-4">
+            <div class="checkbox">
+              <label>
+                <cesam-input [type]="'checkbox'"
+                  [model]="evenement.attributs[field.idEvenementConjointSftrf]"
+                  [innerHTML]="'Intervention conjointe avec événement'"
+                  [fieldName]="field.idEvenementConjointSftrf"
+                  [currentCtx]="currentCtx"></cesam-input>
+              </label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <!-- TODO -->
+            <select class="form-control"                
+                [(ngModel)]="evenement.attributs[field.idEvenementConjointSftrf]"
+                ctxAccess [fieldName]="field.idEvenementConjointSftrf" [currentCtx]="currentCtx">
+                <option value=""></option>
+                <option *ngFor="let evtConjoint of evenementsConjoints"
+                  [value]="evtConjoint" [innerHTML]="evtConjoint"></option>
+            </select>
+           </div>
+        </div>
+     </div>
+  </div>
+</div>

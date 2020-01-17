@@ -1,0 +1,32 @@
+<div class="well well-lg">
+  <div class="form-horizontal" >
+    <h4 (click)="isCollapsedContent = !isCollapsedContent">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+       <!--Animal-->
+       <div class="form-group">
+         <label class="col-xs-3 control-label">Sous Type animal</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+              [model]="evenement.attributs[field.sousTypeAnimal]"
+              [items]="sousTypesAnimal"
+              [enumName]="modeleEvenementCte.SOUS_TYPES_ANIMAL"
+              [fieldName]="field.sousTypeAnimal"
+              [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <label class="col-xs-3 control-label">Espèce animal</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+              [model]="evenement.attributs[field.especeAnimal]"
+              [items]="especesAnimal"
+              [enumName]="modeleEvenementCte.ESPECES_ANIMAL"
+              [fieldName]="field.especeAnimal"
+              [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       </div>
+     </div>
+  </div>
+</div>

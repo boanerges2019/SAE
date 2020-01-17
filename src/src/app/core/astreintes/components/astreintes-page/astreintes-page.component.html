@@ -1,0 +1,20 @@
+<div class="astreintes">
+  <liste-alerte></liste-alerte>
+  <alert-error></alert-error>
+  <suivi-astreintes></suivi-astreintes>
+  <div>
+    <!-- Onglet de détail de l'intervenant -->
+    <details-annuaires
+    *ngIf="activeTab===rightTabs.TAB_INFO.codeInfo"
+    [nextTabs]="[rightTabs.TAB_DIFFUSION]"
+    [parentComponent]="this">
+    </details-annuaires>
+
+    <!-- Onglet de détail de la diffusion de message -->
+    <diffusions-message
+    *ngIf="activeTab===rightTabs.TAB_DIFFUSION.codeInfo"
+    [previousTabs]="[rightTabs.TAB_INFO]"
+    [parentComponent]="this">
+    </diffusions-message>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="well well-lg">
+  <div class="form-horizontal" >
+    <h4 (click)="isCollapsedContent = !isCollapsedContent" data-toggle="collapse">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Commentaires
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+      <!--Ajout commentaire -->
+      <div class="form-group" >
+         <div class="col-xs-10">
+           <cesam-input
+            [type]="'textarea'"
+            [rows]="3" [maxlength]="255"
+            [model]="model[field.descriptionCommentaire]"
+            [fieldName]="field.descriptionCommentaire"
+            [currentCtx]="currentCtx"
+            [hideExtraVar]="true"
+            [disabled]="false"
+            ></cesam-input>
+         </div>
+         <div class="col-xs-2 right">
+            <button class="btn btn-default action right" type="button"
+             ctxAccess [fieldName]="field.addCommentaireBtn" [currentCtx]="currentCtx"
+            (click)="addCommentaire()"aria-haspopup="true" aria-expanded="false"  [hideExtraVar]="true">
+              Ajouter
+            </button>
+          </div>
+      </div>
+
+      <!--Liste des commentaires -->
+      <div class="form-group">
+         <div class="col-xs-12">
+           <table class="table commentaire" *ngIf="commentaires[field.itemCommentaire] && commentaires[field.itemCommentaire].length > 0">
+            <thead>
+              <tr>
+                <td class="com"><b>Commentaire</b></td>
+                <td class="horo"><b>Horodate</b></td>
+              <tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let itemCommentaire of commentaires[field.itemCommentaire]; let i=index">
+                  <td class="com">{{  itemCommentaire[field.descriptionCommentaire].valeur }} </td>
+                  <td class="horo">{{ itemCommentaire[field.horodateCommentaire].valeur | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
+              </tr>
+            </tbody>
+          </table>
+         </div>
+      </div>
+    </div>
+  </div>
+  <!--<p>Form value: {{ evenementCommunFormGroup.value | json }}</p>-->
+</div>

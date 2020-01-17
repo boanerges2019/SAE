@@ -1,0 +1,9 @@
+td{
+  &.check{width:35px;}
+  &.input{
+    width:340px;
+    &.tall{
+      width:388px;
+    }}
+  &.buton{width:45px;}
+}

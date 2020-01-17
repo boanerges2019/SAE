@@ -1,0 +1,98 @@
+@import 'src/styles/variables/variables.scss';
+/*Statut*/
+.content{
+  .libelle{
+     &.statut, &.exe, &.etat{
+        .statut{
+           display: inline-block;
+           margin-bottom: 0;
+           font-weight: normal;
+           text-align: center;
+           vertical-align: middle;
+           color: $gris_clair;
+           padding: 14px 0px;
+           background: $blanc;
+           line-height: 0;
+           font-style: italic;
+           width: 75px !important;
+           font-weight:600;
+           height:30px;
+           &.check{
+             background: $vert;
+             color:$blanc;
+             padding: 7px 0px;
+           }
+           &.croix{
+             background: $orange;
+             color:$blanc;
+             padding: 7px 0px;
+           }
+           &.execution{
+             background: $violet;
+             color:$blanc;
+             padding: 7px 0px;
+             .glyphicon{
+               -webkit-animation:spin 4s linear infinite;
+              -moz-animation:spin 4s linear infinite;
+              animation:spin 4s linear infinite;
+              @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+              @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+              @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+             }
+           }
+           &.oui{
+             background: $vert;
+             color:$blanc;
+           }
+           &.valide{
+             background: $blanc;
+             color:$vert;
+           }
+           &.en-attente{
+             background: $gris_drop;
+             color:$gris_clair;
+           }
+           &.echec, &.non, &.en-cours, &.signale{
+             background: $orange;
+             color:$blanc!important;
+           }
+           &.activee, &.lancer{
+             background: $bleu_fonce;
+             color:$blanc;
+           }
+           &.termine{
+             background: $blanc;
+             color:$gris_clair !important;
+           }
+         }
+       }
+       &.calendrier, &.exe{
+         .calendrier{
+           display: inline-block;
+           margin-bottom: 0;
+           text-align: center;
+           vertical-align: middle;
+           text-transform: uppercase;
+           color: $gris_clair;
+           padding: 14px 5px;
+           background: $blanc;
+           line-height: 0;
+           font-weight:600;
+           height:30px;
+           width:155px;
+           &.active{
+             background: $bleu_fonce;
+             color:$blanc;
+             &.permanent{
+               background: $orange;
+               color:$blanc;
+             }
+           }
+           &.desactive{
+             background: $gris_drop;
+             color:$gris_clair;
+           }
+         }
+       }
+     }
+  }

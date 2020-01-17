@@ -1,0 +1,160 @@
+<div id="journal-extraction" class="journal-historique">
+    <!-- Les onglets -->
+    <div class="header">
+      <!--Menu onglet Tabs-->
+      <ul class="nav nav-tabs" role="tablist">
+
+        <!-- les onglets précédents -->
+        <li role="presentation" *ngFor="let tab of previousTabs" (click)="setActiveTab(tab.codeInfo)">
+          <a>{{tab.nom}}</a>
+        </li>
+
+        <!-- l'onglet courant -->
+        <li role="presentation" class="active">
+          <a>Extraction de données</a>
+        </li>
+
+        <!-- les onglets suivant-->
+        <li role="presentation" *ngFor="let tab of nextTabs" (click)="setActiveTab(tab.codeInfo)">
+          <a>{{tab.nom}}</a>
+        </li>
+
+      </ul>
+      <div class="option">
+          <ul class="nav nav-pills pull-right">
+              <li class="badge_option">
+                  <button
+                    [ngClass]= "{'btn': true, 'badge_rechargement': true, 'force': forceRefresh}"
+                    role="button"
+                    (click)="$event.stopPropagation();charger(true);"></button>
+                </li>
+          </ul>
+        </div>
+    </div>
+
+    <!-- Le contenu de la page -->
+    <div class="content journal-historique">
+        <div class="select_requete">
+            <table class="espace_top">
+                <tbody>
+                    <tr>
+                        <td class="colonTitle">
+                            Choix de la requête : &nbsp;&nbsp;
+                        </td>
+                        <td class="choix_requete">
+                            <cesam-input
+                                [type]="'select2'"
+                                [model]="nomRequeteChoisi"
+                                [items]="requetes"
+                                (selectedValue)="selectRequeteChoisi($event.value)"
+                                ctxAccess
+                                [fieldName]="model.field.requeteChoisi"
+                                [currentCtx]="model.currentCtx"
+                                [configCte]="model.configCte">
+                            </cesam-input>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="requeteChoisi" class="parametre_requete">
+            <table>
+                <tr>
+                    <td class="colonneListeParametre">
+                        <div *ngFor="let param of requeteChoisi.parametres" class="paramBloc">
+                            <table class="table1">
+                                <tbody>
+                                <tr>
+                                    <td class="colonTitle">
+                                        {{param.text + " :"}} &nbsp;
+                                    </td>
+                                    <td *ngIf="param.type===model.configCte.TYPE.TYPE_STRING">
+                                        <div>
+                                            <input type="text" [(ngModel)]="param.value" class="form-control" (keyup)="valueChange($event)"/>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="param.type===model.configCte.TYPE.DATE">
+                                        <input class="form-control"
+                                               [(ngModel)]="param.value"
+                                               (ngModelChange)="selectDate($event)"
+                                               (change)="selectDate($event)"
+                                               ng2-datetime-picker
+                                               date-format="DD/MM/YYYY HH:mm:ss"
+                                               parse-format="DD/MM/YYYY HH:mm:ss"
+                                               [close-on-select]="true"/>
+                                    </td>
+                                    <td *ngIf="param.type===model.configCte.TYPE.LIST">
+                                        <cesam-input
+                                            [type]="'select2'"
+                                            [model]="param.value"
+                                            [items]="param.choices"
+                                            (selectedValue)="changeValue(param, $event)">
+                                        </cesam-input>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                    <td class="colonneButtonExtraire">
+                        <div class="paramBlocButton">
+                            <button
+                                type="button"
+                                class="btn btn-default bleuButton"
+                                [disabled]="!isExtracted"
+                                (click)="extraire()"
+                                ctxAccess
+                                [fieldName]="model.field.extraire"
+                                [currentCtx]="model.currentCtx"
+                                [configCte]="model.configCte">Extraire</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div *ngIf="isExported" class="donnees_requete">
+            <table class="tableDonnees">
+                <thead>
+                    <tr class="ligneEnteteDonnees">
+                        <th class="coloneEnteteDonnees" *ngFor="let entete of donneesRequetes.entetes"
+                            (click)="sortHeader(entete)"
+                            [ngClass]="[model.sort.entete?.identifiant === entete.identifiant ? 'sorted':'' ]"
+                            [innerHTML]="entete?.identifiant"
+                            >
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+               <div #contenuExtractionDonnees class="data_requete" [perfect-scrollbar] appInfiniteScroller>
+                    <table class="tableDonnees">
+                        <tbody>
+                            <tr *ngFor="let data of donneesRequetes.values; let even = even; let odd = odd" [ngClass]="{ odd: odd, even: even }">
+                                <td class="coloneValeurDonnees" *ngFor="let entete of donneesRequetes.entetes"
+                                    [innerHTML]="data[entete.identifiant]">
+                                </td>
+                            </tr>
+                        </tbody>
+                   </table>
+               </div>
+         </div>
+    </div>
+    <div class="footer">
+        <ul class="stat">
+            <li *ngIf="isExported" class="stat"><span class="bold">{{donneesRequetes.values.length}}</span> données extraites</li>
+        </ul>
+        <ul class="boutons pull-right">
+            <li class="link" *ngIf="isExported">
+                <button  type="button"
+                         class="btn btn-default"(click)="exporter()"
+                         ctxAccess
+                         [fieldName]="model.field.exporter"
+                         [currentCtx]="model.currentCtx"
+                         [configCte]="model.configCte">Exporter</button>
+            </li>
+        </ul>
+    </div>
+    <a style="display:none" CesamUploadDirective class="exporter_requete_resultat" id="exporter_requete_resulta" href="" (click)=" $event.stopPropagation(); $event.preventDefault();">tester</a>
+
+</div>
+

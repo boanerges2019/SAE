@@ -1,0 +1,46 @@
+/*--- Background Color ---*/
+
+$bg-bandeau: #283139; /*Header du bandeau principal */
+$bg-notification: #3e464e; /*Header du bandeau principal */
+$bg-titre: #2a333b; /*Header des blocs*/
+
+
+/*--- Color ---*/
+$gris_fonce:#181c1f; /*Gris utilisé pour les bordures*/
+$gris_texte:#333333;/*Gris utilisé pour les textes*/
+$gris_notif:#455a64; /*Gris utilisé pour les notifications*/
+$gris_clair:#7f7f7f; /* Gris pour tableau header */
+$gris_notifborder:#657c87; /*Gris utilisé pour les notifications*/
+$gris_date:#92969b; /*Gris utilisé pour la date*/
+$gris_drop:#e5e5e5;/*Titre d'une partie d'un formulaire*/
+$gris_type:#515960;/*Gris d'une alerte avec un type*/
+$gris_input:#cccccc;
+$gris_ligne_alterne:#f1f1f1;
+$gris_emprise:#f1f1f1;
+$gris_gpbouton:#e0e0e0;/*Hover gp boutons Booléen*/
+$gris_dashed:#c3c3c3; /*Trait dashed pour journaux*/
+$bleu_fonce:#1875d1; /*Bleu hover select*/
+$bleu:#2095f2; /*Bleu principal*/
+$bleu_pale:#baddfa; /*Bleu hover lien*/
+$bleu_pale_transparent:#baddfa75;
+$bleu_groupe:#dff1ff;/*Bleu groupe*/
+$bleu_note:#90caf9;/*Bleu note*/
+$noir:#000000; /*Noir*/
+$blanc:#ffffff; /*Blanc*/
+$orange:#ea4c37; /*Orange*/
+$orange_fonce:#ea3646; /*Orange fonce -nn officiel*/
+$orange_clair:#fad8d7; /*Orange clair -20%*/
+$vert:#43a047; /*Vert bouton */
+$vert_hover:#3f8d3b; /* Vert bouton hover */
+$vert_focus:#2d7c31; /* Vert bouton focus */
+$rouge:#d32f2f; /*Rouge*/
+$violet:#b282ff; /*Violet*/
+$violet_note:#b39ddb;/*Bleu note*/
+$jaune:#fbc02d; /*Jaune*/
+$jaune_note:#fff59d; /*Jaune note*/
+/*--- Font-size ---*/
+$ft_standard:14px; /*Taille de base*/
+$ft_tabs:16px; /*Taille police pour tabs*/
+$ft_titre:18px; /*Taille police pour titre option*/
+$ft_btn:20px; /*Taille police pour bouton principal*/
+$ft_heure:32px; /*Taille police pour heure*/

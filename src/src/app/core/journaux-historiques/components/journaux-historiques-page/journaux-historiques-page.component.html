@@ -1,0 +1,27 @@
+<div class="journaux-historiques">
+  <liste-alerte></liste-alerte>
+  <alert-error></alert-error>
+  <div id="journal">
+    <!-- Onglet journal d'activite -->
+    <journal-activite 
+      *ngIf="activeTab===tabs.TAB_JOURNAL_ACTIVITE.codeInfo" 
+      [nextTabs]="[tabs.TAB_HISTO_COURT_TERME, tabs.TAB_EXTRACTION]" 
+      [parentComponent]="this">
+    </journal-activite>
+
+    <!-- Onglet histos court terme -->
+    <journal-histo-court-terme
+      *ngIf="activeTab===tabs.TAB_HISTO_COURT_TERME.codeInfo" 
+      [previousTabs]="[tabs.TAB_JOURNAL_ACTIVITE]" 
+      [nextTabs]="[tabs.TAB_EXTRACTION]" 
+      [parentComponent]="this">
+    </journal-histo-court-terme>
+
+    <!-- Onglet histos extraction -->
+    <journal-histo-extraction
+      *ngIf="activeTab===tabs.TAB_EXTRACTION.codeInfo" 
+      [previousTabs]="[tabs.TAB_JOURNAL_ACTIVITE,tabs.TAB_HISTO_COURT_TERME]" 
+      [parentComponent]="this">
+    </journal-histo-extraction>
+  </div>
+</div>

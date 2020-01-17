@@ -1,0 +1,291 @@
+<div id="circuits-vh">
+    <div class="header">
+        <!--Menu onglet Tabs-->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a>circuits</a>
+            </li>
+            <li class="title" *ngIf="circuits">
+                <div class="name" *ngIf="circuits?.actif">Viabilité Hivernale active</div>
+                <div class="name" *ngIf="!circuits?.actif">Viabilité Hivernale pas active</div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content circuits">
+        <!--Table intitulé-->
+        <table class="table firstline">
+            <thead>
+            <tr class="first">
+                <th class="libelle vh" title="Partie">Partie
+                </th>
+                <th class="libelle cch" title="Chaussées CCH">
+                    Chaussée CCH
+                </th>
+                <th class="libelle cch2" title="Chaussées CCH à 2h">
+                    Chaussée CCH2
+                </th>
+                <th class="libelle eq_speciaux" title="Equipements spéciaux">
+                    Equip. spéciaux
+                </th>
+                <th class="libelle meteo" title="Météo">
+                    Météo
+                </th>
+                <th class="libelle cond_climatique" title="Tendance des conditions climatiques">
+                    Cond. climatiques
+                </th>
+                <th class="libelle traitement" title="Etat du traitement">
+                    Etat traitement
+                </th>
+                <th class="libelle chaussee" title="Etat de la chaussée">
+                    Etat chaussée
+                </th>
+                <th class="libelle vent" title="Vent">
+                    Vent
+                </th>
+                <th class="libelle air" title="Température de l'air">
+                    Température de l'air
+                </th>
+                <th class="libelle commentaire" title="Commentaire">
+                    Commentaire
+                </th>
+                <th class="libelle interne" title="Commentaire interne">
+                    Commentaire interne
+                </th>
+            </thead>
+        </table>
+        <!--Table contenu -->
+        <div class="contenu" [perfect-scrollbar]>
+            <table class="table" *ngIf="circuits?.circuits">
+                <tbody>
+                <!--Active -->
+                <tr>
+                    <td class="libelle vh">Basse
+                    </td>
+                    <td class="libelle cch">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeCCH"
+                            [items]="condChaussees"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeCCH=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle cch2">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeCCH2"
+                            [items]="condChaussees"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeCCH2=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle eq_speciaux">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeEquipementsSpeciaux"
+                            [items]="eqpSpeciaux"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeEquipementsSpeciaux=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle meteo">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeMeteo"
+                            [items]="meteos"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeMeteo=$event.value">
+                        </cesam-input>
+                    </td>
+                   <td class="libelle cond_climatique">
+                       <cesam-input
+                           [type]="'select1'"
+                           [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeTendance"
+                           [items]="tendancesCC"
+                           (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeTendance=$event.value">
+                       </cesam-input>
+                    </td>
+                    <td class="libelle traitement">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeTraitement"
+                            [items]="etatTraitements"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeTraitement=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle chaussee">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeEtatChaussee"
+                            [items]="etatChaussees"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeEtatChaussee=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle vent">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeVent"
+                            [items]="vents"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].codeVent=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle air">
+                        <cesam-input
+                            [type]="'text1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].temperature"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].temperature=$event.value"
+                            (keyup)="temperatureChange1()">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle commentaire">
+                        <cesam-input
+                            [type]="'text1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].commentaire"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].commentaire=$event.value">
+                        </cesam-input>
+
+                    </td>
+                    <td class="libelle interne">
+                        <cesam-input
+                            [type]="'text1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].commentaireInterne"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_1].commentaireInterne=$event.value">
+                        </cesam-input>
+                    </td>
+                </tr>
+                <!--Desactive -->
+                <tr *ngIf="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2]">
+                    <td class="libelle vh">Haute
+                    </td>
+                    <td class="libelle cch">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeCCH"
+                            [items]="condChaussees"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeCCH=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle cch2">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeCCH2"
+                            [items]="condChaussees"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeCCH2=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle eq_speciaux">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeEquipementsSpeciaux"
+                            [items]="eqpSpeciaux"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeEquipementsSpeciaux=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle meteo">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeMeteo"
+                            [items]="meteos"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeMeteo=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle cond_climatique">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeTendance"
+                            [items]="tendancesCC"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeTendance=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle traitement">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeTraitement"
+                            [items]="etatTraitements"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeTraitement=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle chaussee">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeEtatChaussee"
+                            [items]="etatChaussees"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeEtatChaussee=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle vent">
+                        <cesam-input
+                            [type]="'select1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeVent"
+                            [items]="vents"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].codeVent=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle air">
+                        <cesam-input
+                            [type]="'text1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].temperature"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].temperature=$event.value"
+                            (keyup)="temperatureChange2()">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle commentaire">
+                        <cesam-input
+                            [type]="'text1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].commentaire"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].commentaire=$event.value">
+                        </cesam-input>
+                    </td>
+                    <td class="libelle interne">
+                        <cesam-input
+                            [type]="'text1'"
+                            [model]="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].commentaireInterne"
+                            (selectedValue)="circuits?.circuits[model.configCte.FIELDS.CIRCUIT_2].commentaireInterne=$event.value">
+                        </cesam-input>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--Footer macro planifies-->
+    <div class="footer planifies">
+        <ul class="boutons pull-right">
+            <li class="espace_droite">
+                <button type="button"
+                        class="btn btn-default"
+                        (click)="mettreAjourCircuits()"
+                        [disabled]="!isValid"
+                        ctxAccess
+                        ctxAccess
+                        [fieldName]="model.field.mettreAjour"
+                        [currentCtx]="model.currentCtx"
+                        [configCte]="model.configCte">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Mettre à jour
+                </button>
+            </li>
+            <li class="espace_droite">
+                <button type="button"
+                        class="btn btn-default"
+                        (click)="envoiDonnees()"
+                        [disabled]="!isValid"
+                        ctxAccess
+                        [fieldName]="model.field.envoiDonnees"
+                        [currentCtx]="model.currentCtx"
+                        [configCte]="model.configCte">
+                    <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>Envoi Données
+                </button>
+            </li>
+            <li>
+                <button type="button"
+                        class="btn btn-default"
+                        (click)="envoiReseau()"
+                        [disabled]="!isValid"
+                        ctxAccess
+                        [fieldName]="model.field.envoiReseau"
+                        [currentCtx]="model.currentCtx"
+                        [configCte]="model.configCte">
+                    <span class="glyphicon glyphicon-signal" aria-hidden="true"></span>Envoi Réseau
+                </button>
+            </li>
+        </ul>
+    </div>
+</div>

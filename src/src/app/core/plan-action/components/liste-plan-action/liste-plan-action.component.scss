@@ -1,0 +1,11 @@
+@import 'src/styles/variables/variables.scss';
+.content.empty{
+  height: 570px!important;
+  box-shadow: none!important;
+  border-radius:0 0 5px 5px!important;
+  padding: 14px 20px;
+  p{
+    font-size:$ft_tabs;
+    font-weight:600;
+  }
+}

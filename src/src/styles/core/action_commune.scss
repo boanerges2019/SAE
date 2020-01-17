@@ -1,0 +1,327 @@
+@import 'src/styles/variables/variables.scss';
+#plan-action{
+   height:630px;
+   display:block;
+   float:left;
+   width:900px;
+   border-radius: 5px;
+   /*Header : Onglets */
+   .header{
+     background:$bg-titre;
+     height:60px;
+     width:100%;
+     display:block;
+     float:left;
+     border-radius:5px 5px 0 0;
+     padding-right:0px;
+      /*Barre de progression*/
+      .progress.macro {
+          background-color: $gris_drop;
+          height: 10px;
+          .progress-striped .progress-bar, .progress-bar-striped {
+                 background-image: linear-gradient(135deg, $bleu 25%, transparent 25%, transparent 50%, $bleu 50%, $bleu 75%, transparent 75%, transparent);
+                 background-color:$bleu_fonce;
+                 background-size:2rem 2rem;
+          }
+      }
+     .progress.macro{
+      width:95px;
+      float: right;
+      margin-top:6px;
+     }
+     /*Tabs Bootstrap */
+     .nav-tabs {
+      border-bottom:none;
+      float:left;
+      > li > a:focus {
+        padding: 20px 20px;
+        margin-top: 0px;
+        margin-right:0px;
+        color:$blanc;
+        border:none;
+        height: 60px;
+        background:$bg-titre;
+        border-right:1px solid $gris_fonce;
+      }
+      li{
+        width:225px;
+        height: 60px;
+        cursor: pointer;
+        a.last{
+          border-right:none;
+        }
+        > a {
+          border-radius:0;
+          padding: 20px 20px;
+          margin-top: 0px;
+          margin-right:0px;
+          text-transform: uppercase;
+          color:$blanc;
+          font-size:$ft_tabs;
+          border:none;
+          height: 60px;
+          border-right:1px solid $gris_fonce;
+        }
+        &.active > a {
+           border-top: 6px solid $bleu;
+           padding: 14px 20px 15px 20px;
+           color:$noir;
+           border-right:none;
+           font-weight:600;
+         }
+         &:hover > a,
+         &:focus  > a {
+           color:$noir!important;
+           background:$blanc;
+           border-right:none;
+         }
+      }
+    }
+  }
+
+/*Contenu Global - Tableau action*/
+ .content{
+   overflow:hidden!important;
+   background-color:$blanc;
+   height:520px;
+   width:100%;
+   display:block;
+   float:left;
+   overflow-y: scroll;
+   box-shadow: inset 0 -10px 10px -10px $gris_fonce;
+   .contenu{
+      height:486px;
+   }
+   /*Tableau*/
+   .table {
+     margin-bottom:0;
+     thead tr.first{
+       height:30px;
+       th{border-bottom: 1px solid #ddd;}
+     }
+     thead,
+     > tbody{
+     tr{
+        height: 50px;
+        padding: 0 8px 0 8px;
+        vertical-align: middle;
+        &.evenement-titre{
+            border-top:1px solid $blanc;
+        }
+        th{
+          vertical-align:middle;
+          color:$gris_clair;
+          cursor:pointer;
+          &.sorted{
+            color:$bleu;
+          }
+          .type{
+            padding-left:20px;
+          }
+        }
+        > td{
+          vertical-align:middle;
+          border:none;
+          padding: 0;
+          .reponse{
+            .btn{
+              margin-right:10px;
+            }
+          }
+          .btn{
+            height: 30px;
+            border-radius: 5px;
+            color: $blanc;
+            background: $bleu;
+            padding: 8px 10px;
+            line-height: 0;
+            text-transform: uppercase;
+            font-weight:600;
+            border: 1px solid $blanc;
+            font-size:$ft_standard;
+            &:hover,
+            &:focus{
+              background-color:$bleu_fonce;
+            }
+          }
+        }
+      }
+      label{
+        margin-bottom:0;
+      }
+      .col-xs-5,.col-xs-4,.col-xs-3{
+        padding-left:0!important;
+      }
+      .libelle{
+         &.statut{
+            padding:0 18px 0 20px;
+            .btn{
+              height: 30px;
+              width:75px;
+              text-align: center;
+              padding:8px 0px;
+              &.action.pause {
+                  height: 30px;
+                  width:30px;
+                  padding:0 1px;
+                  margin-left:10px;
+                  border:none;
+                  .glyphicon{
+                    top:0;
+                  }
+                }
+              &.lancer{
+                background:$blanc;
+                color:$bleu;
+                border:1px solid $bleu;
+                &:hover{
+                background:$bleu;
+                color:$blanc;
+                border:1px solid $blanc;
+                };
+              }
+            }
+            /*Statut*/
+            .statut, .statut.termine{
+             display: inline-block;
+             margin-bottom: 0;
+             font-weight: normal;
+             text-align: center;
+             vertical-align: middle;
+             color: $gris_clair;
+             padding: 14px 0px;
+             background: $blanc;
+             line-height: 0;
+             font-style: italic;
+             width: 75px !important;
+             font-weight:600;
+             height:30px;
+             &.check{
+               background: $vert;
+               color:$blanc;
+               padding: 7px 0px;
+             }
+             &.croix{
+               background: $orange;
+               color:$blanc;
+               padding: 7px 0px;
+             }
+             &.execution{
+               background: $violet;
+               color:$blanc;
+               padding: 7px 0px;
+               .glyphicon{
+                 -webkit-animation:spin 4s linear infinite;
+                -moz-animation:spin 4s linear infinite;
+                animation:spin 4s linear infinite;
+                @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+                @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+                @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+               }
+             }
+             &.oui{
+               background: $vert;
+               color:$blanc;
+             }
+             &.valide{
+               background: $blanc;
+               color:$vert;
+             }
+             &.en-attente{
+               background: $gris_drop;
+               color:$gris_clair;
+             }
+             &.echec, &.non, &.refuse{
+               background: $orange;
+               color:$blanc;
+             }
+             &.activee{
+               background: $bleu_fonce;
+               color:$blanc;
+             }
+          }
+        }
+      }
+    }
+   }
+   .theme {
+     background-color: $gris_drop;
+     font-weight: 600;
+   }
+   .selected{
+       background-color:$bleu;
+       color:$blanc;
+       &.sous{
+         background-color:$bleu_fonce;
+       }
+     }
+ }
+  /*Footer*/
+  .footer{
+   height:50px;
+   width:100%;
+   display:block;
+   float:left;
+   background-color:$blanc;
+   border-radius:0 0 5px 5px;
+   padding-left:20px;
+   ul.stat{
+     float: left;
+     margin: 0;
+     padding-left: 0;
+     margin-bottom: 0;
+     list-style: none;
+     margin-top:12px;
+     li{
+       position: relative;
+       display: block;
+       float: left;
+       margin-right:20px;
+       .bold{
+         font-weight:bold;
+         font-size:$ft_tabs;
+         color:$bleu;
+       }
+     }
+   }
+   ul.boutons{
+     padding-left: 0!important;
+     li{
+       float: left;
+       position: relative;
+       display: block;
+       &.link{
+        cursor:pointer;
+        margin-top: 13px;
+        font-weight:bold;
+        font-size:$ft_tabs;
+        color:$bleu;
+        margin-right:20px;
+        &:hover{
+          color:$bleu_fonce;
+        }
+        .glyphicon{
+          top:2px;
+          margin-right:5px;
+        }
+       }
+       .btn{
+         width:auto;
+         height:50px;
+         border-radius:0;
+         border:none;
+         background-color:$vert;
+         color:$blanc;
+         text-transform: uppercase;
+         font-size:$ft_btn;
+         &:hover{
+           background-color:$vert_hover;
+         }
+         &:focus{
+           background-color:$vert_focus;
+         }
+       }
+     }
+   }
+  }
+}

@@ -1,0 +1,36 @@
+<div class="content intervenant">
+  <!--Table intitulé-->
+  <table class="table firstline">
+      <thead>
+          <tr class="first">
+            <th class="libelle nom">
+              Nom
+            </th>
+            <th class="libelle portable">
+              Numéro de portable
+            </th>
+            <th class="libelle numradio">
+              Numéro radio
+            </th>
+      </thead>
+  </table>
+  <!--Table contenu -->
+  <div class="contenu" [perfect-scrollbar] >
+      <table class="table">
+        <tbody>
+            <!--Intervenant 1 -->
+            <tr *ngFor="let intervenant of intervenantsAstreintes">
+              <td class="libelle nom">
+                {{intervenant.nom +" "+ intervenant.attributs[model.configCte.FIELDS.ASTREINTE_PRENOM].valeur}}
+              </td>
+              <td class="libelle portable">
+                  {{intervenant.attributs[model.configCte.FIELDS.ASTREINTE_PORTABLE].valeur}}
+              </td>
+              <td class="libelle numradio">
+                  {{intervenant.attributs[model.configCte.FIELDS.ASTREINTE_RADIO].valeur}}
+              </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

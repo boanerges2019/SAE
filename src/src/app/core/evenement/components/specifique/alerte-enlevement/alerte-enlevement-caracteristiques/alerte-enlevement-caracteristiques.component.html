@@ -1,0 +1,29 @@
+<div class="well well-lg">
+  <div class="form-horizontal" >
+    <h4 (click)="isCollapsedContent = !isCollapsedContent">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+       <!-- Enlevement durée -->
+      <div class="form-group">
+           <label class="col-xs-3 control-label">Début afichage PMV</label>
+           <div class="col-xs-3">
+             <cesam-input [type]="'date'" [model]="evenement.attributs[field.debutAffichagePmv]" [fieldName]="field.debutAffichagePmv" [currentCtx]="currentCtx"></cesam-input>
+          </div>
+          <label class="col-xs-3 control-label">Fin afichage PMV</label>
+          <div class="col-xs-3">
+            <cesam-input [type]="'date'" [model]="evenement.attributs[field.finAffichagePmv]" [fieldName]="field.finAffichagePmv" [currentCtx]="currentCtx"></cesam-input>
+          </div>
+      </div>
+      <!--Nb. PMV utilisé-->
+      <div class="form-group">
+        <label class="col-xs-3 control-label">Nb. PMV utilisé</label>
+        <div class="col-xs-3">
+          <cesam-input [type]="'number'" [model]="evenement.attributs[field.nbPmvUtilise]" [fieldName]="field.nbPmvUtilise" [currentCtx]="currentCtx"></cesam-input>
+        </div>
+      </div>
+     </div>
+  </div>
+</div>

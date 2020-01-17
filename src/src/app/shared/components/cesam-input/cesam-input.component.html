@@ -1,0 +1,77 @@
+<input *ngIf="type === 'date' && model" (ngModelChange)="attributChange($event)"
+  class="form-control"
+  [(ngModel)]="model.valeur"
+  ctxAccess [fieldName]="fieldName" [currentCtx]="currentCtx"  [hideExtraVar]="hideExtraVar" [state]="state"
+  ng2-datetime-picker
+  date-format="DD/MM/YYYY HH:mm:ss"
+  parse-format="DD/MM/YYYY HH:mm:ss"
+  [close-on-select]="false" />
+
+
+<input  *ngIf="type === 'checkbox'"
+  type="checkbox"
+  [(ngModel)]="checkboxModel"
+  (click)="checkboxModel = !checkboxModel; $event.stopPropagation();"
+  (ngModelChange)="attributCheckboxChange()"
+  ctxAccess [fieldName]="fieldName" [currentCtx]="currentCtx" [hideExtraVar]="hideExtraVar"> {{ innerHTML }}
+
+
+<select *ngIf="type === 'select'" (ngModelChange)="attributSelectChange($event)"
+  class="form-control"
+  [(ngModel)]="model.codeValeur"
+  ctxAccess [fieldName]="fieldName" [currentCtx]="currentCtx" [hideExtraVar]="hideExtraVar">
+  <option *ngFor="let item of items"
+      [value]="item.codeInfo" [innerHTML]="item.nom" [selected]="model.codeValeur == item.codeInfo">
+  </option>
+</select>
+
+<select *ngIf="type === 'select1'" (ngModelChange)="attributSelectChange1($event)"
+        class="form-control"
+        [(ngModel)]="model">
+    <option *ngFor="let item of items"
+            [value]="item.codeInfo" [innerHTML]="item.text">
+    </option>
+</select>
+
+<select *ngIf="type === 'select2'" (ngModelChange)="attributSelectChange1($event)"
+        class="form-control choix_requete"
+        [(ngModel)]="model">
+    <option *ngFor="let item of items"
+            [value]="item.codeInfo" [innerHTML]="item.text">
+    </option>
+</select>
+
+
+
+
+
+
+<input *ngIf="type === 'number'"
+  type="number"
+  class="form-control"
+  [(ngModel)]="model.valeur"
+  [step]="step"
+  maxlength="maxlength"
+  cesamNumber   [cesamNumberModel]="model"
+  ctxAccess [fieldName]="fieldName" [currentCtx]="currentCtx" [hideExtraVar]="hideExtraVar">
+
+  <input *ngIf="type === 'text'" (ngModelChange)="attributChange($event)"
+    type="text"
+    class="form-control"
+    [disabled]="disabled"
+    [(ngModel)]="model.valeur"
+    [maxlength]="maxlength"
+    ctxAccess [fieldName]="fieldName" [currentCtx]="currentCtx" [hideExtraVar]="hideExtraVar">
+
+<input *ngIf="type === 'text1'" (ngModelChange)="attributSelectChange1($event)"
+       type="text"
+       class="form-control"
+       [(ngModel)]="model">
+
+<textarea  *ngIf="type === 'textarea'"
+  [rows]="rows"
+  [maxlength]="maxlength"
+  [(ngModel)]="model.valeur"
+  ctxAccess [fieldName]="fieldName" [currentCtx]="currentCtx" [hideExtraVar]="hideExtraVar"
+  resize:none>
+</textarea>

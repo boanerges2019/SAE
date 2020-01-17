@@ -1,0 +1,121 @@
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img src="./assets/img/logo.jpeg" alt="">
+            </a>
+        </div>
+        <span id="notification">
+         <!--aucune notification -->
+            <div *ngIf="notifications.length === 0" class="notification_alerte">
+                <div class="notification_nom">
+                    pas de notifications
+                </div>
+            </div>
+
+            <!-- 1 notification -->
+            <div *ngIf="notifications.length === 1" class="notification_alerte active">
+                <div>
+                    <div class="notification_nom">
+                        {{notifications[0].message}}
+                    </div>
+                    <a  class="voir" ConfirmAction
+                        (confirmActionResponse)="voirNotification($event, notifications[0])">voir</a>
+                </div>
+            </div>
+
+            <!-- Partie notification -->
+              <div *ngIf="notifications.length > 1" class="dropdown">
+                  <button class="notification_alerte active btn btn-default dropdown-toggle" type="button"
+                          id="list_notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      {{notifications.length}} notifications
+                      <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="list_notifications">
+                      <li *ngFor="let notif of notifications">
+                          <div>
+                              <div class="notification_nom">
+                                  {{notif.message}}
+                              </div>
+                              <a class="voir"
+                                 ConfirmAction
+                                 (confirmActionResponse)="voirNotification($event, notif)">voir</a>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+        </span>
+
+
+        <!-- Test demande creation evt/balisage-->
+
+
+        <!-- Partie macro en cours -->
+        <div class="macro_en_cours">
+            <ul class="nav nav-pills">
+                <li>
+                    <span aria-hidden="true" class="glyphicon glyphicon glyphicon-volume-down sound"
+                          style="color:white"></span>
+                </li>
+                <!-- Partie macro en cours -->
+                <li class="border"></li>
+                <li>MACROS EN COURS</li>
+                <li class="badge_option">
+                    <a ConfirmAction
+                      (confirmActionResponse)="goToMacros()" class="badge_notification">{{nbrMacros}}</a></li>
+            </ul>
+        </div>
+
+        <div class="menu">
+            <ul class="nav nav-pills pull-right">
+                <li>
+                    <div class="encadrer">
+                        <ul class="nav nav-pills pull-right">
+                            <li><span class="glyphicon glyphicon-comment info" aria-hidden="true"></span></li>
+                            <li><a class="cursor_pointer"  ConfirmAction
+                                   (confirmActionResponse)="goToInfosAndConsignes()">infos et consignes </a></li>
+                            <li class="badge_option"><a class="badge_notification"  ConfirmAction
+                                                        (confirmActionResponse)="goToInfosAndConsignes()" >{{nbrNotes}}</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="encadrer">
+                        <ul class="nav nav-pills pull-right">
+                            <li>
+                                <span class="avatar">
+                                 <span aria-hidden="true" class="glyphicon glyphicon-user"></span>
+                               </span>
+                            </li>
+                            <!-- Partie décrivant le user profil -->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                   aria-expanded="false">
+                                    <div class="name">{{session?.nom}}</div>
+                                    <div class="caret"></div>
+                                </a>
+                                <ul class="dropdown-menu">
+                                <!--    <li (click)="deconnexion()"><span>Déconnexion</span></li>-->
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="meme_block">
+                        <ul class="nav nav-pills pull-right">
+                            <li class="local">
+                                <span class="heure">
+                                    <!-- TODO : trouver une meilleur manière d'afficher l'heure, car là ça raffraichit la page toute les secondes-->
+                                    <!-- <current-time></current-time> -->
+                                </span>
+                                <div class="jour">{{now}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

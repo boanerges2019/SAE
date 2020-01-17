@@ -1,0 +1,41 @@
+<div class="well well-lg">
+  <div class="form-horizontal" >
+    <h4 (click)="isCollapsedContent = !isCollapsedContent">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div  [collapse]="isCollapsedContent" class="collapse">
+       <!-- Type Convoi & PL  -->
+      <div class="form-group">
+        <label class="col-xs-3 control-label">Type convoi</label>
+        <div class="col-xs-3">
+          <cesam-input [type]="'select'"
+             [model]="evenement.attributs[field.typeConvoi]"
+             [items]="typesConvoi"
+             [enumName]="modeleEvenementCte.TYPES_CONVOI"
+             [fieldName]="field.typeConvoi"
+             [currentCtx]="currentCtx"></cesam-input>
+        </div>
+        <label class="col-xs-3 control-label">Nb. de PL en convoi</label>
+        <div class="col-xs-3">
+          <cesam-input [type]="'number'"
+            [model]="evenement.attributs[field.nbDePlEnConvoi]"
+            [fieldName]="field.nbDePlEnConvoi"
+            [currentCtx]="currentCtx"></cesam-input>
+        </div>
+      </div>
+       <!-- Accord de passage -->
+      <div class="form-group">
+        <label class="col-xs-2 control-label">Accord de passage</label>
+        <div class="col-xs-4">
+          <cesam-input [type]="'text'"
+            [model]="evenement.attributs[field.nbDePlEnConvoi]"
+            [maxlength]="30"
+            [fieldName]="field.nbDePlEnConvoi"
+            [currentCtx]="currentCtx"></cesam-input>
+        </div>
+      </div>
+     </div>
+  </div>
+</div>

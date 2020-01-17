@@ -1,0 +1,471 @@
+<div id="evenement" [ngClass]="{'large': prevusDuJourUniquement}">
+  <div class="header">
+    <!--Menu onglet Tabs-->
+    <ul class="nav nav-tabs" role="tablist">
+      <!-- les onglets précédents -->
+      <li role="presentation" *ngFor="let tab of previousTabs" (click)="setActiveTab(tab.codeInfo)">
+        <a>{{tab.nom}}</a>
+      </li>
+      <li role="presentation" *ngIf="!prevusDuJourUniquement" [ngClass]="{ 'active': model.ongletActif.evenementsCourants.actif }"
+        ConfirmAction (confirmActionResponse)=resolveTab(model.onglet.evenementsCourants)>
+        <a aria-controls="ev_balisages" role="ev_balisages" data-toggle="ev_balisages" [innerHTML]="model.i18n.label[type].evenementsCourants"></a>
+      </li>
+      <li role="presentation" *ngIf="!prevusDuJourUniquement" [ngClass]="{ 'active': model.ongletActif.evenementsPrevus.actif }"
+        ConfirmAction (confirmActionResponse)=resolveTab(model.onglet.evenementsPrevus)>
+        <a aria-controls="balisages_prevus" role="balisages_prevus" data-toggle="balisages_prevus" [innerHTML]="model.i18n.label[type].evenementsPrevus"></a>
+      </li>
+      <li role="presentation" *ngIf="prevusDuJourUniquement" [ngClass]="{ 'active': true }">
+        <a aria-controls="balisages_prevus" role="balisages_prevus" data-toggle="balisages_prevus" [innerHTML]="model.i18n.label[type].evenementsPrevus"></a>
+      </li>
+      <!-- les onglets suivant-->
+      <li role="presentation" *ngFor="let tab of nextTabs" (click)="setActiveTab(tab.codeInfo)">
+        <a>{{tab.nom}}</a>
+      </li>
+    </ul>
+   <!--Options-->
+   <span class="option" *ngIf="!prevusDuJourUniquement">
+      <ul class="nav nav-pills pull-right" *ngIf="model.currentCtx === model.contexte.LIST_EVENEMENT_PREVU">
+        <li *ngIf="!model.ctx.dailyEvenement">
+            <a
+                ConfirmAction
+                (confirmActionResponse)=resolveDailyEvenements()>Aujourd'hui</a></li>
+        <li *ngIf="model.ctx.dailyEvenement">
+            <a
+                ConfirmAction
+                (confirmActionResponse)=resolveTab(model.onglet.evenementsPrevus)>Tous</a>
+        </li>
+        <li class="badge_option">
+            <a
+                *ngIf="!model.ctx.dailyEvenement"
+                class="badge_notification"
+                [innerHTML]="model.nbDailyEvenements"></a>
+            <a
+                *ngIf="model.ctx.dailyEvenement"
+                class="badge_notification"
+                [innerHTML]="model.nbEvenements.prevus"></a>
+        </li>
+
+        <li>
+          <span class="dropdown">
+            <button
+                class="btn btn-default calendar"
+                aria-haspopup="true"
+                aria-expanded="true"
+                data-toggle="dropdown"
+                role="button">
+              <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <div class="form-group">
+                <a href="#">
+                    <span class="glyphicon glyphicon-remove pull-right " aria-hidden="true"></span></a>
+              </div>
+              <div class="form-group">
+                <label class="col-xs-3 control-label">De</label>
+                <div class="col-xs-9">
+                  <input
+                    class="form-control"
+                    [(ngModel)]="model.dateFrom"
+                    ng2-datetime-picker
+                    date-format="DD/MM/YYYY"
+                    parse-format="DD/MM/YYYY"
+                    [close-on-select]="false"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-xs-3 control-label">A</label>
+                <div class="col-xs-9">
+                  <input class="form-control"
+                    [(ngModel)]="model.dateTo"
+                    ng2-datetime-picker
+                    date-format="DD/MM/YYYY"
+                    parse-format="DD/MM/YYYY"
+                    [close-on-select]="false"/>
+                </div>
+              </div>
+              <div class="form-group">
+                  <button
+                    class="btn btn-default action btn-xs pull-right col-xs-12"
+                    ConfirmAction
+                    (confirmActionResponse)="resolveEvenementsPrevus(model.dateFrom, model.dateTo)">Filtrer</button>
+              </div>
+            </div>
+          </span>
+        </li>
+      </ul>
+    </span>
+  </div>
+
+  <div class="content ev_courant">
+    <!--Table intitulé-->
+    <table class="table firstline">
+        <thead *ngIf="!editedEvenement && !model.ctx.new">
+            <tr class="first">
+                <th
+                    class="libelle"
+                    *ngFor="let header of model.i18n.evenement.headers"
+                    (click)="sortHeader(header)"
+                    [ngClass]="[header.identifiant, model.sort.header.identifiant === header.identifiant ? 'sorted':'' ]"
+                    [innerHTML]="header?.label">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+          <!-- Evènement édité -->
+          <tr
+              *ngIf="editedEvenement"
+              class="evenement-titre event-selected">
+            <td class="libelle type"><img [src]="'src/assets/img/icon/' + editedEvenement.codeModele +'.png'" alt="accident" />  </td>
+            <td class="libelle evenement">
+              <tr>
+                <td class="nom_evenement" [innerHTML]="model.i18n.typeEvenement[editedEvenement?.codeModele]"></td>
+              </tr>
+            </td>
+            <td class="libelle localisation">
+              <tr>
+                <td class="nom_localisation" [innerHTML]="editedEvenement?.localisant?.nom"></td>
+                <td *ngIf="isSelected(editedEvenement)" class="bouton">
+                  <button class="btn btn-default btn-xs" [innerHTML]="model.i18n.evenement.actions.show"></button>
+                </td>
+              </tr>
+            </td>
+            <td class="libelle statut">
+                <div
+                    class="statut"
+                    [ngClass]="getCssClasses(editedEvenement.codeEtat)"
+                    [innerHTML]="model.i18n.evenement.etats[editedEvenement?.codeEtat]"></div>
+            </td>
+            <td class="libelle debut">{{ editedEvenement?.horodateDebut || editedEvenement?.horodateDebutPrevue | date: "dd/MM/yyyy HH:mm:ss" }} </td>
+            <td class="libelle fin">{{ editedEvenement?.horodateFin || editedEvenement?.horodateFinPrevue | date: "dd/MM/yyyy HH:mm:ss" }} </td>
+            <td class="libelle id" [innerHTML]="editedEvenement?.nom"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!--Table contenu -->
+      <div
+        class="contenu"
+        [ngClass]="[!!editedEvenement ? 'edition' : '', model.currentOnglet === model.onglet.evenementsPrevus ? 'prevu':'' ]"
+        [perfect-scrollbar] >
+        <div *ngIf="model.ctx.new">
+          <evenement-nouveau
+            [evenement]="selectedEvenement"
+            [idAlerteSource]="model.idAlerteSource"
+            [position]="model.position"
+            [currentCtx]="model.currentCtx"
+            [currentOnglet]="model.currentOnglet">
+          </evenement-nouveau>
+        </div>
+        <div *ngIf="editedEvenement">
+            <evenement
+              [evenement]="editedEvenement"
+              [currentCtx]="model.currentCtx"
+              [warningEvtEdit]="warningEvtEdit">
+            </evenement>
+        </div>
+        <table class="table" *ngIf="!editedEvenement && !model.ctx.new">
+            <tbody>
+              <ng-template ngFor let-groupe [ngForOf]="groupes" let-i="index">
+                <tr class="groupe"
+                  [style.display]="type === 'BAL' ? 'none' : undefined"
+                  applyClassOnHover
+                  [applyClassesOnHover]="'selected'"
+                  [unSelectedExtraConditions]="[!groupe.ctx.renamed]"
+                  (click)="selectGroup($event, groupe)">
+                    <td class="libelle type">
+                      <span class="glyphicon"
+                            [ngClass]="[ groupe.ctx.collapse ? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+                            aria-hidden="false"
+                            data-toggle="collapse"></span>
+                    </td>
+                    <td class="libelle evenement" colspan="6">
+                      <tr>
+                        <td class="nom_groupe">
+                          <span [innerHTML]="groupe.groupName"
+                                *ngIf="!groupe.ctx.renameInProgress && !groupe.ctx.creationInProgress"></span>
+                          <div *ngIf="!groupe.ctx.renameInProgress && !groupe.ctx.creationInProgress"
+                               class="badge"
+                               [innerHTML]="groupe.evenements.length">
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control col-xs-2"
+                            placeholder="créer/modifier un groupe"
+                            [(ngModel)]="model.groupName"
+                            (keyup.enter)="createOrUpdateGroup($event, groupe, model.groupName, model.evenementToBeMovedToNewGroup)"
+                            *ngIf="groupe.ctx.renameInProgress || groupe.ctx.creationInProgress"
+                            ctxAccess
+                            [fieldName]="model.field.groupe"
+                            [currentCtx]="model.currentCtx">
+                        </td>
+                        <td class="nom_bouton">
+                          <ul class="boutons pull-right">
+                            <li>
+                              <button
+                                class="btn btn-default btn-xs pull-right" role="button" aria-haspopup="true" aria-expanded="false"
+                                ctxAccess
+                                [fieldName]="model.field.renameGroupBtn"
+                                [currentCtx]="model.currentCtx"
+                                *ngIf="groupe.ctx.renamable && groupe.ctx.allowUpdate"
+                                (click)="renameGroup($event, groupe)"
+                                [innerHTML]="'RENOMMER'">
+
+                              </button>
+                            </li>
+                            <li>
+                               <button
+                                    class="btn btn-default btn-xs pull-right" role="button" aria-haspopup="true" aria-expanded="false"
+                                    ctxAccess
+                                    [fieldName]="model.field.editGroupBtn"
+                                    [currentCtx]="model.currentCtx"
+                                    *ngIf="groupe.ctx.editable && groupe.ctx.allowUpdate"
+                                    (click)="editGroup($event, groupe)"
+                                    [innerHTML]="'EDITER'">
+
+                               </button>
+                             </li>
+                             <li>
+                                <button class="btn btn-default btn-xs pull-right" role="button" aria-haspopup="true" aria-expanded="false"
+                                        ctxAccess
+                                        [fieldName]="model.field.cancelGroupBtn"
+                                        [currentCtx]="model.currentCtx"
+                                        *ngIf="groupe.ctx.evenementMovable || groupe.ctx.creationInProgress || groupe.ctx.renameInProgress && groupe.ctx.allowUpdate "
+                                        (click)="cancelGroup($event, groupe)"
+                                        [innerHTML]="'ANNULER'">
+                                </button>
+                              </li>
+                              <li>
+                                 <button class="btn btn-default btn-xs pull-right" role="button" aria-haspopup="true" aria-expanded="false"
+                                        ctxAccess
+                                        [fieldName]="model.field.validateGroupBtn"
+                                        [currentCtx]="model.currentCtx"
+                                        *ngIf="groupe.ctx.evenementMovable && groupe.ctx.allowUpdate"
+                                        (click)="validateGroup($event, groupe)"
+                                        [innerHTML]="'VALIDER'">
+                                 </button>
+                               </li>
+                               <li>
+                                  <button class="btn btn-default btn-xs pull-right" role="button" aria-haspopup="true" aria-expanded="false"
+                                          ctxAccess
+                                          [fieldName]="model.field.validateRenameGroupBtn"
+                                          [currentCtx]="model.currentCtx"
+                                          *ngIf="groupe.ctx.renameInProgress && groupe.ctx.allowUpdate"
+                                          (click)="validateRenameGroup($event, groupe)"
+                                          [innerHTML]="'VALIDER'">
+                                  </button>
+                               </li>
+                               <li>
+                                   <button class="btn btn-default btn-xs pull-right" role="button" aria-haspopup="true" aria-expanded="false"
+                                           ctxAccess
+                                           [fieldName]="model.field.validateCreateGroupBtn"
+                                           [currentCtx]="model.currentCtx"
+                                           (click)="validateCreateGroup($event, groupe, model.groupName, model.evenementToBeMovedToNewGroup)"
+                                           *ngIf="groupe.ctx.creationInProgress"
+                                           [disabled]="!model.groupName"
+                                           [innerHTML]="'VALIDER'">
+                                   </button>
+                                </li>
+                        </ul>
+                      </td>
+                    </tr>
+                  </td>
+                </tr>
+
+                <tr *ngFor="let evenement of groupe.evenements"
+                      [ngClass]="{'child': evenement[model.field.checked], 'event-selected':evenement.identifiant === model.ctx.identifiant}"
+                      selectItemDirective
+                      [applyClassesOnSelect]="'event-selected'"
+                      [model]="evenement"
+                      deselectionConcerned="listeEvenements"
+                      (click)="selectEvenement(evenement.identifiant, evenement.codeModele)"
+                      [collapse]="groupe.ctx.collapse">
+                      <td class="libelle type"><img [src]="'assets/img/icon/' + evenement.codeModele +'.png'" alt="accident" />  </td>
+                      <td class="libelle evenement">
+                        <tr>
+                          <td class="nom_evenement" [innerHTML]="model.i18n.typeEvenement[evenement?.codeModele]"></td>
+                          <td class="bouton options_btn">                            
+                            <span changeDropDirection [seuil]="750" >
+                              <button
+                                      *ngIf="!lectureSeule"
+                                      class="btn btn-default btn-xs"
+                                      data-toggle="dropdown"
+                                      role="button"
+                                      aria-haspopup="true"
+                                      aria-expanded="false"
+                                      ctxAccess
+                                      [fieldName]="model.field.editEvenementBtn"
+                                      [currentCtx]="model.contexte.LIST_EVENEMENT_COURANT"
+                                      [innerHTML]="'ACTIONS'"></button>
+                              <ul class="dropdown-menu clearfix" role="menu">                                
+                                <li>
+                                    <a (click)="editEvenement($event, evenement.identifiant, model.contexte.READ, evenement.codeModele)"
+                                        [innerHTML]="'Consulter'"></a></li>
+                                <li><a
+                                    (click)="editEvenement($event, evenement.identifiant, model.contexte.EDIT_EVENEMENT, evenement.codeModele)"
+                                    ctxAccess
+                                    [fieldName]="model.field.editEvenementBtn"
+                                    [currentCtx]="model.currentCtx"
+                                    [innerHTML]="'Editer'"></a></li>
+                                <li *ngIf="evenement.codeModele !== 'BAL'">
+                                  <a
+                                    (click)="updateTypeEvenement($event, evenement, model.contexte.UPDDATE_TYPE_EVENEMENT)"
+                                    ctxAccess
+                                    [fieldName]="model.field.updateTypeEvenementBtn"
+                                    [currentCtx]="model.currentCtx"
+                                    [innerHTML]="'Modifier type'"></a></li>
+                                <li><a
+                                    (click)="updateEtatEvenement($event,evenement, model.contexte.UPDATE_ETAT_EVENEMENT, evenement.codeModele)"
+                                    ctxAccess
+                                    [fieldName]="model.field.updateEtatEvenementBtn"
+                                    [currentCtx]="model.currentCtx"
+                                    [innerHTML]="'Modifier état'"></a></li>
+                                <li *ngIf="model.currentCtx === model.contexte.LIST_EVENEMENT_COURANT && !groupe.ctx.allowUpdate && type !== 'BAL'">
+                                  <a
+                                    (click)="createGroup($event, groupe, evenement)"
+                                    ctxAccess
+                                    [fieldName]="model.field.createGroupBtn"
+                                    [currentCtx]="model.currentCtx"
+                                    [hideExtraVar]="true"
+                                    [innerHTML]="'Créer groupe'"></a></li>
+                                <li *ngIf="model.currentCtx === model.contexte.LIST_EVENEMENT_COURANT && !groupe.ctx.allowUpdate">
+                                      <a
+                                        (click)="localiserEvenement($event,  evenement)"
+                                        ctxAccess
+                                        [fieldName]="model.field.createGroupBtn"
+                                        [currentCtx]="model.currentCtx"
+                                        [hideExtraVar]="true"
+                                        [innerHTML]="'Localiser'"></a></li>                                    
+                              </ul>
+                            </span>
+                          </td>
+                        </tr>
+                      </td>
+                      <td class="libelle localisation">
+                        <tr>
+                          <td class="nom_localisation" [innerHTML]="evenement?.nomLocalisant || evenement?.localisant?.nom"></td>
+                          <td *ngIf="isSelected(evenement)" class="bouton">
+                            <button class="btn btn-default btn-xs" [innerHTML]="model.i18n.evenement.actions.show"></button>
+                          </td>
+                        </tr>
+                      </td>
+                      <td class="libelle statut">
+                            <div
+                                class="statut"
+                                [ngClass]="getCssClasses(evenement.codeEtat)"
+                                [innerHTML]="model.i18n.evenement.etats[evenement?.codeEtat]">
+                            </div>
+                      </td>
+                      <td class="libelle debut">{{ evenement?.horodateDebut  || evenement?.horodateDebutPrevue | date: "dd/MM/yyyy" }} </td>
+                      <td class="libelle fin">{{ evenement?.horodateFin || evenement?.horodateFinPrevue | date: "dd/MM/yyyy" }} </td>
+                      <td class="libelle id"
+                          *ngIf="!groupe.ctx.edited || groupe.ctx.renamed"
+                          [innerHTML]="evenement?.nom"></td>
+                      <td class="libelle id"
+                          *ngIf="groupe.ctx.edited && !groupe.ctx.renamed">
+                          <input type="checkbox"
+                              [value]="evenement[model.field.checked]"
+                              [(ngModel)]="evenement[model.field.checked]"
+                              ctxAccess
+                              [fieldName]="model.field.checked"
+                              [currentCtx]="model.currentCtx"
+                              (click)="evenement[model.field.checked] = !evenement[model.field.checked]; $event.stopPropagation(); $event.stopPropagation();">
+                      </td>
+                </tr>
+              </ng-template>
+            </tbody>
+        </table>
+    </div>
+  </div>
+
+  <!--Footer evenement-->
+  <div class="footer">
+    <div *ngIf="!lectureSeule">
+    <ul class="stat" *ngIf="!editedEvenement && model.currentCtx === model.contexte.LIST_EVENEMENT_COURANT" >
+      <li>
+        <div class="checkbox">
+          <label>
+             <input type="checkbox"
+               ctxAccess
+               [fieldName]="model.field.evenementEnCoursCheckbox"
+               [currentCtx]="model.currentCtx"
+               [hideExtraVar]="true"
+               [(ngModel)]="model.evenementFiltre.enCours"
+               (click)="model.evenementFiltre.enCours = !model.evenementFiltre.enCours; $event.stopPropagation(); $event.stopPropagation();"
+               (ngModelChange)="resolveEvenementFiltre()">
+             <span class="bold" [innerHTML]="model.nbEvenements.enCours"></span> {{ model.i18n.label[type].countEnCours }}
+          </label>
+        </div>
+      </li>
+      <li  *ngIf="type !== 'BAL'">
+        <div class="checkbox">
+          <label>
+             <input type="checkbox"
+               ctxAccess
+               [fieldName]="model.field.evenementSignaleCheckbox"
+               [currentCtx]="model.currentCtx"
+               [hideExtraVar]="true"
+               [(ngModel)]="model.evenementFiltre.signale"
+               (click)="model.evenementFiltre.signale = !model.evenementFiltre.signale; $event.stopPropagation(); $event.stopPropagation();"
+               (ngModelChange)="resolveEvenementFiltre()">
+             <span class="bold" [innerHTML]="model.nbEvenements.signales"></span> {{ model.i18n.label[type].countSignales }}
+          </label>
+        </div>
+      </li>
+      <li>
+        <div class="checkbox">
+          <label>
+             <input type="checkbox"
+                ctxAccess
+                [fieldName]="model.field.evenementTermineCheckbox"
+                [currentCtx]="model.currentCtx"
+                [hideExtraVar]="true"
+                [(ngModel)]="model.evenementFiltre.termine"
+                (click)="model.evenementFiltre.termine = !model.evenementFiltre.termine; $event.stopPropagation(); $event.stopPropagation();"
+                (ngModelChange)="resolveEvenementFiltre()">
+             <span class="bold" [innerHTML]="model.nbEvenements.termines"></span> {{ model.i18n.label[type].countTermines }}
+          </label>
+        </div>
+      </li>
+     </ul>
+     <ul class="stat" *ngIf="!editedEvenement && model.currentCtx === model.contexte.LIST_EVENEMENT_PREVU" >
+       <li>
+         <div class="checkbox">
+              <span class="bold" [innerHTML]="model.nbEvenements.prevus"></span> {{ model.i18n.label[type].countPrevus }}
+         </div>
+       </li>
+     </ul>
+     <ul class="boutons pull-right">
+        <li *ngIf="editedEvenement" [ngClass]="[model.currentCtx === model.contexte.READ ? 'link_consultation' : 'link_update']">
+            <button type="button"
+                    class="btn btn-default"
+                    (click)="cancelEdition($event)">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" style="margin-right:10px"></span>{{ model.i18n.ctx.cancelButton[model.currentCtx] }}
+            </button>
+        </li>
+        <li>
+          <button
+            type="button"
+            class="btn btn-default"
+            (click)="createEvenementManually(model.contexte.CREATE_EVENEMENT_MANUALLY)"
+            ctxAccess
+            [fieldName]="model.field.createEvenementManuallyBtn"
+            [currentCtx]="model.currentCtx"
+            [hideExtraVar]="true">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:10px"></span>{{ model.i18n.label[type].create }}
+          </button>
+          <button
+            type="button"
+            class="btn btn-default"
+            (click)="updateEvenement($event, editedEvenement)"
+            [disabled]="model.hadValidationErrors"
+            ctxAccess
+            [fieldName]="model.field.validerEvenementBtn"
+            [currentCtx]="model.currentCtx"
+            [hideExtraVar]="true">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true" style="margin-right:10px"></span>{{ model.i18n.label[type].validate }}
+          </button>
+        </li>
+      </ul>
+    </div>  
+  </div>
+</div>

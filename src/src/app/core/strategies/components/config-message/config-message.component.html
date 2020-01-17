@@ -1,0 +1,387 @@
+<div class="form-group">
+    <div class="col-xs-6">
+        <table>
+            <tbody>
+            <tr>
+                <td><label class="col-xs-3 control-label header-ligne">Mode</label></td>
+                <td>
+                    <label class="control-label">
+                        <input
+                            type="radio"
+                            [checked]="configMessage.valeurs[getDynamicModel(model.field.mode)] === model.radios.radioExtinction.value ? true : false"
+                            [value]="model.radios.radioExtinction.value"
+                            (click)="modeChange($event, model.radios.radioExtinction.value)"
+                            ctxAccess [fieldName]="model.field.mode" [currentCtx]="currentCtx"
+                            [configCte]="model.configCte"/>
+                    </label>
+                </td>
+                <td><label class="control-label">Extinction</label></td>
+
+                <td>
+                    <label class="control-label">
+                        <input
+                            type="radio"
+                            [checked]="configMessage.valeurs[getDynamicModel(model.field.mode)] === model.radios.radioNeutre.value ? true : false"
+                            [value]="model.radios.radioNeutre.value"
+                            (click)="modeChange($event, model.radios.radioNeutre.value)"
+                            ctxAccess [fieldName]="model.field.mode" [currentCtx]="currentCtx"
+                            [configCte]="model.configCte"/>
+                    </label>
+                </td>
+
+                <td><label class="control-label">Neutre</label></td>
+                <td>
+                    <label class="control-label">
+                        <input
+                            type="radio"
+                            [checked]="configMessage.valeurs[getDynamicModel(model.field.mode)] === model.radios.radioAffichage.value ? true : false"
+                            [value]="model.radios.radioAffichage.value"
+                            (click)="modeChange($event, model.radios.radioAffichage.value)"
+                            ctxAccess [fieldName]="model.field.mode" [currentCtx]="currentCtx"
+                            [configCte]="model.configCte"/>
+                    </label>
+                </td>
+                <td><label class="control-label">Affichage</label></td>
+            </tr>
+            </tbody>
+        </table>
+        <table *ngIf="model.allowEdit">
+            <tbody>
+            <tr *ngIf="formatMessage.nbLignes >= 1">
+                <td><label class="col-xs-3 control-label header-ligne">Message</label></td>
+                <td>
+                    <input
+                        class="form-control ligne"
+                        type="text"
+                        (ngModelChange)="resolveSpaces($event, getDynamicModel(model.field.ligne1))"
+                        [style.width.px]="model.pmvSize"
+                        [attr.maxlength]="formatMessage.nbColonnes"
+                        [(ngModel)]="configMessage.valeurs[getDynamicModel(model.field.ligne1)]"
+                        ctxAccess
+                        [fieldName]="model.field.ligne1"
+                        [currentCtx]="currentCtx"
+                        [configCte]="model.configCte"/>
+                </td>
+            </tr>
+
+            <tr *ngIf="formatMessage.nbLignes >= 2">
+                <td><label class="col-xs-3 control-label"></label></td>
+                <td>
+                    <input
+                        class="form-control ligne"
+                        type="text"
+                        (ngModelChange)="resolveSpaces(getDynamicModel(model.field.ligne2))"
+                        [style.width.px]="model.pmvSize"
+                        [attr.maxlength]="formatMessage.nbColonnes"
+                        [(ngModel)]="configMessage.valeurs[getDynamicModel(model.field.ligne2)]"
+                        ctxAccess
+                        [fieldName]="model.field.ligne2"
+                        [currentCtx]="currentCtx"
+                        [configCte]="model.configCte"/>
+                </td>
+            </tr>
+
+            <tr *ngIf="formatMessage.nbLignes >= 3">
+                <td><label class="col-xs-3 control-label"></label></td>
+                <td>
+                    <input
+                        class="form-control ligne"
+                        type="text"
+                        (ngModelChange)="resolveSpaces(getDynamicModel(model.field.ligne3))"
+                        [style.width.px]="model.pmvSize"
+                        [attr.maxlength]="formatMessage.nbColonnes"
+                        [(ngModel)]="configMessage.valeurs[getDynamicModel(model.field.ligne3)]"
+                        ctxAccess
+                        [fieldName]="model.field.ligne3"
+                        [currentCtx]="currentCtx"
+                        [configCte]="model.configCte"/>
+                </td>
+            </tr>
+
+            <tr *ngIf="formatMessage.nbLignes >= 4">
+                <td><label class="col-xs-3 control-label"></label></td>
+                <td>
+                    <input
+                        class="form-control ligne"
+                        type="text"
+                        (ngModelChange)="resolveSpaces(getDynamicModel(model.field.ligne4))"
+                        [style.width.px]="model.pmvSize"
+                        [attr.maxlength]="formatMessage.nbColonnes"
+                        [(ngModel)]="configMessage.valeurs[getDynamicModel(model.field.ligne4)]"
+                        ctxAccess [fieldName]="model.field.ligne4"
+                        [currentCtx]="currentCtx"
+                        [configCte]="model.configCte"/>
+                </td>
+            </tr>
+
+            <tr class="spacer"></tr>
+
+            <tr>
+                <td><label class="col-xs-3 control-label"></label></td>
+                <td>
+                    <div class="btn-group btn-justification">
+                        <button type="submit" class="btn btn-default btn-xs action pause"
+                                (click)="setJustification('left', 'normal')"
+                                ctxAccess
+                                [fieldName]="model.field.justificationGauche"
+                                [currentCtx]="currentCtx"
+                                [configCte]="model.configCte">
+                            <span class="glyphicon glyphicon-align-left"></span>
+                        </button>
+                        <button type="submit" class="btn btn-default btn-xs action pause"
+                                (click)="setJustification('center', 'normal')"
+                                ctxAccess
+                                [fieldName]="model.field.justificationCentre"
+                                [currentCtx]="currentCtx"
+                                [configCte]="model.configCte">
+                            <span class="glyphicon glyphicon-align-center"></span>
+                        </button>
+                        <button type="submit" class="btn btn-default btn-xs action pause"
+                                (click)="setJustification('right', 'normal')"
+                                ctxAccess
+                                [fieldName]="model.field.justificationDroite"
+                                [currentCtx]="currentCtx"
+                                [configCte]="model.configCte">
+                            <span class="glyphicon glyphicon-align-right"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr class="medium-spacer"></tr>
+            <tr class="medium-spacer"></tr>
+
+            <tr *ngIf="configMessage.valeurs[getDynamicModel(model.field.pictogramme)]">
+                <td><label class="col-xs-3 control-label header-ligne">Pictogramme</label></td>
+                <td>
+                    <select
+                        [style.width.px]="model.pmvSize"
+                        class="form-control"
+                        [(ngModel)]="configMessage.valeurs[getDynamicModel(model.field.pictogramme)]"
+                        ctxAccess
+                        [fieldName]="model.field.strategieModel"
+                        [currentCtx]="currentCtx"
+                        [configCte]="model.configCte">
+                        <option *ngFor="let item of model.pictogrammes"
+                                [value]="item.codeInfo"
+                                [innerHTML]="item.nom"
+                                [selected]="configMessage.valeurs[getDynamicModel(model.field.pictogramme)] == item.codeInfo">
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    <div class="col-xs-3" *ngIf="configMessage.valeurs[getDynamicModel(model.field.pictogramme)]">
+                        <img
+                            [src]="'assets/img/icon/IconePictogramme/' + configMessage.valeurs[getDynamicModel(model.field.pictogramme)] +'.png'"
+                            alt="accident" height="30"/>
+                    </div>
+                </td>
+
+                <td><label class="col-xs-3 control-label"></label></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-xs-6" *ngIf="model.allowEdit"><!-- Colonne de droite -->
+        <table>
+            <tbody>
+            <tr>
+                <td><label class="col-xs-3 control-label header-ligne">Message</label></td>
+                <td>
+                    <label class="control-label">
+                        <input
+                            type="radio"
+                            [checked]="configMessage.valeurs[getDynamicModel(model.field.message)] === model.radios.radioSimple.value ? true : false"
+                            [value]="model.radios.radioSimple.value"
+                            (click)="messageChange($event, model.radios.radioSimple.value)"
+                            ctxAccess
+                            [fieldName]="model.field.message"
+                            [currentCtx]="currentCtx"
+                            [configCte]="model.configCte"/>
+                    </label>
+                </td>
+                <td><label class="control-label">Simple</label></td>
+
+                <td>
+                    <label class="control-label">
+                        <input
+                            type="radio"
+                            [checked]="configMessage.valeurs[getDynamicModel(model.field.message)] === model.radios.radioClignotant.value ? true : false"
+                            [value]="model.radios.radioClignotant.value"
+                            (click)="messageChange($event, model.radios.radioClignotant.value)"
+                            ctxAccess
+                            [fieldName]="model.field.message"
+                            [currentCtx]="currentCtx"
+                            [configCte]="model.configCte"/>
+                    </label>
+                </td>
+                <td><label class="control-label">Clignotant</label></td>
+
+                <td>
+                    <label class="control-label">
+                        <input
+                            type="radio"
+                            [checked]="configMessage.valeurs[getDynamicModel(model.field.message)] === model.radios.radioAlternat.value ? true : false"
+                            [value]="model.radios.radioAlternat.value"
+                            (click)="messageChange($event, model.radios.radioAlternat.value)"
+                            ctxAccess
+                            [fieldName]="model.field.message"
+                            [currentCtx]="currentCtx"
+                            [configCte]="model.configCte"/>
+                    </label>
+                </td>
+                <td><label class="control-label">Alternat</label></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table *ngIf="model.allowEdit">
+            <tbody>
+            <tr *ngIf="formatMessage.nbLignes >= 1">
+                <td><label class="control-label header-ligne">Message Alterné </label></td>
+                <td>
+                    <input
+                        class="form-control ligne"
+                        type="text"
+                        (ngModelChange)="resolveSpaces(getDynamicModel(model.field.ligne1Alternee))"
+                        [style.width.px]="model.pmvSize"
+                        [attr.maxlength]="formatMessage.nbColonnes"
+                        [(ngModel)]="configMessage.valeurs[getDynamicModel(model.field.ligne1Alternee)]"
+                        ctxAccess
+                        [fieldName]="model.field.ligne1Alternee"
+                        [currentCtx]="currentCtx"
+                        [configCte]="model.configCte"/>
+                </td>
+            </tr>
+
+            <tr *ngIf="formatMessage.nbLignes >= 2">
+                <td><label class="col-xs-3 control-label"></label></td>
+                <td>
+                    <input
+                        class="form-control ligne"
+                        type="text"
+                        (ngModelChange)="resolveSpaces(getDynamicModel(model.field.ligne2Alternee))"
+                        [style.width.px]="model.pmvSize"
+                        [attr.maxlength]="formatMessage.nbColonnes"
+                        [(ngModel)]="configMessage.valeurs[getDynamicModel(model.field.ligne2Alternee)]"
+                        ctxAccess [fieldName]="model.field.ligne2Alternee" [currentCtx]="currentCtx"
+                        [configCte]="model.configCte"/>
+                </td>
+            </tr>
+
+            <tr *ngIf="formatMessage.nbLignes >= 3">
+                <td><label class="col-xs-3 control-label"></label></td>
+                <td>
+                    <input
+                        class="form-control ligne"
+                        type="text"
+                        (ngModelChange)="resolveSpaces(getDynamicModel(model.field.ligne3Alternee))"
+                        [style.width.px]="model.pmvSize"
+                        [attr.maxlength]="formatMessage.nbColonnes"
+                        [(ngModel)]="configMessage.valeurs[getDynamicModel(model.field.ligne3Alternee)]"
+                        ctxAccess
+                        [fieldName]="model.field.ligne3Alternee"
+                        [currentCtx]="currentCtx"
+                        [configCte]="model.configCte"/>
+                </td>
+            </tr>
+
+            <tr *ngIf="formatMessage.nbLignes >= 4">
+                <td><label class="col-xs-3 control-label"></label></td>
+                <td>
+                    <input
+                        class="form-control ligne"
+                        type="text"
+                        (ngModelChange)="resolveSpaces(getDynamicModel(model.field.ligne4Alternee))"
+                        [style.width.px]="model.pmvSize"
+                        [attr.maxlength]="formatMessage.nbColonnes"
+                        [(ngModel)]="configMessage.valeurs[getDynamicModel(model.field.ligne4Alternee)]"
+                        ctxAccess
+                        [fieldName]="model.field.ligne4Alternee"
+                        [currentCtx]="currentCtx"
+                        [configCte]="model.configCte"/>
+                </td>
+            </tr>
+
+            <tr class="spacer"></tr>
+
+            <tr>
+                <td><label class="col-xs-3 control-label"></label></td>
+                <td>
+                    <div class="btn-group btn-justification">
+                        <button
+                            type="submit"
+                            class="btn btn-default btn-xs action pause"
+                            (click)="setJustification('left', 'alternee')"
+                            ctxAccess
+                            [fieldName]="model.field.justificationGauche"
+                            [currentCtx]="currentCtx"
+                            [configCte]="model.configCte">
+                            <span class="glyphicon glyphicon-align-left"></span>
+                        </button>
+                        <button
+                            type="submit"
+                            class="btn btn-default btn-xs action pause"
+                            (click)="setJustification('center', 'alternee')"
+                            ctxAccess
+                            [fieldName]="model.field.justificationCentre"
+                            [currentCtx]="currentCtx"
+                            [configCte]="model.configCte">
+                            <span class="glyphicon glyphicon-align-center"></span>
+                        </button>
+                        <button
+                            type="submit"
+                            class="btn btn-default btn-xs action pause"
+                            (click)="setJustification('right', 'alternee')"
+                            ctxAccess
+                            [fieldName]="model.field.justificationDroite"
+                            [currentCtx]="currentCtx"
+                            [configCte]="model.configCte">
+                            <span class="glyphicon glyphicon-align-right"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+
+            <tr class="medium-spacer"></tr>
+            <tr class="medium-spacer"></tr>
+
+            <tr>
+                <td><label class="col-xs-3 control-label header-ligne">Luminosite</label></td>
+                <td>
+                    <select
+                        [style.width.px]="model.pmvSize"
+                        class="form-control"
+                        [(ngModel)]="configMessage.valeurs[getDynamicModel(model.field.luminosite)]"
+                        ctxAccess
+                        [fieldName]="model.field.luminosite"
+                        [currentCtx]="currentCtx"
+                        [configCte]="model.configCte">
+                        <option *ngFor="let item of model.luminosites"
+                                [value]="item.codeInfo"
+                                [innerHTML]="item.nom"
+                                [selected]="configMessage.valeurs[getDynamicModel(model.field.luminosite)] == item.codeInfo">
+                        </option>
+                    </select>
+                </td>
+
+                <td>
+                    <label class="control-label down-label">
+                        <input
+                            type="checkbox"
+                            [(ngModel)]="configMessage.valeurs[getDynamicModel(model.field.flash)]"
+                            (click)="configMessage.valeurs[getDynamicModel(model.field.flash)] = !configMessage.valeurs[getDynamicModel(model.field.flash)];"
+                            ctxAccess
+                            [fieldName]="model.field.flash"
+                            [currentCtx]="currentCtx"
+                            [configCte]="model.configCte"/>
+                    </label>
+                </td>
+                <td><label class="control-label down-label">Flash</label></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

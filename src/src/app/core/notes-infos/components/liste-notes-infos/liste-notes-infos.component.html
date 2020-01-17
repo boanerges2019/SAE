@@ -1,0 +1,133 @@
+<div id="notes">
+    <!-- Background du bloc alertes (gris & blanc)-->
+    <cesam-note-popup [hidden]="!showPopupModifNote"
+       [note]="note"
+       [type]="consignesEnCours ? types.CONSIGNE : types.POSTIT ">
+    </cesam-note-popup>
+
+    <div class="bg_header">
+        <ul class="nav nav-tabs" role="tablist">
+            <!-- les onglets précédents -->
+            <li
+                *ngFor="let tab of previousTabs"
+                role="presentation"
+                title="{{tab.description}}"
+                (click)="setActiveTab(tab.codeInfo)">
+                <a>{{tab.nom}}</a>
+            </li>
+            <!-- l'onglet note ou consignes -->
+            <li role="presentation" class="active notif">
+                <a>{{notesEnCours ? 'notes' : 'consignes'}}
+                    <!-- <span class="badge_option">
+                        <a class="badge_notification">{{nbrNotes}}</a>
+                    </span> -->
+                </a>
+            </li>
+            <!-- les onglets suivant-->
+            <li *ngFor="let tab of nextTabs"
+                role="presentation"
+                title="{{tab.description}}"
+                (click)="setActiveTab(tab.codeInfo)">
+                    <a>{{tab.nom}}</a>
+            </li>
+        </ul>
+        <div class="option">
+            <ul class="nav nav-pills pull-right">
+                <span class="dropdown">
+          <button aria-expanded="true" aria-haspopup="true" class="btn btn-default action" data-toggle="dropdown"
+                  role="button"
+                  (click)="resolveNouvelleNote()"
+                  ctxAccess
+                  [fieldName]="model.field.nouvelleNote"
+                  [currentCtx]="model.currentCtx"
+                  [configCte]="model.configCte">
+              <span aria-hidden="true" class="glyphicon glyphicon-plus"></span>Nouvelle {{notesEnCours ? 'note' : 'consigne'}}
+          </button>
+          <div class="dropdown-menu nouvelle-note dropdown-menu-right" *ngIf="isCreated">
+              <form class="form-horizontal  ng-untouched ng-pristine ng-valid" novalidate="">
+                  <div class="form-group">
+                  </div>
+                  <div class="form-group">
+                      <label class="col-xs-11 control-label titre">Nouvelle {{notesEnCours ? 'note' : 'consigne'}}</label>
+                      <label class="col-xs-1 control-label">
+                          <a (click)="closeCreateNotePopup()"><span aria-hidden="true"
+                                                                    class="glyphicon glyphicon-remove pull-right "></span></a>
+                      </label>
+                  </div>
+                  <div class="form-group">
+                      <div class="col-xs-12">
+                    <textarea maxlength="255" rows="3"
+                              [value]="model.descriptionNote"
+                              (keyup)="descriptionNoteChange($event);"
+                              class="ng-pristine ng-valid ng-touched"
+                              placeholder="Tapez votre note ici..."
+                        >
+                    </textarea>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="col-xs-2 control-label">Couleurs</label>
+
+                      <div class="col-xs-3">
+                          <ul class="couleur">
+                              <li>
+                                  <div class="btn carre bleu" (click)="selectBleu($event)"><span aria-hidden="true"
+                                                                                                 class="glyphicon glyphicon-ok"
+                                                                                                 *ngIf="model.checkbleu"></span>
+                                  </div>
+                              </li>
+                              <li>
+                                  <div class="btn carre violet" (click)="selectViolet($event)"><span aria-hidden="true"
+                                                                                                     class="glyphicon glyphicon-ok"
+                                                                                                     *ngIf="model.checkviolet"></span>
+                                  </div>
+                              </li>
+                              <li>
+                                  <div class="btn carre jaune" (click)="selectJaune($event)"><span aria-hidden="true"
+                                                                                                   class="glyphicon glyphicon-ok"
+                                                                                                   *ngIf="model.checkjaune"></span>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+
+                  <div class="form-group" *ngIf="consignesEnCours">
+                      <div class="col-xs-4">
+                          <cesam-upload (outputFile)="fileChange($event)"></cesam-upload>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <ul class="pull-right col-xs-12">
+                          <button class="btn btn-default action btn-xs pull-right"
+                                  (click)="creerNote()">OK
+                          </button>
+                          <button class="btn btn-default action btn-xs pull-right"
+                                  (click)="closeCreateNotePopup()">Annuler
+                          </button>
+                      </ul>
+                  </div>
+              </form>
+          </div>
+        </span>
+            </ul>
+        </div>
+    </div>
+
+    <div class="bg_content" [perfect-scrollbar]>
+        <div>
+            <div class='wrapper'>
+                <div *ngIf="notes && notes.length > 0" [ngGrid]="gridConfig" class='container dragndrop'>
+                    <div *ngFor="let note of notes; let i = index" [(ngGridItem)]="noteConfigs[i]"
+                         (onDragStop)="onDragStop(i, $event)">
+                        <note-info
+                            [note]="note">
+                        </note-info>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

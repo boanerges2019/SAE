@@ -1,0 +1,36 @@
+<div class="well well-lg">
+  <div class="form-horizontal">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent" data-toggle="collapse">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+    aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+      <!--ss type, direction & distance-->
+       <div class="form-group">
+         <label class="col-xs-2 control-label">Sous type AREA</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.sousTypeReseauArea]"
+            [items]="sousTypesReseauArea"
+            [enumName]="modeleEvenementCte.SOUS_TYPES_RESEAU_AREA"
+            [fieldName]="field.sousTypeReseauArea"
+            [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <label class="col-xs-1 control-label">Direction</label>
+         <div class="col-xs-2">
+           <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.directionReseauArea]"
+            [items]="directionsReseauArea"
+            [enumName]="modeleEvenementCte.DIRECTIONS_RESEAU_AREA"
+            [fieldName]="field.directionReseauArea"
+            [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <label class="col-xs-2 control-label">PR AREA</label>
+         <div class="col-xs-2">
+           <cesam-input [type]="'text'" [model]="evenement.attributs[field.prReseauArea]" [fieldName]="field.prReseauArea" [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       </div>
+     </div>
+  </div>
+</div>

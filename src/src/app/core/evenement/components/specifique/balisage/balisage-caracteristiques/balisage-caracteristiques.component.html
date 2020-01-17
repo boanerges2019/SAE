@@ -1,0 +1,110 @@
+<div class="well well-lg">
+    <div class="form-horizontal" >
+      <h4 (click)="isCollapsedContent = !isCollapsedContent" data-toggle="collapse">
+        <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+        aria-hidden="false"></span>
+              Caractéristiques
+      </h4>
+      <div [collapse]="isCollapsedContent" class="collapse">
+        <!-- Libelle du balisage -->
+         <div class="form-group">
+           <label class="col-xs-3 control-label">Libellé</label>
+           <div class="col-xs-3">
+              <cesam-input [type]="'text'"
+              [model]="evenement.attributs[field.libelleBalisage]"
+              [fieldName]="field.libelleBalisage"
+              [currentCtx]="currentCtx"
+              [disabled]="false"></cesam-input>
+           </div>
+         </div>
+
+         <!--
+         typeBalisage:                       'BAL.TYPE_BALISAGE',
+         motifBalisage:                      'BAL.MOTIF_BALISAGE',
+         -->
+         <div class="form-group">
+              <!-- <div *ngIf="evenement.attributs[field.typeBalisage]"> -->
+                <label class="col-xs-3 control-label">Type</label>
+                <div class="col-xs-3">
+                    <cesam-input [type]="'select'"
+                                [model]="evenement.attributs[field.typeBalisage]"
+                                [items]="typesBalisages"
+                                [enumName]="modeleEvenementCte.TYPE_BALISAGE"
+                                [fieldName]="field.typeBalisage"
+                                [currentCtx]="currentCtx"></cesam-input>
+                </div>
+              <!-- </div> -->
+              <!-- <div *ngIf="evenement.attributs[field.motifBalisage]"> -->
+                <label class="col-xs-3 control-label">Motif</label>
+                <div class="col-xs-3">
+                    <cesam-input [type]="'select'"
+                                [model]="evenement.attributs[field.motifBalisage]"
+                                [items]="motifsBalisages"
+                                [enumName]="modeleEvenementCte.MOTIF_BALISAGE"
+                                [fieldName]="field.motifBalisage"
+                                [currentCtx]="currentCtx"></cesam-input>
+                </div>            
+              <!-- </div> -->
+        </div>
+
+
+
+      <!--Début & Fin pose -->
+      <div class="form-group">
+          <label class="col-xs-3 control-label">Horodate pose 1er panneau</label>
+          <div class="col-xs-3">
+            <cesam-input
+               [type]="'date'"
+               [model]="evenement.attributs[field.horodatePosePremierPanneauBalisage]"
+               [fieldName]="field.horodatePosePremierPanneauBalisage"
+               [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <label class="col-xs-3 control-label">Horodate pose biseau</label>
+         <div class="col-xs-3">
+           <cesam-input
+               [type]="'date'"
+               [model]="evenement.attributs[field.horodatePoseBiseauBalisage]"
+               [fieldName]="field.horodatePoseBiseauBalisage"
+               [currentCtx]="currentCtx"></cesam-input>
+         </div>
+        </div>
+        <div class="form-group">  
+         <label class="col-xs-3 control-label">Horodate fin pose</label>
+         <div class="col-xs-3">           
+           <cesam-input
+               [type]="'date'"
+               [model]="evenement.attributs[field.horodateFinPoseBalisage]"
+               [fieldName]="field.horodateFinPoseBalisage"
+               [currentCtx]="currentCtx"></cesam-input>
+         </div>                  
+        </div>
+
+       <!--Horodates de dépose -->
+      <div class="form-group">
+        <label class="col-xs-3 control-label">Horodate début dépose</label>
+        <div class="col-xs-3">
+          <cesam-input [type]="'date'" 
+                       [model]="evenement.attributs[field.horodateDebutDeposeBalisage]" 
+                       [fieldName]="field.horodateDebutDeposeBalisage"
+                       [currentCtx]="currentCtx"></cesam-input>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-xs-3 control-label">Horodate dépose panneau</label>
+        <div class="col-xs-3">
+          <cesam-input [type]="'date'" 
+                       [model]="evenement.attributs[field.horodateDeposePanneauBalisage]" 
+                       [fieldName]="field.horodateDeposePanneauBalisage"
+                       [currentCtx]="currentCtx"></cesam-input>
+        </div>
+        <label class="col-xs-3 control-label">Horodate dépose biseau</label>
+        <div class="col-xs-3">
+          <cesam-input [type]="'date'" 
+                       [model]="evenement.attributs[field.horodateDeposeBiseauBalisage]" 
+                       [fieldName]="field.horodateDeposeBiseauBalisage"
+                       [currentCtx]="currentCtx"></cesam-input>
+        </div>
+      </div>
+       </div>
+    </div>
+  </div>

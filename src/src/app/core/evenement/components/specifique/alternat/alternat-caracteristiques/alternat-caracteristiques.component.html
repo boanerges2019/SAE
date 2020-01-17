@@ -1,0 +1,34 @@
+<div class="well well-lg">
+  <div class="form-horizontal" >
+    <h4 (click)="isCollapsedContent = !isCollapsedContent">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+       <!--Alterat-->
+       <div class="form-group">
+         <label class="col-xs-3 control-label">Planification alternat</label>
+         <div class="col-xs-3">
+           <cesam-input [type]="'select'"
+              [model]="evenement.attributs[field.planificationAlternat]"
+              [items]="planificationsAlternat"
+              [enumName]="modeleEvenementCte.PLANIFICATIONS_ALTERNAT"
+              [fieldName]="field.planificationAlternat"
+              [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <div class="col-xs-3">
+             <div class="checkbox">
+                 <label>
+                   <cesam-input [type]="'checkbox'"
+                   [model]="evenement.attributs[field.alternatExceptionnel]"
+                   [innerHTML]="'Alternat exceptionnel'"
+                   [fieldName]="field.alternatExceptionnel"
+                   [currentCtx]="currentCtx"></cesam-input>
+                  </label>
+            </div>
+         </div>
+       </div>
+     </div>
+  </div>
+</div>

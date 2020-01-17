@@ -1,0 +1,206 @@
+<div class="well well-lg">
+  <div class="form-horizontal">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent" data-toggle="collapse">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+       <!--Nature&Mobile-->
+       <div class="form-group">
+         <label class="col-xs-1 control-label">Nature</label>
+         <div class="col-xs-4">
+           <cesam-input [type]="'select'"
+            [model]="evenement.attributs[field.natureTravaux]"
+            [items]="naturesTravaux"
+            [enumName]="modeleEvenementCte.NATURES_TRAVAUX"
+            [fieldName]="field.natureTravaux"
+            [currentCtx]="currentCtx"></cesam-input>
+        </div>
+        <div class="col-xs-1"></div>
+          <div class="col-xs-3">
+              <div class="checkbox">
+                <cesam-input [type]="'checkbox'"
+                  [innerHTML]="'Mobile'"
+                  [model]="evenement.attributs[field.mobileCbTravaux]"
+                  [fieldName]="field.mobileCbTravaux"
+                  [currentCtx]="currentCtx"></cesam-input>
+              </div>
+            </div>
+        </div>
+
+       <!--Intervenants travaux-->
+       <div class="row">
+         <label class="col-xs-12 control-label titre">Intervenants travaux</label>
+       </div>
+
+       <ng-template  ngFor let-item [ngForOf]="listeIntervenantsTravaux[field.itemIntervenantTravaux]" let-i="index">
+          <!--Entreprise -->
+           <div class="form-group">
+               <label class="col-xs-2 control-label">Entreprise</label>
+               <div class="col-xs-3">
+                 <cesam-input
+                    [type]="'text'"
+                    [model]="item[field.entrepriseTravaux]"
+                    [fieldName]="field.entrepriseTravaux"
+                    [currentCtx]="currentCtx"></cesam-input>
+               </div>
+              <label class="col-xs-1 control-label">Nb. pers.</label>
+               <div class="col-xs-2">
+                 <cesam-input
+                    [type]="'number'"
+                    [model]="item[field.nbPersonnesTravaux]"
+                    [fieldName]="field.nbPersonnesTravaux"
+                    [currentCtx]="currentCtx"></cesam-input>
+               </div>
+               <label class="col-xs-1 control-label unite">Nb. véh.</label>
+               <div class="col-xs-2">
+                 <cesam-input
+                    [type]="'number'"
+                    [model]="item[field.nbVehiculesTravaux]"
+                    [fieldName]="field.nbVehiculesTravaux"
+                    [currentCtx]="currentCtx"></cesam-input>
+               </div>
+               <div class="col-xs-1">
+                 <button class="btn btn-default btn-xs trash" (click)="removeIntervention(i)">
+                   <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+               </div>
+          </div>
+          <!--autorisation & radio -->
+          <div class="form-group">
+               <label class="col-xs-2 control-label">Autorisation</label>
+               <div class="col-xs-3">
+                 <cesam-input
+                    [type]="'text'"
+                    [model]="item[field.autorisationTravaux]"
+                    [fieldName]="field.autorisationTravaux"
+                    [currentCtx]="currentCtx"></cesam-input>
+               </div>
+               <label class="col-xs-1 control-label">Mobile</label>
+               <div class="col-xs-2">
+                 <cesam-input
+                    [type]="'text'"
+                    [model]="item[field.mobileTravaux]"
+                    [fieldName]="field.mobileTravaux"
+                    [currentCtx]="currentCtx"></cesam-input>
+               </div>
+               <label class="col-xs-1 control-label">Radio</label>
+               <div class="col-xs-2">
+                 <cesam-input
+                    [type]="'text'"
+                    [model]="item[field.radioTravaux]"
+                    [fieldName]="field.radioTravaux"
+                    [currentCtx]="currentCtx"></cesam-input>
+                </div>
+          </div>
+        <!--Horodate -->
+        <div class="form-group">
+            <label class="col-xs-2 control-label">Date de début</label>
+                <div class="col-xs-3">
+                    <cesam-input
+                      [type]="'date'"
+                      [model]="item[field.dateDebutTravaux]"
+                      [fieldName]="field.dateDebutTravaux"
+                      [currentCtx]="currentCtx"></cesam-input>
+                </div>
+                 <label class="col-xs-2 control-label">Date de fin</label>
+                 <div class="col-xs-3">
+                   <cesam-input
+                     [type]="'date'"
+                     [model]="item[field.dateFinTravaux]"
+                     [fieldName]="field.dateFinTravaux"
+                     [currentCtx]="currentCtx"></cesam-input>
+                 </div>
+          </div>
+         <div class="row">
+           <div class="col-xs-12 control-label separation dashed"></div>
+         </div>
+      </ng-template>
+
+      <!--------------------------  Nouvel Element --------------------------  -->
+
+       <div class="form-group">
+           <label class="col-xs-2 control-label">Entreprise</label>
+           <div class="col-xs-3">
+             <cesam-input
+                [type]="'text'"
+                [model]="model[field.entrepriseTravaux]"
+                [fieldName]="field.entrepriseTravaux"
+                [currentCtx]="currentCtx"></cesam-input>
+           </div>
+          <label class="col-xs-1 control-label">Nb. pers.</label>
+           <div class="col-xs-2">
+             <cesam-input
+                [type]="'number'"
+                [model]="model[field.nbPersonnesTravaux]"
+                [fieldName]="field.nbPersonnesTravaux"
+                [currentCtx]="currentCtx"></cesam-input>
+           </div>
+           <label class="col-xs-1 control-label unite">Nb. véh.</label>
+           <div class="col-xs-2">
+             <cesam-input
+                [type]="'number'"
+                [model]="model[field.nbVehiculesTravaux]"
+                [fieldName]="field.nbVehiculesTravaux"
+                [currentCtx]="currentCtx"></cesam-input>
+           </div>
+           <div class="col-xs-1">
+             <!-- <button class="btn btn-default btn-xs trash"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button> -->
+           </div>
+      </div>
+      <!--autorisation & radio -->
+      <div class="form-group">
+           <label class="col-xs-2 control-label">Autorisation</label>
+           <div class="col-xs-3">
+             <cesam-input
+                [type]="'text'"
+                [model]="model[field.autorisationTravaux]"
+                [fieldName]="field.autorisationTravaux"
+                [currentCtx]="currentCtx"></cesam-input>
+           </div>
+           <label class="col-xs-1 control-label">Mobile</label>
+           <div class="col-xs-2">
+             <cesam-input
+                [type]="'text'"
+                [model]="model[field.mobileTravaux]"
+                [fieldName]="field.mobileTravaux"
+                [currentCtx]="currentCtx"></cesam-input>
+           </div>
+           <label class="col-xs-1 control-label">Radio</label>
+           <div class="col-xs-2">
+             <cesam-input
+                [type]="'text'"
+                [model]="model[field.radioTravaux]"
+                [fieldName]="field.radioTravaux"
+                [currentCtx]="currentCtx"></cesam-input>
+            </div>
+      </div>
+    <!--Horodate -->
+    <div class="form-group">
+        <label class="col-xs-2 control-label">Date de début</label>
+            <div class="col-xs-3">
+              <cesam-input
+                [type]="'date'"
+                [model]="model[field.dateDebutTravaux]"
+                [fieldName]="field.dateDebutTravaux"
+                [currentCtx]="currentCtx"></cesam-input>
+            </div>
+             <label class="col-xs-2 control-label">Date de fin</label>
+             <div class="col-xs-3">
+               <cesam-input
+                 [type]="'date'"
+                 [model]="model[field.dateFinTravaux]"
+                 [fieldName]="field.dateFinTravaux"
+                 [currentCtx]="currentCtx"></cesam-input>
+             </div>
+      </div>
+       <div class="row">
+         <div class="col-xs-12 control-label separation dashed"></div>
+       </div>
+       <div class="form-group">
+          <div class="col-xs-12 control-label right">
+              <button class="btn btn-default btn-xs action" (click)="addIntervention()">AJOUTER</button></div>
+        </div>
+     </div>
+  </div>
+</div>

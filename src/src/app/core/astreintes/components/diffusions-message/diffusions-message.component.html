@@ -1,0 +1,158 @@
+<div id="diffusions-message">
+  <div class="header">
+    <!--Menu onglet Tabs-->
+    <ul class="nav nav-tabs" role="tablist">
+
+      <!-- les onglets précédents -->
+      <li role="presentation" *ngFor="let tab of previousTabs" (click)="setActiveTab(tab.codeInfo)">
+          <a>{{tab.nom}}</a>
+        </li>
+
+     <li role="presentation" class="active">
+        <a>diffusions du message</a>
+     </li>
+
+      <!-- les onglets suivant-->
+      <li role="presentation" *ngFor="let tab of nextTabs" (click)="setActiveTab(tab.codeInfo)">
+          <a>{{tab.nom}}</a>
+        </li>
+   </ul>
+ </div>
+
+ <div class="content edit" [perfect-scrollbar]>
+
+
+
+
+   <!--Commun-->
+   <div class="well well-lg">
+
+      <!-- Liste de jours -->
+      <form class="form-horizontal"  >
+      <div class="col-xs-12  five_div">
+          <table>
+              <tr>
+                  <td class="firstColonne">
+                      Calendrier
+                  </td>
+                  <td>
+                    &nbsp;
+                  </td>
+                  <td *ngFor="let journee of journees">
+                      <button class="btn btn-default"
+                              [ngClass]="{ 'active': journee.isActive}"
+                              (click)="selectJournee(journee)"
+                              ctxAccess
+                              [fieldName]="model.field.calendrier"
+                              [currentCtx]="model.currentCtx"
+                              [configCte]="model.configCte"
+                          >{{journee.nom}}
+                      </button>
+                  </td>
+              </tr>
+              <tr>
+
+              </tr>
+              <tr>
+                  <td class="firstColonne">
+                      Heure debut
+                  </td>
+                  <td>
+                      &nbsp;
+                  </td>
+                  <td  colspan="6">
+                      <select class="colonneHor"
+                              name="heureDebut"
+                              [style.height.px]="25"
+                              ctxAccess
+                              [fieldName]="model.field.heureDebut"
+                              [currentCtx]="model.currentCtx"
+                              [configCte]="model.configCte"
+                              [(ngModel)]="data.heureDebut">
+                          <option *ngFor="let plageHoraire of plagesHoraires"
+                                  [ngValue]="plageHoraire">{{plageHoraire.horaire}}
+                          </option>
+                      </select>
+                  </td>
+              </tr>
+          </table>
+      </div>
+      </form>
+
+    <form class="form-horizontal">
+      <div class="form-group">
+        <h4>
+          <span>Dernier compte-rendu de diffusion du message vocal de test astreinte</span>
+          <span>du {{derniereDiffusion?.HORODATE}}</span>
+          <span> : {{derniereDiffusion?.STATUS}}</span>
+        </h4>
+      </div>
+      <div class="form-group">
+        <table [style.width.%]="100">
+          <thead>
+            <tr>
+              <th>Astreinte</th>
+              <th>Intervenant</th>
+              <th>Nombre d'appels</th>
+              <th>Compte rendu</th>
+              <th>Horodate</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cr of compteRendus">
+              <td>{{cr.NOM_ASTREINTE_DESTINATAIRE}}</td>
+              <td>{{cr.NOM_RESSOURCE_DESTINATAIRE}}</td>
+              <td>{{cr.NOMBRE_TENTATIVE}}</td>
+              <td>{{cr.STATUT}}</td>
+              <td>{{cr.HORODATE}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </form>
+   </div>
+</div>
+
+  <!--Footer plan-->
+  <div class="footer">
+    <ul class="boutons pull-right" *ngIf="modificationEnCours">
+       <li class="link"
+           (click)="annuler()"
+           ctxAccess
+           [fieldName]="model.field.annuler"
+           [currentCtx]="model.currentCtx"
+           [configCte]="model.configCte"
+       >
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+          <span class="bold"  >Retour </span>
+       </li>
+       <li>
+         <button type="button"
+                class="btn btn-default"
+                (click)="modifierCalendrierPlanification()"
+                 ctxAccess
+                 [fieldName]="model.field.valider"
+                 [currentCtx]="model.currentCtx"
+                 [configCte]="model.configCte"
+             >
+           <span class="glyphicon glyphicon-ok" aria-hidden="true" style="margin-right:10px"></span>valider les modifications
+         </button>
+       </li>
+     </ul>
+     <ul class="boutons pull-right" *ngIf="!modificationEnCours">
+        <li>
+            <button type="button"
+                    class="btn btn-default"
+                    (click)="forcerDiffusionMessageVocal()"
+                    ctxAccess
+                    [fieldName]="model.field.forcer"
+                    [currentCtx]="model.currentCtx"
+                    [configCte]="model.configCte"
+                >
+              <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"  style="margin-right:10px"></span>
+              Forcer diffusion
+            </button>
+         </li>
+     </ul>
+  </div>
+</div>

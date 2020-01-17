@@ -1,0 +1,54 @@
+@import 'src/styles/variables/variables.scss';
+#presentation-envoi-new {
+    .espace{
+        margin-top:20px;
+        margin-left:30px;
+    }
+
+    .ligne{
+        width: 800px;
+        padding-bottom: 20px;
+    }
+
+    .colonne1{
+        width: 200px;
+    }
+    .colonne2{
+        width: 300px;
+    }
+    .colonne2{
+        width: 300px;
+    }
+
+    .colonne4{
+        width: 400px;
+    }
+    .colonne5{
+        width: 100px;
+    }
+
+    .commentaire{
+        width: 400px;
+        height: 50px;
+    }
+
+    .espace_droite{
+        padding-left: 120px;
+        padding-top: 10px;
+    }
+
+    .btn{
+        margin-right: 50px;
+        background-color:$bleu;
+        color:$blanc;
+        text-align: center;
+        font-size:$ft_btn;
+        border-left: 3px solid $blanc;
+        &:hover{
+            background-color:$bleu_fonce;
+        }
+        /*&:focus{
+            background-color:$vert_focus;
+        }*/
+    }
+}

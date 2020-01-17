@@ -1,0 +1,306 @@
+@import 'src/styles/variables/variables.scss';
+
+#cesam-planification {
+    background-color: $bg-notification;
+    height: 100%;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+
+    .header{
+        background:$bg-titre;
+        height:60px;
+        width:100%;
+        display:block;
+        float:left;
+        border-radius:5px 5px 0 0;
+        padding-right:10px;
+        /*Tabs Bootstrap */
+        .nav-tabs {
+            border-bottom:none;
+            float:left;
+            > li > a:focus {
+                padding: 20px 20px;
+                margin-top: 0px;
+                margin-right:0px;
+                color:$blanc;
+                border:none;
+                height: 60px;
+                background:$bg-titre;
+                border-right:1px solid $gris_fonce;
+            }
+            li{
+                width:280px;
+                height: 60px;
+                cursor: pointer;
+                > a {
+                    border-radius:0;
+                    padding: 20px 20px;
+                    margin-top: 0px;
+                    margin-right:0px;
+                    text-transform: uppercase;
+                    color:$blanc;
+                    font-size:$ft_tabs;
+                    border:none;
+                    height: 60px;
+                    border-right:1px solid $gris_fonce;
+                }
+                &.active > a {
+                    border-top: 6px solid $bleu;
+                    padding: 14px 20px 15px 20px;
+                    color:$noir;
+                    border-right:none;
+                    font-weight:600;
+                }
+                &:hover > a,
+                &:focus > a {
+                    color:$noir!important;
+                    background:$blanc;
+                    border-right:none;
+                }
+            }
+        }
+    }
+
+    .active{
+        color:$blanc!important;
+        background:$bleu!important;
+    }
+
+    .title_div {
+        color: $blanc;
+        margin-left: 20px;
+        padding-top: 20px;
+        height: 60px;
+        width: 100%;
+    }
+
+    .second_div {
+        display: inline-block;
+        background-color: $blanc;
+        padding-top: 5px;
+        height: 30px;
+        width: 100%;
+
+        .partie1 {
+            display: inline-block;
+            font-weight: bold;
+            font-size: $ft_tabs;
+            color: $bleu;
+            margin-left: 10px;
+            width: 60%;
+            float: left;
+        }
+        .partie2 {
+            display: inline-block;
+            width: 20%;
+            color: $gris_clair;
+            margin-left: 10px;
+            font-weight: 600;
+            float: right;
+            .border {
+                display: inline-block;
+                border-left: 1px solid $gris_clair;
+                padding-right: 10px;
+            }
+            .texte {
+                display: inline-block;
+            }
+
+        }
+    }
+
+    .third_div {
+        display: inline-block;
+        background-color: $bleu;
+        padding-top: 5px;
+        height: 50px;
+        width: 100%;
+
+        .partie1 {
+            display: inline-block;
+            font-weight: bold;
+            font-size: $ft_tabs;
+            color: $blanc;
+            margin-left: 10px;
+            width: 60%;
+            float: left;
+        }
+        .partie2 {
+            display: inline-block;
+            width: 20%;
+            color: $blanc;
+            margin-left: 10px;
+            font-weight: 600;
+            float: right;
+            .date {
+                display: inline-block;
+                padding-right: 10px;
+            }
+            .heure {
+                display: inline-block;
+            }
+
+        }
+    }
+
+    .four_div {
+        display: inline-block;
+        background-color: $bleu;
+        padding-top: 5px;
+        height: 50px;
+        width: 100%;
+
+        .partie1 {
+            display: inline-block;
+            font-weight: bold;
+            font-size: $ft_tabs;
+            color: $blanc;
+            margin-left: 10px;
+            width: 60%;
+            float: left;
+        }
+        .partie2 {
+            display: inline-block;
+            width: 30%;
+            color: $blanc;
+            margin-left: 10px;
+            font-weight: 600;
+            float: right;
+            .date {
+                display: inline-block;
+                padding-right: 10px;
+            }
+            .heure {
+                display: inline-block;
+            }
+
+        }
+    }
+
+    .content{
+        margin: 0;
+        padding: 0;
+        /*overflow: hidden!important;*/
+        box-shadow: inset 0 -10px 10px -10px $gris_fonce;
+        background-color: $blanc;
+
+        .five_div {
+            background-color: $blanc;
+            padding-top: 10px;
+            .tableau{
+                padding-top: 10px;
+            }
+
+            .colonne{
+                width: 100px;
+            }
+
+            .dateColonne{
+                width: 150px;
+            }
+
+            .toggleColonne{
+                width: 200px;
+            }
+
+            .firstColonne{
+                font-weight: 600;
+                width: 100px;
+            }
+
+            .colonneHor{
+                width: 100px;
+                margin-right: 5px;
+            }
+
+            .colonneContentHor{
+                width: 200px;
+                margin-right: 5px;
+            }
+            .espaceLigne{
+                margin-bottom: 5px;
+            }
+
+        }
+    }
+
+
+    .footer{
+        height:50px;
+        width:100%;
+        display:block;
+        float:left;
+        background-color:$blanc;
+        border-radius:0 0 5px 5px;
+        padding-left:20px;
+        ul.stat{
+            float: left;
+            margin: 0;
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+            margin-top:12px;
+            li{
+                position: relative;
+                display: block;
+                float: left;
+                margin-right:10px;
+                .checkbox{
+                    margin:0;
+                    label input[type="checkbox"]{
+                        margin-top: 5px;
+                    }
+                }
+                .bold{
+                    font-weight:bold;
+                    font-size:$ft_tabs;
+                    color:$bleu;
+                }
+            }
+        }
+        ul.boutons{
+            padding-left:0;
+            li{
+                float: left;
+                position: relative;
+                display: block;
+                &.link{
+                    cursor:pointer;
+                    margin-top: 13px;
+                    font-weight:bold;
+                    font-size:$ft_tabs;
+                    color:$bleu;
+                    margin-right:10px;
+                    &:hover{
+                        color:$bleu_fonce;
+                    }
+                }
+                .btn{
+                    height:50px;
+                    border-radius:0;
+                    border:none;
+                    background-color:$vert;
+                    color:$blanc;
+                    text-transform: uppercase;
+                    font-size:$ft_btn;
+                    border-left: 3px solid $blanc;
+                    padding:6px 8px;
+                    &.temps{width:295px;}
+                    &.manuelle{width:205px;}
+                    &.evenement{width:220px;}
+                    &:hover{
+                        background-color:$vert_hover;
+                    }
+                    &:focus{
+                        background-color:$vert_focus;
+                    }
+                    .glyphicon{
+                        top:2px;
+                        margin-right:10px;
+                    }
+                }
+            }
+        }
+    }
+}

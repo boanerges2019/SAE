@@ -1,0 +1,21 @@
+<div class="input-file form-horizontal" >
+    <input
+        type='file'
+        class='input-file-hidden'
+        style='visibility:hidden; height:0'
+        (change)="uploadFile($event)">
+    <button *ngIf="false"
+        CesamUploadDirective
+        class="btn btn-default btn-choose"
+        type="button">Choose</button>
+    <input
+        CesamUploadDirective
+        type="text"
+        [(ngModel)]="fileName"
+        class="form-control"
+        style="cursor: pointer;"
+        placeholder='Choisir un fichier...' />
+    <button *ngIf="false"
+        class="btn btn-warning btn-reset"
+        type="button">Reset</button>
+</div>

@@ -1,0 +1,331 @@
+<div id="presentation-envoi-edit">
+    <div class="col-xs-12">
+        <table class="espace">
+        <tbody>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Nom</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div *ngIf="preparation?.nom">
+                    <input type="text" placeholder="Entrer le nom" [(ngModel)]="preparation.nom"
+                           (keyup)="nameChange($event)" class="form-control" disabled/>
+                </div>
+            </td>
+            <td class="colonne3">
+            </td>
+        </tr>
+        <br>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Description</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div  *ngIf="preparation?.description">
+                    <input type="text" placeholder="Entrer la description" [(ngModel)]="preparation.description"
+                           (keyup)="descriptionChange($event)" class="form-control" disabled/>
+                </div>
+            </td>
+            <td class="colonne3">
+            </td>
+        </tr>
+        <br>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Choix type Destinataire</label>
+                </div>
+            </td>
+            <td class="colonne4">
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <label>
+                                <input
+                                    type="radio"
+                                    [checked]="preparation?.codeRessourceDestinataire ? true : false"
+                                    (click)="getDestinataire(); $event.stopPropagation();"
+                                    disabled/> Destinataire.
+                            </label>
+                        </div>
+                    </td>
+                    <td class="colonne1">
+                        <div class="checkbox">
+                            <label>
+                                <input
+                                    type="radio"
+                                    [checked]="preparation?.codeGroupeDestinataire ? true : false"
+                                    (click)="getGroupeDestinataire(); $event.stopPropagation();"
+                                    disabled/> Groupe Destinataire.
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+        </td>
+        <td class="colonne5">
+
+        </td>
+        </tr>
+        <br>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div *ngIf="preparation?.codeRessourceDestinataire">
+                    <label>Nom destinataire</label>
+                </div>
+                <div *ngIf="preparation?.codeGroupeDestinataire">
+                    <label>Nom Groupe Destinataire</label>
+                </div>
+            </td>
+            <td class="colonne1">
+                <div *ngIf="preparation?.codeRessourceDestinataire">
+                    <ng-select *ngIf="itemDestinataire"
+                        [active]="[itemDestinataire]"
+                        (selected)="destinataireChange($event)"
+                        [items]="paramDestinataires.valeurPossibles"
+                        placeholder="Sélectionner un destinataire..."
+                       disabled="true">
+                    </ng-select>
+                </div>
+                <div *ngIf="preparation?.codeGroupeDestinataire">
+                    <ng-select *ngIf="itemGroupeDestinataire"
+                        [active]="[itemGroupeDestinataire]"
+                        (selected)="destinataireChange($event)"
+                        [items]="paramGroupeDestinataires.valeurPossibles"
+                        placeholder="Sélectionner un groupe de destinataires ..."
+                       disabled="true">
+                    </ng-select>
+                </div>
+            </td>
+            <td class="colonne2">
+
+            </td>
+        </tr>
+        <br>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Modèle bulletin</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div *ngIf="preparation?.codeModeleDocument">
+                    <ng-select *ngIf="itemCodeModeleBulletin"
+                        [active]="[itemCodeModeleBulletin]"
+                        (selected)="modeleBulletinChange($event)"
+                        [items]="bulletins"
+                        placeholder="Sélectionner un modèle de bulletins ..."
+                       disabled="true">
+                    </ng-select>
+                </div>
+            </td>
+            <td class="colonne2">
+
+            </td>
+        </tr>
+        <br *ngIf="itemEvenementBulletin">
+        <tr class="ligne" *ngIf="itemEvenementBulletin && preparation.typeObjetSource">
+            <td class="colonne1">
+                <div>
+                    <label>Evénements liés</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div>
+                    <ng-select *ngIf="itemEvenementBulletin"
+                               [active]="[itemEvenementBulletin]"
+                               (selected)="modeleEvenementChange($event)"
+                               [items]="evenements"
+                               placeholder="Sélectionner un événement..."
+                               disabled="true">
+                    </ng-select>
+                </div>
+            </td>
+            <td class="colonne2">
+
+            </td>
+        </tr>
+        <br>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Format</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div *ngIf="preparation?.codeFormat">
+                    <ng-select *ngIf="itemFormat"
+                        [active]="[itemFormat]"
+                        (selected)="formatChange($event)"
+                        [items]="paramFormats.valeurPossibles"
+                        placeholder="Sélectionner un Format ..."
+                               disabled="true">
+                    </ng-select>
+                </div>
+            </td>
+            <td class="colonne2">
+            </td>
+        </tr>
+        <br>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Media</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div *ngIf="preparation?.codeMedia">
+                    <ng-select *ngIf="itemMedia"
+                        [active]="[itemMedia]"
+                        (selected)="mediaChange($event)"
+                        [items]="paramMedias.valeurPossibles"
+                        placeholder="Sélectionner un Media ..."
+                               disabled="true">
+                    </ng-select>
+                </div>
+            </td>
+            <td class="colonne2">
+            </td>
+        </tr>
+        <br>
+        <tr class="ligne">
+            <td class="colonne1">
+                <div>
+                    <label>Commentaire</label>
+                </div>
+            </td>
+            <td class="colonne2">
+                <div>
+                    <textarea *ngIf="isUpadtePlanif" placeholder="Commentaire"  [(ngModel)]="preparation.commentaire"
+                              (keyup)="commentaireChange($event)"class="commentaire" disabled></textarea>
+                     <textarea *ngIf="!isUpadtePlanif" placeholder="Commentaire"  [(ngModel)]="preparation.commentaire"
+                               (keyup)="commentaireChange($event)"class="commentaire"></textarea>
+                </div>
+            </td>
+            <td class="colonne2">
+            </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div *ngIf="isUpadtePlanif" class="col-xs-12 content">
+        <div class="col-xs-12 five_div">
+            <table class="tableau espace">
+                <tr>
+                    <td class="firstColonne">
+                        Planification
+                    </td>
+                    <td class="colonne">
+                        Date de début
+                    </td>
+                    <td class="dateColonne">
+                        <input class="form-control"
+                               [(ngModel)]="preparation.planification.dateDebut"
+                               (ngModelChange)="selectDate($event)"
+                               (change)="selectDate($event)"
+                               ng2-datetime-picker
+                               date-format="DD/MM/YYYY HH:mm:ss"
+                               parse-format="DD/MM/YYYY HH:mm:ss"
+                               [close-on-select]="true"/>
+                    </td>
+
+                    <td class="colonne">
+                        &nbsp; &nbsp; Date de fin
+                    </td>
+                    <td class="dateColonne">
+                        <input class="form-control"
+                               [(ngModel)]="preparation.planification.dateFin"
+                               (ngModelChange)="selectDate($event)"
+                               (change)="selectDate($event)"
+                               ng2-datetime-picker
+                               date-format="DD/MM/YYYY HH:mm:ss"
+                               parse-format="DD/MM/YYYY HH:mm:ss"
+                               [close-on-select]="true"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-xs-12 five_div">
+            <table class="tableau espace">
+                <tr>
+                    <td class="firstColonne">
+                        Calendrier
+                    </td>
+
+                    <td *ngFor="let journee of journees" class="colonne">
+                        <button class="btn btn-default btn-xs"
+                                [ngClass]="{ 'active': journee.isActive}"
+                                (click)="selectJournee(journee)"
+                            >{{journee.nom}}
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-xs-12 five_div">
+            <table class="tableau espace">
+                <tr>
+                    <td class="firstColonne">
+                        Heure debut
+                    </td>
+                    <td class="colonneContentHor">
+                        <select class="colonneHor"
+                                [(ngModel)]="preparation.planification.heureDebut"
+                                (change)="selectHoraire($event)">
+                            <option *ngFor="let plageHoraire of plagesHoraires"
+                                    [ngValue]="plageHoraire">{{plageHoraire.horaire}}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-xs-12 five_div">
+            <table class="tableau espace">
+                <tr>
+                    <td class="firstColonne">
+                        Périodicité en minutes
+                    </td>
+                    <td class="colonneContentHor">
+                        <select class="colonneHor"
+
+                                [(ngModel)]="periodicite"
+                                (change)="selectPeriodicite($event)">
+                            <option *ngFor="let period of periodicites"
+                                    [ngValue]="period">{{period.periodicite}}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-xs-12 five_div">
+            <table class="tableau espace">
+                <tr>
+                    <td class="firstColonne">
+                        Confirmation Lancement
+                    </td>
+                    <td class="toggleColonne">
+                        <div class="btn-group bool" role="group">
+                            <button type="button" class="btn btn-default"
+                                    [ngClass]="{ 'active': preparation.planification.demandeConfirmationDebut}"
+                                    (click)="selectConfirmation($event)">
+                                Oui
+                            </button>
+                            <button type="button" class="btn btn-default"
+                                    [ngClass]="{ 'active': !preparation.planification.demandeConfirmationDebut}"
+                                    (click)="selectConfirmation($event)">
+                                Non
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+

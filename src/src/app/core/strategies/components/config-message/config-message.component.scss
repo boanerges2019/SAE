@@ -1,0 +1,43 @@
+@import 'src/styles/variables/variables.scss';
+.btn.action.pause
+{
+    height: 30px!important;
+    width: 30px;
+    padding: 0 1px!important;
+    margin-left: 10px;
+    border: none;
+}
+
+input.ligne{
+  font-family: "Roboto Mono", consolas !important;
+  color: #fbc02d;
+  background: #000000;
+  font-weight: 400;
+}
+
+div.dropdown{
+  margin-left: 10px;
+}
+
+#message-ligne,
+label.header-ligne, {
+  text-align: left;
+  padding-right: 12px !important;
+  padding-left: 0px !important;
+}
+.btn-justification{
+  display: block !important;
+}
+
+tr.spacer {
+ height: 5px;
+}
+
+tr.medium-spacer {
+ height: 10px;
+}
+
+
+label.down-label{
+  padding-top: 0px !important;
+}

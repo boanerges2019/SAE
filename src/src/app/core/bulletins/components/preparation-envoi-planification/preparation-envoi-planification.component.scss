@@ -1,0 +1,92 @@
+@import 'src/styles/variables/variables.scss';
+#presentation-envoi-planification {
+    .active{
+        color:$blanc!important;
+        background:$bleu!important;
+    }
+
+    .espace{
+        margin-top:20px;
+        margin-left:30px;
+    }
+
+    .ligne{
+        width: 800px;
+        padding-bottom: 20px;
+    }
+
+    .colonne1{
+        width: 200px;
+    }
+    .colonne2{
+        width: 300px;
+    }
+    .colonne2{
+        width: 300px;
+    }
+
+    .colonne4{
+        width: 400px;
+    }
+    .colonne5{
+        width: 100px;
+    }
+
+    .commentaire{
+        width: 400px;
+        height: 50px;
+    }
+
+    .espace_droite{
+        padding-left: 120px;
+        padding-top: 10px;
+    }
+
+
+    .content{
+        margin: 0;
+        padding: 0;
+        /*overflow: hidden!important;*/
+        box-shadow: inset 0 -10px 10px -10px $gris_fonce;
+        background-color: $blanc;
+        .five_div {
+            background-color: $blanc;
+            padding-top: 10px;
+            .tableau{
+                padding-top: 10px;
+            }
+
+            .colonne{
+                width: 100px;
+            }
+
+            .dateColonne{
+                width: 150px;
+            }
+
+            .toggleColonne{
+                width: 200px;
+            }
+
+            .firstColonne{
+                font-weight: 600;
+                width: 100px;
+            }
+
+            .colonneHor{
+                width: 100px;
+                margin-right: 5px;
+            }
+
+            .colonneContentHor{
+                width: 200px;
+                margin-right: 5px;
+            }
+            .espaceLigne{
+                margin-bottom: 5px;
+            }
+
+        }
+    }
+
+}

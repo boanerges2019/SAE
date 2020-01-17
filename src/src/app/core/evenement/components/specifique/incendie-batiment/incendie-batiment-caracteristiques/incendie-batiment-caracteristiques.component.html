@@ -1,0 +1,90 @@
+<div class="well well-lg">
+  <div  class="form-horizontal" >
+    <h4 (click)="isCollapsedContent = !isCollapsedContent" data-toggle="collapse">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+    aria-hidden="false"></span>
+            Caractéristiques
+    </h4>
+    <div [collapse]="isCollapsedContent"  class="collapse">
+      <!--Début & Fin confinement -->
+      <div class="form-group">
+           <label class="col-xs-3 control-label">Début confinement</label>
+           <div class="col-xs-3">
+             <cesam-input [type]="'date'" [model]="evenement.attributs[field.debutConfinement]" [fieldName]="field.debutConfinement" [currentCtx]="currentCtx"></cesam-input>
+          </div>
+          <label class="col-xs-3 control-label">Fin confinement</label>
+          <div class="col-xs-3">
+            <cesam-input [type]="'date'" [model]="evenement.attributs[field.finConfinement]" [fieldName]="field.finConfinement" [currentCtx]="currentCtx"></cesam-input>
+          </div>
+      </div>
+      <!--Présence blessés -->
+      <div class="form-group">
+        <div class="col-xs-3">
+            <div class="checkbox">
+              <label>
+                <cesam-input
+                  [type]="'checkbox'"
+                  [model]="evenement.attributs[field.presenceBlesses]"
+                  [innerHTML]="'Présence Blessés'"
+                  [fieldName]="field.presenceBlesses"
+                  [currentCtx]="currentCtx"></cesam-input>
+               </label>
+           </div>
+        </div>
+      </div>
+      <!--Gravité-->
+      <div class="form-group">
+        <label class="col-xs-3 control-label">Nb. de personnes impliquées</label>
+        <div class="col-xs-1">
+          <cesam-input [type]="'number'" [model]="evenement.attributs[field.gravitePersonnesImpliquees][field.nbPersonnesImpliquees]" [fieldName]="field.nbPersonnesImpliquees" [currentCtx]="currentCtx"></cesam-input>
+        </div>
+      </div>
+      <div class="form-group">
+         <label class="col-xs-1 control-label">Indemnes</label>
+         <div class="col-xs-1">
+           <cesam-input [type]="'number'" [model]="evenement.attributs[field.gravitePersonnesImpliquees][field.indemnes]" [fieldName]="field.indemnes" [currentCtx]="currentCtx"></cesam-input>
+         </div>
+       <div class="col-xs-1"></div>
+         <label class="col-xs-2 control-label">Blessés légers</label>
+         <div class="col-xs-1">
+           <cesam-input [type]="'number'" [model]="evenement.attributs[field.gravitePersonnesImpliquees][field.blessesLegers]" [fieldName]="field.blessesLegers" [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <label class="col-xs-2 control-label">Blessés graves</label>
+         <div class="col-xs-1">
+           <cesam-input [type]="'number'" [model]="evenement.attributs[field.gravitePersonnesImpliquees][field.blessesGraves]" [fieldName]="field.blessesGraves" [currentCtx]="currentCtx"></cesam-input>
+         </div>
+         <div class="col-xs-1"></div>
+         <label class="col-xs-1 control-label">Décédés</label>
+         <div class="col-xs-1">
+           <cesam-input [type]="'number'" [model]="evenement.attributs[field.gravitePersonnesImpliquees][field.decedes]" [fieldName]="field.decedes" [currentCtx]="currentCtx"></cesam-input>
+         </div>
+      </div>
+       <!--Séparator-->
+       <div class="row">
+         <div class="col-xs-12 control-label separation"></div>
+       </div>
+      <!--Dégats aux domaines-->
+      <div class="form-group">
+        <div class="col-xs-3">
+            <div class="checkbox">
+              <label>
+                <cesam-input [type]="'checkbox'"
+                  [model]="evenement.attributs[field.degatsAuxDomaines]"
+                  [innerHTML]="'Dégâts aux domaines'"
+                  [fieldName]="field.degatsAuxDomaines"
+                  [currentCtx]="currentCtx"></cesam-input>
+              </label>
+           </div>
+        </div>
+        <div class="col-xs-9">
+          <cesam-input [type]="'textarea'"
+            [rows]="3" [maxlength]="255"
+            [innerHTML]="'Descriptions à saisir'"
+            [model]="evenement.attributs[field.descriptionDegatsAuxDomaines]"
+            [fieldName]="field.descriptionDegatsAuxDomaines"
+            [currentCtx]="currentCtx"></cesam-input>
+        </div>
+      </div>
+     </div>
+  </div>
+</div>

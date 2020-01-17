@@ -1,0 +1,131 @@
+  <div id="journal">
+    <div class="header">
+      <!--Menu onglet Tabs-->
+      <ul class="nav nav-tabs" role="tablist">
+       <li role="presentation" class="active">
+          <a>journal des alertes</a>
+        </li>
+     </ul>
+    <!--Options-->
+     <span class="option">
+       <!-- <alert-error></alert-error> -->
+        <ul class="nav nav-pills pull-right">
+          <li>Alertes</li>
+          <li class="badge_option"><a class="badge_notification"  [innerHTML]="model.nbAlertes.atraite"></a></li>
+        </ul>
+      </span>
+    </div>
+
+    <div class="content ev_courant">
+      <!--Table intitulé-->
+      <table class="table firstline">
+          <thead>
+            <tr class="first">
+              <th class="libelle" *ngFor="let header of model.i18n.alerte.headers" (click)="sortHeader(header)"
+              [ngClass]="[header.identifiant, model.sort.header.identifiant === header.identifiant ? 'sorted':'' ]" >
+                {{ header?.label }}
+              </th>
+            </tr>
+          </thead>
+        </table>
+        <div class="contenu" [perfect-scrollbar] >
+          <table class="table">
+            <tbody>
+            <!-- Alerte sélectionné (A traiter) class="event-selected"-->
+            <tr *ngFor="let alerte of journalAlertes"
+               selectItemDirective
+               [applyClassesOnSelect]="'event-selected'"
+               [ngClass]="{ 'event-selected': alerte.isSelect}"
+               [model]="alerte"
+               class="element-alerte" >
+              <td class="libelle id" [innerHTML]="alerte.identifiant"></td>
+              <td class="libelle type">
+                <tr>
+                  <td class="nom_type">
+                    {{alerte?.nom}}
+                    <ul class="typealerte" [ngSwitch]="alerte.level">
+
+                      <li *ngSwitchCase="'degrade'"><div class="cercle degrade"></div></li>
+                      <li *ngSwitchCase="'degrade'"><div class="cercle"></div></li>
+                      <li *ngSwitchCase="'degrade'"><div class="cercle"></div></li>
+
+                      <li *ngSwitchCase="'critique'"><div class="cercle critique"></div></li>
+                      <li *ngSwitchCase="'critique'"><div class="cercle critique"></div></li>
+                      <li *ngSwitchCase="'critique'"><div class="cercle"></div></li>
+
+                      <li *ngSwitchCase="'fermeture'"><div class="fermeture">CME niveau 3</div></li>
+
+                    </ul>
+                  </td>
+                  <td class="nom_bouton">
+                    <span changeDropDirection [seuil]="850" >
+                      <span class="dropdown" >
+                        <button class="btn btn-default btn-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Actions</button>
+                        <ul class="dropdown-menu">
+                          <li><a (click)="visualiserAlert($event, alerte)">Vidéo</a></li>
+                          <li><a (click)="localiserAlert($event, alerte)">Localiser</a></li>
+                        </ul>
+                      </span>
+                    </span>
+                  </td>
+                </tr>
+              </td>
+              <td class="libelle localisation">
+                <tr>
+                  <td class="nom_localisation" [innerHTML]="alerte?.nomLocalisant">
+                  </td>
+                </tr>
+              </td>
+              <td class="libelle qualification"><div class="statut"
+                [ngClass]="{'traite': alerte.codeEtat=='A traiter', 'valide': alerte.codeEtat=='Terminé'}"
+                [innerHTML]="model.i18n.etat[alerte.codeEtat] ">À traiter</div>
+              </td>
+              <td class="libelle apparition">{{ alerte?.horodateDebut || alerte?.horodateDebutPrevue | date: "dd/MM/yyyy HH:mm:ss" }}</td>
+              <td class="libelle h-qualification">
+                <!-- Boutons uniquement si aucune date horodate (à confirmer)-->
+                <!-- <button *ngIf="alerte.codeEtat!='Terminé'" class="btn btn-default btn-xs" role="button" aria-haspopup="true" aria-expanded="false" (click)="validateAlertWithoutEvenement($event, alerte)">vraie</button>
+                <button *ngIf="alerte.codeEtat!='Terminé'" class="btn btn-default btn-xs" role="button" aria-haspopup="true" aria-expanded="false" (click)="rejectAlert($event, alerte)">fausse</button> -->
+              </td>
+              <td class="libelle operateur" [innerHTML]="alerte?.operateur"></td>
+              <td class="libelle evenement">
+                <!-- Boutons uniquement si aucun event (à confirmer)-->
+                <!-- <button *ngIf="alerte.codeEtat!='Terminé'" class="btn btn-default btn-xs create-evenement" role="button" aria-haspopup="true" aria-expanded="false" (click)="createEvenement($event, alerte)">Créer un événement</button>
+                <select *ngIf="alerte.codeEtat!='Terminé'" class="form-control selectlie" (change)="validateAlertWithEvenement($event, alerte)">
+                  <option value="">Lier à...</option>
+                  <option *ngFor="let evenement of evenementsEnCours" [value]="evenement" [innerHTML]="evenement"
+                   ></option>
+                </select> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--Footer evenement-->
+    <div class="footer">
+      <ul class="stat">
+        <li>
+          <div class="checkbox">
+            <label>
+               <input type="checkbox"
+                  [(ngModel)]="model.alertes.aTraite"
+                  (click)="model.alertes.aTraite = !model.alertes.aTraite; $event.stopPropagation(); $event.stopPropagation();"
+                  (ngModelChange)="resolveAlerteFiltre()" >
+               <span class="bold" [innerHTML]="model.nbAlertes.atraite"></span>  alertes à traiter
+            </label>
+          </div>
+        </li>
+        <li>
+          <div class="checkbox">
+            <label>
+               <input type="checkbox"
+                  [(ngModel)]="model.alertes.termine"
+                  (click)="model.alertes.termine = !model.alertes.termine; $event.stopPropagation(); $event.stopPropagation();"
+                  (ngModelChange)="resolveAlerteFiltre()" >
+               <span class="bold" [innerHTML]="model.nbAlertes.termine"></span>  alertes terminées
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>

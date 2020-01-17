@@ -1,0 +1,250 @@
+<div id="cesam-planification" [style.height.px]="model.contentHeight">
+    <div class="header">
+        <!--Menu onglet Tabs-->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a>{{labelTitle}}</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-xs-12 content"
+         [style.height.px]="model.contentHeight"
+         [perfect-scrollbar]>
+        <div class="col-xs-12 five_div">
+            <table class="tableau">
+                <tr>
+                    <td class="firstColonne">
+                        Planification
+                    </td>
+                    <td class="colonne">
+                        Date de début
+                    </td>
+                    <td class="dateColonne">
+                        <input class="form-control"
+                               [(ngModel)]="data.dateDebut"
+                               ctxAccess [fieldName]="model.field.dateDebut"
+                               [currentCtx]="model.currentCtx"
+                               [configCte]="model.configCte"
+                               ng2-datetime-picker
+                               date-format="DD/MM/YYYY HH:mm:ss"
+                               parse-format="DD/MM/YYYY HH:mm:ss"
+                               [close-on-select]="true"/>
+                    </td>
+
+                    <td class="colonne">
+                        &nbsp; &nbsp; Date de fin
+                    </td>
+                    <td class="dateColonne">
+                        <input class="form-control"
+                               [(ngModel)]="data.dateFin"
+                               ctxAccess [fieldName]="model.field.dateFin"
+                               [currentCtx]="model.currentCtx"
+                               [configCte]="model.configCte"
+                               ng2-datetime-picker
+                               date-format="DD/MM/YYYY HH:mm:ss"
+                               parse-format="DD/MM/YYYY HH:mm:ss"
+                               [close-on-select]="true"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-xs-12 five_div">
+            <table class="tableau">
+                <tr>
+                    <td class="firstColonne">
+                        Calendrier
+                    </td>
+
+                    <td *ngFor="let journee of journees" class="colonne">
+                        <button class="btn btn-default btn-xs"
+                                ctxAccess
+                                [fieldName]="model.field.calendrier"
+                                [currentCtx]="model.currentCtx"
+                                [configCte]="model.configCte"
+                                [ngClass]="{ 'active': journee.isActive}"
+                                (click)="selectJournee(journee)"
+                            >{{journee.nom}}
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-xs-12 five_div">
+            <table class="tableau" *ngIf="isMacroCtx">
+                <tr>
+                    <td class="firstColonne">
+                        Heure debut
+                    </td>
+                    <td class="colonneContentHor">
+                        <select class="colonneHor"
+                                [(ngModel)]="data.heureDebut"
+                                ctxAccess
+                                [fieldName]="model.field.plageHoraire"
+                                [currentCtx]="model.currentCtx"
+                                [configCte]="model.configCte">
+                            <option *ngFor="let plageHoraire of plagesHoraires"
+                                    [ngValue]="plageHoraire">{{plageHoraire.horaire}}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <table class="tableau" *ngIf="!isMacroCtx">
+                <tr>
+                    <td class="firstColonne">
+                        Plage Horaire
+                    </td>
+                    <td class="colonneContentHor">
+                        <div>
+                            <table>
+                                <tr class="espaceLigne">
+                                    <td>
+                                        <select class="colonneHor"
+                                                [(ngModel)]="data.heureDebut"
+                                                ctxAccess
+                                                [fieldName]="model.field.plageHoraire"
+                                                [currentCtx]="model.currentCtx"
+                                                [configCte]="model.configCte">
+                                            <option *ngFor="let plageHoraire of plagesHoraires"
+                                                    [ngValue]="plageHoraire">{{plageHoraire.horaire}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default btn-xs trash"
+                                                (click)="decreasePlageHoraire()"
+                                                ctxAccess
+                                                [fieldName]="model.field.plageHoraire"
+                                                [currentCtx]="model.currentCtx"
+                                                [configCte]="model.configCte">
+                                            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="espaceLigne">
+                                    <td>
+                                        <select class="colonneHor"
+                                                [(ngModel)]="data.heureFin"
+                                                ctxAccess
+                                                [fieldName]="model.field.plageHoraire"
+                                                [currentCtx]="model.currentCtx"
+                                                [configCte]="model.configCte">
+                                            <option *ngFor="let plageHoraire of plagesHoraires"
+                                                    [ngValue]="plageHoraire">{{plageHoraire.horaire}}
+                                            </option>
+                                        </select>
+
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-default btn-xs trash"
+                                                (click)="increasePlageHoraire()"
+                                                ctxAccess
+                                                [fieldName]="model.field.plageHoraire"
+                                                [currentCtx]="model.currentCtx"
+                                                [configCte]="model.configCte">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-xs-12 five_div">
+            <table class="tableau">
+                <tr>
+                    <td class="firstColonne">
+                        Confirmation Lancement
+                    </td>
+                    <td class="toggleColonne">
+                        <div class="btn-group bool" role="group">
+                            <button type="button" class="btn btn-default"
+                                    [ngClass]="{ 'active': data.demandeConfirmationDebut}"
+                                    (click)="selectConfirmation($event)"
+                                    ctxAccess
+                                    [fieldName]="model.field.confLancement"
+                                    [currentCtx]="model.currentCtx"
+                                    [configCte]="model.configCte">
+                                Oui
+                            </button>
+                            <button type="button" class="btn btn-default"
+                                    [ngClass]="{ 'active': !data.demandeConfirmationDebut}"
+                                    (click)="selectConfirmation($event)"
+                                    ctxAccess
+                                    [fieldName]="model.field.confLancement"
+                                    [currentCtx]="model.currentCtx"
+                                    [configCte]="model.configCte">
+                                Non
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-xs-12 five_div">
+            <table class="tableau">
+                <tr>
+                    <td class="firstColonne">
+                        Statut sur calendrier
+                    </td>
+
+                    <td class="toggleColonne">
+                        <div class="btn-group bool" role="group">
+                            <button type="button" class="btn btn-default"
+                                    [ngClass]="{ 'active': data.demandeConfirmationFin}"
+                                    (click)="selectStatutCalendrier($event)"
+                                    ctxAccess
+                                    [fieldName]="model.field.statutCalendrier"
+                                    [currentCtx]="model.currentCtx"
+                                    [configCte]="model.configCte">
+                                Activation
+                            </button>
+                            <button type="button" class="btn btn-default"
+                                    [ngClass]="{ 'active': !data.demandeConfirmationFin}"
+                                    (click)="selectStatutCalendrier($event)"
+                                    ctxAccess
+                                    [fieldName]="model.field.statutCalendrier"
+                                    [currentCtx]="model.currentCtx"
+                                    [configCte]="model.configCte">
+                                Désactivation
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <ul class="boutons pull-right">
+            <li class="link"
+                (click)="annulerPlanification()"
+                ctxAccess [fieldName]="model.field.annuler" [currentCtx]="model.currentCtx"
+                [configCte]="model.configCte">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                <span class="bold" class="bold">Annuler </span>
+            </li>
+            <li>
+                <button type="button" class="btn btn-default"
+                        [disabled]="!isPlanificationValid()"
+                        (click)="validerPlanification()"
+                        ctxAccess
+                        [fieldName]="model.field.valider"
+                        [currentCtx]="model.currentCtx"
+                        [configCte]="model.configCte">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true" style="margin-right:10px"></span>Appliquer
+                    les modifications
+                </button>
+            </li>
+        </ul>
+    </div>
+
+</div>

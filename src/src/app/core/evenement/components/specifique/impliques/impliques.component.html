@@ -1,0 +1,49 @@
+<div class="well well-lg">
+  <div  class="form-horizontal">
+    <h4 (click)="isCollapsedContent = !isCollapsedContent" data-toggle="collapse">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+            Impliqués
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+      <!--Véhicules -->
+      <div class="form-group tabled" [ngClass]="[currentCtx === contexte.READ ? 'tabledisabled': '']">
+        <table class="table table-bordered table-condensed input col-xs-12">
+          <thead>
+            <th class="col-xs-12">Coordonnée impliquée</th>
+          </thead>
+        <tbody>
+          <tr  *ngFor="let item of listeImpliques[field.itemImplique]; let i=index">
+            <td class="col-xs-12">
+              <tr>
+                <td class="col-xs-12">
+                  <cesam-input [type]="'text'" [model]="item[field.coordonneesImpliquees]"  [fieldName]="field.coordonneesImpliquees" [currentCtx]="currentCtx"></cesam-input>
+                </td>
+                <td class="col-xs-1">
+                  <button class="btn btn-default btn-xs trash"
+                    (click)="removeIntervention(i)"
+                    ctxAccess [fieldName]="field.removeImpliqueBtn" [currentCtx]="currentCtx" [hideExtraVar]="true">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                 </button>
+               </td>
+             </tr>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-xs-12">
+              <cesam-input [type]="'text'" [model]="model[field.coordonneesImpliquees]"  [fieldName]="field.coordonneesImpliquees" [currentCtx]="currentCtx"></cesam-input>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-group">
+       <div class="col-xs-12 control-label">
+         <button class="btn btn-default btn-xs action right"
+           (click)="addIntervention()"
+           ctxAccess [fieldName]="field.addImpliqueBtn" [currentCtx]="currentCtx" [hideExtraVar]="true">AJOUTER</button>
+       </div>
+    </div>
+     </div>
+  </div>
+</div>

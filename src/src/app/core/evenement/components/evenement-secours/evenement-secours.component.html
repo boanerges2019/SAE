@@ -1,0 +1,280 @@
+<div class="well well-lg">
+  <div class="form-horizontal" >
+    <h4 (click)="isCollapsedContent = !isCollapsedContent">
+      <span class="glyphicon" [ngClass]="[ isCollapsedContent? 'glyphicon-triangle-right': 'glyphicon-triangle-bottom']"
+      aria-hidden="false"></span>
+        Interventions secours
+    </h4>
+    <div [collapse]="isCollapsedContent" class="collapse">
+      <!-- Gendarmerie -->
+      <div class="form-group tabled" [ngClass]="[currentCtx === contexte.READ ? 'tabledisabled': '']">
+        <table class="table table-bordered table-condensed input col-xs-12">
+          <thead>
+            <th class="col-xs-3">Gendarmerie</th>
+            <th class="col-xs-3">Alerte</th>
+            <th class="col-xs-3">Arrivée sur les lieux</th>
+            <th class="col-xs-3">Quitte les lieux</th>
+          </thead>
+        <tbody>
+          <tr  *ngFor="let item of listeSuivisGendarmerie[field.itemSuiviGendarmerie]; let i=index">
+            <td class="col-xs-3">
+              <cesam-input
+                  [type]="'text'"
+                  [model]="item[field.intervenantSuiviGendarmerie]"
+                  [fieldName]="field.intervenantSuiviGendarmerie"
+                  [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <cesam-input
+                  [type]="'date'"
+                  [model]="item[field.horodateAppelSuiviGendarmerie]"
+                  [fieldName]="field.horodateAppelSuiviGendarmerie"
+                  [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <cesam-input
+                  [type]="'date'"
+                  [model]="item[field.horodateArriveeLieuSuiviGendarmerie]"
+                  [fieldName]="field.horodateArriveeLieuSuiviGendarmerie"
+                  [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <tr>
+                <td class="col-xs-10">
+                  <cesam-input
+                      [type]="'date'"
+                      [model]="item[field.horodateQuitteLieuSuiviGendarmerie]"
+                      [fieldName]="field.horodateQuitteLieuSuiviGendarmerie"
+                      [currentCtx]="currentCtx"></cesam-input>
+                </td>
+                <td class="col-xs-2">
+                  <button class="btn btn-default btn-xs trash"
+                    (click)="removeSuiviGendarmerie(i)"
+                    ctxAccess
+                    [fieldName]="field.removeSuiviGendarmerieBtn"
+                    [currentCtx]="currentCtx"
+                    [hideExtraVar]="true">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true" ></span>
+                 </button>
+               </td>
+             </tr>
+            </td>
+          </tr>
+          <tr>
+            <td class="col-xs-3">
+              <cesam-input
+                  [type]="'text'"
+                  [model]="modelSuiviGendarmerie[field.intervenantSuiviGendarmerie]"
+                  [fieldName]="field.intervenantSuiviGendarmerie"
+                  [currentCtx]="currentCtx"></cesam-input>
+              </td>
+            <td class="col-xs-3">
+              <cesam-input
+                  [type]="'date'"
+                  [model]="modelSuiviGendarmerie[field.horodateAppelSuiviGendarmerie]"
+                  [fieldName]="field.horodateAppelSuiviGendarmerie"
+                  [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+              <cesam-input
+                  [type]="'date'"
+                  [model]="modelSuiviGendarmerie[field.horodateArriveeLieuSuiviGendarmerie]"
+                  [fieldName]="field.horodateArriveeLieuSuiviGendarmerie"
+                  [currentCtx]="currentCtx"></cesam-input>
+            </td>
+            <td class="col-xs-3">
+                  <cesam-input
+                      [type]="'date'"
+                      [model]="modelSuiviGendarmerie[field.horodateQuitteLieuSuiviGendarmerie]"
+                      [fieldName]="field.horodateQuitteLieuSuiviGendarmerie"
+                      [currentCtx]="currentCtx"></cesam-input>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="form-group">
+       <div class="col-xs-12 control-label">
+         <button class="btn btn-default btn-xs action right"
+             (click)="addSuiviGendarmerie()"
+             ctxAccess
+             [fieldName]="field.addSuiviGendarmerieBtn"
+             [currentCtx]="currentCtx"
+             [hideExtraVar]="true">AJOUTER</button>
+       </div>
+    </div>
+      <!-- Gendarmerie motif-->
+         <div class="form-group">
+           <label class="col-xs-1 control-label">Motif</label>
+           <div class="col-xs-3">
+             <cesam-input [type]="'select'"
+                [model]="evenement.attributs[field.motifSuiviGendarmerie]"
+                [items]="motifsSuiviGendarmerie"
+                [enumName]="modeleEvenementCte.MOTIFS_SUIVI_GENDARMRIE"
+                [fieldName]="field.motifSuiviGendarmerie"
+                [currentCtx]="currentCtx"></cesam-input>
+          </div>
+          <div class="col-xs-1"></div>
+          <div class="col-xs-4">
+            <div class="checkbox">
+                <label>
+                  <cesam-input [type]="'checkbox'"
+                    [model]="evenement.attributs[field.interventionConjointeSuiviGendarmerie]"
+                    [innerHTML]="'Intervention conjointe avec événement'"
+                    [fieldName]="field.interventionConjointeSuiviGendarmerie"
+                    [currentCtx]="currentCtx"></cesam-input>
+               </label>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <select class="form-control"
+                [(ngModel)]="evenement.attributs[field.idEvenementConjointSuiviGendarmerie]"
+                ctxAccess [fieldName]="field.idEvenementConjointSuiviGendarmerie" [currentCtx]="currentCtx">
+                <option value=""></option>
+                <option *ngFor="let evtConjoint of evenementsConjointsSuiviGendarmerie"
+                  [value]="evtConjoint" [innerHTML]="evtConjoint"></option>
+            </select>
+           </div>
+        </div>
+        <!-- Separator -->
+        <div class="row">
+          <div class="col-xs-12 control-label separation"></div>
+        </div>
+       <!-- Pompiers-->
+       <div class="form-group tabled" [ngClass]="[currentCtx === contexte.READ ? 'tabledisabled': '']">
+         <table class="table table-bordered table-condensed input col-xs-12">
+           <thead>
+             <th class="col-xs-3">Sapeurs Pompiers</th>
+             <th class="col-xs-3">Alerte</th>
+             <th class="col-xs-3">Arrivée sur les lieux</th>
+             <th class="col-xs-3">Quitte les lieux</th>
+           </thead>
+         <tbody>
+           <tr  *ngFor="let item of listeSuivisSapeurPompier[field.itemSuiviSapeurPompier]; let i=index">
+             <td class="col-xs-3">
+               <cesam-input
+                   [type]="'text'"
+                   [model]="item[field.intervenantSuiviSapeurPompier]"
+                   [fieldName]="field.intervenantSuiviSapeurPompier"
+                   [currentCtx]="currentCtx"></cesam-input>
+             </td>
+             <td class="col-xs-3">
+               <cesam-input
+                   [type]="'date'"
+                   [model]="item[field.horodateAppelSuiviSapeurPompier]"
+                   [fieldName]="field.horodateAppelSuiviSapeurPompier"
+                   [currentCtx]="currentCtx"></cesam-input>
+             </td>
+             <td class="col-xs-3">
+               <cesam-input
+                   [type]="'date'"
+                   [model]="item[field.horodateArriveeLieuSuiviSapeurPompier]"
+                   [fieldName]="field.horodateArriveeLieuSuiviSapeurPompier"
+                   [currentCtx]="currentCtx"></cesam-input>
+             </td>
+             <td class="col-xs-3">
+               <tr>
+                 <td class="col-xs-10">
+                   <cesam-input
+                       [type]="'date'"
+                       [model]="item[field.horodateQuitteLieuSuiviSapeurPompier]"
+                       [fieldName]="field.horodateQuitteLieuSuiviSapeurPompier"
+                       [currentCtx]="currentCtx"></cesam-input>
+                 </td>
+                 <td class="col-xs-2">
+                   <button class="btn btn-default btn-xs trash"
+                      (click)="removeSuiviSapeurPomier(i)"
+                      ctxAccess
+                      [fieldName]="field.removeSuiviSapeurPomierBtn"
+                      [currentCtx]="currentCtx"
+                      [hideExtraVar]="true">
+                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                  </button>
+                </td>
+              </tr>
+             </td>
+           </tr>
+           <tr>
+             <td class="col-xs-3">
+               <cesam-input
+                   [type]="'text'"
+                   [model]="modelSuiviSapeurPompier[field.intervenantSuiviSapeurPompier]"
+                   [fieldName]="field.intervenantSuiviSapeurPompier"
+                   [currentCtx]="currentCtx"></cesam-input>
+               </td>
+             <td class="col-xs-3">
+               <cesam-input
+                   [type]="'date'"
+                   [model]="modelSuiviSapeurPompier[field.horodateAppelSuiviSapeurPompier]"
+                   [fieldName]="field.horodateAppelSuiviSapeurPompier"
+                   [currentCtx]="currentCtx"></cesam-input>
+             </td>
+             <td class="col-xs-3">
+               <cesam-input [type]="'date'"
+                   [model]="modelSuiviSapeurPompier[field.horodateArriveeLieuSuiviSapeurPompier]"
+                   [fieldName]="field.horodateArriveeLieuSuiviSapeurPompier"
+                   [currentCtx]="currentCtx"></cesam-input>
+             </td>
+             <td class="col-xs-3">
+               <tr>
+                 <td class="col-xs-10">
+                   <cesam-input
+                       [type]="'date'"
+                       [model]="modelSuiviSapeurPompier[field.horodateQuitteLieuSuiviSapeurPompier]"
+                       [fieldName]="field.horodateQuitteLieuSuiviSapeurPompier"
+                       [currentCtx]="currentCtx"></cesam-input>
+                 </td>
+                 <td class="col-xs-2">
+                </td>
+              </tr>
+             </td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <div class="form-group">
+        <div class="col-xs-12 control-label">
+          <button class="btn btn-default btn-xs action right"
+            (click)="addSuiviSapeurPomier()"
+            ctxAccess
+            [fieldName]="field.addSuiviSapeurPompierBtn"
+            [currentCtx]="currentCtx"
+            [hideExtraVar]="true">AJOUTER</button>
+        </div>
+     </div>
+
+      <!-- Pompier vehicule-->
+          <div class="form-group">
+            <label class="col-xs-1 control-label">Véhicules</label>
+            <div class="col-xs-3">
+              <cesam-input
+                  [type]="'text'"
+                  [model]="evenement.attributs[field.vehiculeSuiviSapeurPompier]"
+                  [fieldName]="field.vehiculeSuiviSapeurPompier"
+                  [currentCtx]="currentCtx"></cesam-input>
+            </div>
+           <div class="col-xs-1"></div>
+           <div class="col-xs-4">
+             <div class="checkbox">
+               <label>
+                 <cesam-input [type]="'checkbox'"
+                   [model]="evenement.attributs[field.interventionConjointeSuiviSapeurPompier]"
+                   [innerHTML]="'Intervention conjointe avec événement'"
+                   [fieldName]="field.interventionConjointeSuiviSapeurPompier"
+                   [currentCtx]="currentCtx"></cesam-input>
+               </label>
+             </div>
+           </div>
+           <div class="col-xs-3">
+             <select class="form-control"
+                 [(ngModel)]="evenement.attributs[field.idEvenementConjointSuiviSapeurPompier]"
+                 ctxAccess [fieldName]="field.idEvenementConjointSuiviSapeurPompier" [currentCtx]="currentCtx">
+                 <option value=""></option>
+                 <option *ngFor="let evtConjoint of evenementsConjointsSuiviSapeurPompier"
+                   [value]="evtConjoint" [innerHTML]="evtConjoint"></option>
+             </select>
+            </div>
+         </div>
+     </div>
+  </div>
+</div>

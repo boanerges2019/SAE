@@ -1,0 +1,337 @@
+@import 'src/styles/variables/variables.scss';
+#right-vh{
+   height:380px;
+   display:block;
+   float:left;
+   width:900px;
+   border-radius: 5px;
+  /*Header : Onglets + Option calendrier */
+   .header{
+     background:$bg-titre;
+     height:60px;
+     width:100%;
+     display:block;
+     float:left;
+     border-radius:5px 5px 0 0;
+     padding-right:10px;
+     /*Tabs Bootstrap */
+     .nav-tabs {
+      border-bottom:none;
+      float:left;
+      > li > a:focus {
+        padding: 20px 20px;
+        margin-top: 0px;
+        margin-right:0px;
+        color:$blanc;
+        border:none;
+        height: 60px;
+        background:$bg-titre;
+        border-right:1px solid $gris_fonce;
+      }
+      li{
+        width:280px;
+        height: 60px;
+        cursor: pointer;
+        > a {
+          border-radius:0;
+          padding: 20px 20px;
+          margin-top: 0px;
+          margin-right:0px;
+          text-transform: uppercase;
+          color:$blanc;
+          font-size:$ft_tabs;
+          border:none;
+          height: 60px;
+          border-right:1px solid $gris_fonce;
+        }
+        &.active > a {
+           border-top: 6px solid $bleu;
+           padding: 14px 20px 15px 20px;
+           color:$noir;
+           border-right:none;
+           font-weight:600;
+         }
+         &:hover > a,
+         &:focus > a {
+           color:$noir!important;
+           background:$blanc;
+           border-right:none;
+         }
+      }
+    }
+   }
+  /*Contenu Global - Tableau evenements*/
+   .content{
+     background-color:$blanc;
+     height:520px;
+     width:100%;
+     display:block;
+     float:left;
+     overflow-y: scroll;
+     box-shadow: inset 0 -10px 10px -10px $gris_fonce;
+
+     &.meteo{
+       height:268px!important;
+       overflow:hidden;
+       .contenu{
+         height:236px!important;
+         overflow: hidden!important;
+       }
+     }
+     .contenu{
+        height:465px;
+     }
+     ul.dropdown-menu{
+        padding:0;
+        cursor:pointer;
+        li{
+          border-bottom:1px solid #e0e0e0;
+          border-left:6px solid $blanc;
+          min-height:30px;
+          margin-top:0;
+          &:hover{
+            background:$bleu_pale!important;
+            border-left:6px solid $bleu;
+          }
+          a{
+            color:black;
+            text-decoration:none;
+            padding: 5px 10px;
+            font-size:14px;
+            word-wrap: break-word;
+            white-space: normal;
+            &.dropdown-toggle{
+              text-decoration:none;
+              padding: 10px 0px 10px 0px;
+            }
+            &:hover{
+              background:$bleu_pale;
+            }
+          }
+        }
+      }
+     .table {
+       margin-bottom:0;
+       thead tr.first{
+         height:30px;
+         th{border-bottom: 1px solid #ddd;}
+       }
+       .separator{
+         height: 5px !important;
+         .ligne{
+           border-bottom:1px dashed #e5e5e5!important;
+         }
+       }
+       .bleu{
+         color:$bleu;
+       }
+       thead,
+       > tbody{
+       tr{
+          height: 50px;
+          padding: 0 8px 0 8px;
+          vertical-align: middle;
+          &.evenement-titre{
+              border-top:1px solid $blanc;
+          }
+          > td{
+            vertical-align:middle;
+            border:none;
+            padding: 0;
+            .btn{
+              height: 28px;
+              border-radius: 5px;
+              color: $blanc;
+              background: $bleu;
+              padding: 8px 10px;
+              line-height: 0;
+              text-transform: uppercase;
+              font-weight:600;
+              border: 1px solid $blanc;
+              font-size:$ft_standard;
+              &:hover,
+              &:focus{
+                background-color:$bleu_fonce;
+              }
+            }
+            &.options_btn{
+              display:none;
+            }
+          }
+          th{
+            vertical-align:middle;
+            color:$gris_clair;
+            cursor:pointer;
+            &.sorted{
+              color:$bleu;
+            }
+            .type{
+              padding-left:20px;
+            }
+          }
+          .libelle{
+            &.plan{
+              padding: 0 18px 0 20px!important;
+              width: 390px;
+              font-weight:600;
+            }
+            &.priorite{
+              width: 100px;
+              padding: 0 18px 0 0;
+              .sort{
+                margin-right:10px;
+                .glyphicon{
+                  cursor:pointer;
+                  margin-left:5px;
+                  &.first{
+                    margin-right:21px;
+                  }
+                }
+              }
+            }
+            &.maco{
+              width: 690px;
+              padding: 0 18px 0 20px!important;
+              font-weight:600;
+            }
+            &.calendrier{
+              width: 200px;
+              padding: 0 18px 0 0;
+            }
+            &.exe{
+              padding: 0 18px 0 0!important;
+            }
+          }
+
+          &.groupe{
+            background:$gris_drop;
+            ul.boutons{
+              margin:0;
+              padding: 0;
+              li{
+                float: left;
+                margin-left:10px;
+                position: relative;
+                display: block;
+              }
+            }
+            &.selected{
+              background:$bleu_fonce!important;
+              color:$blanc!important;
+            }
+
+          }
+          &.child{
+            background:$bleu_groupe;
+            color:$noir;
+          }
+          &.event-selected{
+            &.child{
+              background:$bleu!important;
+              color:$blanc!important;
+            }
+          }
+        }
+      }
+     }
+     .event-selected {
+       background-color: $bleu; //orange
+       color: $blanc;
+       td.options_btn{
+         display: table-cell!important;
+         vertical-align: middle;
+          border: none;
+          padding: 0;
+       }
+       .statut{
+         color:$blanc!important;
+       }
+     }
+   }
+
+   .footer{
+     height:50px;
+     width:100%;
+     display:block;
+     float:left;
+     background-color:$blanc;
+     border-radius:0 0 5px 5px;
+     padding-left:20px;
+     &.planifies{
+       margin-bottom: 10px !important;
+     }
+     ul.stat{
+       float: left;
+       margin: 0;
+       padding-left: 0;
+       margin-bottom: 0;
+       list-style: none;
+       margin-top:12px;
+       li{
+         position: relative;
+         display: block;
+         float: left;
+         margin-right:10px;
+         .checkbox{
+           margin:0;
+           label input[type="checkbox"]{
+             margin-top: 5px;
+           }
+         }
+         .bold{
+           font-weight:bold;
+           font-size:$ft_tabs;
+           color:$bleu;
+         }
+       }
+     }
+     ul.boutons{
+       padding-left:0;
+       li{
+         float: left;
+         position: relative;
+         display: block;
+         &.link{
+          cursor:pointer;
+          margin-top: 13px;
+          font-weight:bold;
+          font-size:$ft_tabs;
+          color:$bleu;
+          margin-right:10px;
+          &:hover{
+            color:$bleu_fonce;
+          }
+         }
+         .btn{
+           height:50px;
+           border-radius:0;
+           border:none;
+           background-color:$vert;
+           color:$blanc;
+           text-transform: uppercase;
+           font-size:$ft_btn;
+           border-left: 3px solid $blanc;
+           padding:6px 8px;
+           &.temps{width:295px;}
+           &.manuelle{width:205px;}
+           &.evenement{width:220px;}
+           &:hover{
+             background-color:$vert_hover;
+           }
+           &:focus{
+             background-color:$vert_focus;
+           }
+           .glyphicon{
+             top:2px;
+             margin-right:10px;
+           }
+         }
+       }
+     }
+   }
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; // remove the gap so it doesn't close
+ }

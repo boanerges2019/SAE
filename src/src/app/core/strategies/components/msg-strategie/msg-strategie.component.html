@@ -1,0 +1,114 @@
+<div id="liste-messages">
+  <div class="header">
+    <!--Menu onglet Tabs-->
+    <ul class="nav nav-tabs" role="tablist">
+     <li role="presentation" class="active">
+          <a [innerHTML]="model.labels.ctx[model.currentCtx]"></a>
+      </li>
+   </ul>
+ </div>
+
+  <div class="content ev_equipements">
+    <!--Table intitulé-->
+    <table class="table firstline">
+        <thead>
+            <tr class="first">
+                <th class="libelle chevron">Actions</th>
+                <th class="libelle nom_pmv"><span class="bleu">PMV</span> / Strategie</th>
+                <th class="libelle message">Message</th>
+            </tr>
+        </thead>
+    </table>
+    <!--Table contenu -->
+    <div class="contenu" [perfect-scrollbar]>
+        <table class="table">
+          <tbody *ngIf="messages">
+              <tr *ngFor="let message of messages">
+                <td class="libelle chevron">
+                    <tr>
+                        <td>
+                            <button class="btn btn-default btn-xs trash"
+                               (click)="editMessage($event, message)"
+                               ctxAccess
+                               [fieldName]="model.field.removeMessageBtn"
+                               [currentCtx]="model.currentCtx"
+                               [configCte]="model.configCte">
+                               <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                             </button>
+                        </td>
+                      <td>
+                           <button class="btn btn-default btn-xs trash"
+                             (click)="removeMessage($event, message)"
+                             ctxAccess
+                             [fieldName]="model.field.removeMessageBtn"
+                             [currentCtx]="model.currentCtx"
+                             [configCte]="model.configCte">
+                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                           </button>
+                      </td>
+                    </tr>
+                </td>
+                 <td class="libelle nom_pmv">
+                   <span [ngClass]="getClasses(message)">{{ message.nomStrategie || message.nom }}</span>
+                </td>
+                 <td class="libelle message">
+                   <tr>
+                     <td>
+                       <div class="statut encart pourlimite">
+                         <img *ngIf="message.valeurs[getDynamicModel(message,model.field.pictogramme)]"
+                                src="{{ 'assets/img/icon/IconePictogramme/'+ message.valeurs[getDynamicModel(message,model.field.pictogramme)] +'.png' }}" alt="accident" />
+                         <img *ngIf="!message.valeurs[getDynamicModel(message,model.field.pictogramme)]"
+                                src="{{ 'assets/img/icon/IconePictogramme/'+ model.defaultPicto +'.png' }}" alt="accident" />
+                       </div>
+                     </td>
+                     <td class="pul-right">
+                       <div
+                            class="statut encart pourmessage"
+                            [style.minWidth.px]="getNbColonnes(message)">
+
+                         <span
+                             class="line"
+                             [style.whiteSpace]="getWhiteSpace(message?.valeurs[getDynamicModel(message, model.field.ligne1)])"
+                             [style.minWidth.px]="getNbColonnes(message)"
+                             [innerHTML]="message?.valeurs[getDynamicModel(message, model.field.ligne1)]">
+
+                         </span>
+
+                         <span
+                             class="line"
+                             [style.whiteSpace]="getWhiteSpace(message?.valeurs[getDynamicModel(message, model.field.ligne2)])"
+                             [style.minWidth.px]="getNbColonnes(message)"
+                             [innerHTML]="message?.valeurs[getDynamicModel(message, model.field.ligne2)]">
+
+                         </span>
+
+                         <span
+                             class="line"
+                             [style.whiteSpace]="getWhiteSpace(message?.valeurs[getDynamicModel(message, model.field.ligne3)])"
+                             [style.minWidth.px]="getNbColonnes(message)"
+                             [innerHTML]="message?.valeurs[getDynamicModel(message, model.field.ligne3)]">
+
+                         </span>
+
+                         <span
+                             class="line"
+                             [style.whiteSpace]="getWhiteSpace(message?.valeurs[getDynamicModel(message, model.field.ligne4)])"
+                             [style.minWidth.px]="getNbColonnes(message)"
+                             [innerHTML]="message?.valeurs[getDynamicModel(message, model.field.ligne4)]">
+                         </span>
+                       </div>
+                     </td>
+                   </tr>
+                 </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+
+  <!--Footer strategie-->
+  <div class="footer strategie">
+    <ul class="stat">
+   </ul>
+  </div>
+</div>
