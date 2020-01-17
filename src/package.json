@@ -31,7 +31,7 @@
     "export-to-csv": "^0.1.1",
     "form-data": "^2.3.1",
     "is-buffer": "^2.0.2",
-    "jquery": "^2.2.4",
+    "jquery": "^3.4.1",
     "moment": "^2.18.1",
     "ng2-bootstrap": "^1.6.3",
     "ng2-pdf-viewer": "^2.0.3",
